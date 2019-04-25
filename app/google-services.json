@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "206355511697",
+    "firebase_url": "https://trade-4f499.firebaseio.com",
+    "project_id": "trade-4f499",
+    "storage_bucket": "trade-4f499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206355511697:android:d9e124e5ba822186",
+        "android_client_info": {
+          "package_name": "com.social.trade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206355511697-5f86feba55krf3ediu2mmj3p8ek088oh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHig9Fbcsp18CxR83HYJHuYMSEiTVvq-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206355511697-5f86feba55krf3ediu2mmj3p8ek088oh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
