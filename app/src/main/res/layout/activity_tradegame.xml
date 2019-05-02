@@ -2,8 +2,101 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nation1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tradegame">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="2dp">
+
+        <TextView
+            android:id="@+id/subject"
+            android:layout_width="218dp"
+            android:layout_height="56dp"
+            android:text="나라를 선택하세요!"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="41dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/nationbtn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:outlineProvider="paddedBounds"
+                android:text="Nation1"
+                tools:layout_editor_absoluteX="56dp"
+                tools:layout_editor_absoluteY="173dp" />
+
+            <Button
+                android:id="@+id/nationbtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:text="Nation2"
+                tools:layout_editor_absoluteX="256dp"
+                tools:layout_editor_absoluteY="172dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/nationbtn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nation3"
+                tools:layout_editor_absoluteX="55dp"
+                tools:layout_editor_absoluteY="341dp" />
+
+            <Button
+                android:id="@+id/nationbtn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nation4"
+                tools:layout_editor_absoluteX="256dp"
+                tools:layout_editor_absoluteY="340dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/nationbtn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nation5"
+                tools:layout_editor_absoluteX="56dp"
+                tools:layout_editor_absoluteY="505dp" />
+
+            <Button
+                android:id="@+id/nationbtn6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nation6"
+                tools:layout_editor_absoluteX="255dp"
+                tools:layout_editor_absoluteY="505dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
