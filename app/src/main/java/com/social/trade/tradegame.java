@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,16 +40,36 @@ public class tradegame extends AppCompatActivity {
         selectednation.put("nation5", 0);
         selectednation.put("nation6", 0);
 
+        db = FirebaseFirestore.getInstance();
+
+        db.collection("나라선택여부").document("selectednation")
+                .set(selectednation)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("activity_tradegame", "기록이 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("activity_tradegame", "쓰기 실패",e);
+                    }
+                });
+
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.nationbtn1:
-                        db = FirebaseFirestore.getInstance();
 
-                        db.collection("나라선택여부").document("nation1")
-                                .set(selectednation)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        Map<String, Object> nation1 = new HashMap<>();
+                        nation1.put("nation1", 1);
+//                        db = FirebaseFirestore.getInstance();
+
+                        db.collection("나라선택여부").document("selectednation")
+                                .set(nation1, SetOptions.merge());
+ /*                               .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d("activity_tradegame", "기록이 성공함");
@@ -60,7 +81,7 @@ public class tradegame extends AppCompatActivity {
                                         Log.w("activity_tradegame", "쓰기 실패",e);
                                     }
                                 });
-
+*/
 
                         Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
