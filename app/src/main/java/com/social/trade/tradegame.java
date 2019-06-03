@@ -3,15 +3,22 @@ package com.social.trade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
@@ -20,17 +27,20 @@ import java.util.Map;
 public class tradegame extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    private String TAG = "activity_tradegame";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradegame);
 
-        Button nationbtn1 = (Button) findViewById(R.id.nationbtn1);
+        final Button nationbtn1 = (Button) findViewById(R.id.nationbtn1);
         Button nationbtn2 = (Button) findViewById(R.id.nationbtn2);
         Button nationbtn3 = (Button) findViewById(R.id.nationbtn3);
         Button nationbtn4 = (Button) findViewById(R.id.nationbtn4);
         Button nationbtn5 = (Button) findViewById(R.id.nationbtn5);
         Button nationbtn6 = (Button) findViewById(R.id.nationbtn6);
+
+
 
         final Map<String, Object> selectednation = new HashMap<>();
         selectednation.put("nation1", 0);
@@ -42,34 +52,19 @@ public class tradegame extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        db.collection("나라선택여부").document("selectednation")
-                .set(selectednation)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("activity_tradegame", "기록이 성공함");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("activity_tradegame", "쓰기 실패",e);
-                    }
-                });
-
-        View.OnClickListener Listener = new View.OnClickListener() {
+        DocumentReference docRef = db.collection("나라선택여부").document("selectednation");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.nationbtn1:
-
-                        Map<String, Object> nation1 = new HashMap<>();
-                        nation1.put("nation1", 1);
-//                        db = FirebaseFirestore.getInstance();
-
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        Log.d(TAG, "스탭샷 데이터"+document.getData());
+                    }else{
+                        Log.d(TAG,"도큐먼트 찾을 수 없음");
                         db.collection("나라선택여부").document("selectednation")
-                                .set(nation1, SetOptions.merge());
- /*                               .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                .set(selectednation)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d("activity_tradegame", "기록이 성공함");
@@ -81,7 +76,78 @@ public class tradegame extends AppCompatActivity {
                                         Log.w("activity_tradegame", "쓰기 실패",e);
                                     }
                                 });
-*/
+                    }
+                }else{
+                    Log.d(TAG, "가져오기 실패", task.getException());
+                }
+            }
+        });
+
+
+
+        View.OnClickListener Listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.nationbtn1:
+
+                        db.collection("나라선택여부").document("selectednation")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot document = task.getResult();
+                                    Object s = document.getData().get("nation1");
+
+
+                                  if (s==0){
+                                      Log.d(TAG, "기록이 성공함"+s);
+                                      nationbtn1.setEnabled(false);
+                                      Map<String, Object> nation1 = new HashMap<>();
+                                      nation1.put("nation1", 1);
+                                      db.collection("나라선택여부").document("selectednation")
+                                              .set(nation1)
+                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                  @Override
+                                                  public void onSuccess(Void aVoid) {
+                                                      Log.d(TAG, "기록이 성공함");
+                                                  }
+                                              })
+                                              .addOnFailureListener(new OnFailureListener() {
+                                                  @Override
+                                                  public void onFailure(@NonNull Exception e) {
+                                                      Log.w(TAG, "쓰기 실패",e);
+                                                  }
+                                              });
+
+                                    }else{
+                                        Log.d(TAG,"이미 버튼이 눌림");
+                                        db.collection("나라선택여부").document("selectednation")
+                                                .set(selectednation)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("activity_tradegame", "기록이 성공함");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                                    }
+                                                });
+                                    }
+
+                                }else{
+                                    Log.d(TAG, "가져오기 실패", task.getException());
+                                }
+                            }
+                                });
+
+
+
+
 
                         Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
