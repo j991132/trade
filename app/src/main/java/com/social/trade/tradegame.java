@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,10 +29,14 @@ public class tradegame extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String TAG = "activity_tradegame";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradegame);
+
+
+
 
         final Button nationbtn1 = (Button) findViewById(R.id.nationbtn1);
         Button nationbtn2 = (Button) findViewById(R.id.nationbtn2);
@@ -40,7 +45,8 @@ public class tradegame extends AppCompatActivity {
         Button nationbtn5 = (Button) findViewById(R.id.nationbtn5);
         Button nationbtn6 = (Button) findViewById(R.id.nationbtn6);
 
-
+        Intent intent = getIntent();
+        final String name = intent.getStringExtra("ename");
 
         final Map<String, Object> selectednation = new HashMap<>();
         selectednation.put("nation1", 0);
@@ -49,6 +55,7 @@ public class tradegame extends AppCompatActivity {
         selectednation.put("nation4", 0);
         selectednation.put("nation5", 0);
         selectednation.put("nation6", 0);
+
 
         db = FirebaseFirestore.getInstance();
 
@@ -84,7 +91,6 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,20 +104,19 @@ public class tradegame extends AppCompatActivity {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot document = task.getResult();
-                                    Object s = document.getData().get("nation1");
+                                    Object s = document.getData().get("nation1").toString();
 
 
-                                  if (s==0){
+                                  if (s.equals("0")){
                                       Log.d(TAG, "기록이 성공함"+s);
-                                      nationbtn1.setEnabled(false);
-                                      Map<String, Object> nation1 = new HashMap<>();
-                                      nation1.put("nation1", 1);
+
+
                                       db.collection("나라선택여부").document("selectednation")
-                                              .set(nation1)
+                                              .update("nation1", name)
                                               .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                   @Override
                                                   public void onSuccess(Void aVoid) {
-                                                      Log.d(TAG, "기록이 성공함");
+                                                      Log.d(TAG, "필드 업데이트 성공함");
                                                   }
                                               })
                                               .addOnFailureListener(new OnFailureListener() {
@@ -122,8 +127,16 @@ public class tradegame extends AppCompatActivity {
                                               });
 
                                     }else{
-                                        Log.d(TAG,"이미 버튼이 눌림");
-                                        db.collection("나라선택여부").document("selectednation")
+                                        Log.d(TAG,"이미 버튼이 눌림"+s);
+                                        if(s.equals(name)){
+                                            //액티비티 1번 나라로 넘기기
+                                            Toast.makeText(getApplication(), "1번 국가로 이동.", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Log.d(TAG,"선택자  "+s);
+                                            Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
+                                        }
+
+ /*                                      db.collection("나라선택여부").document("selectednation")
                                                 .set(selectednation)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
@@ -137,10 +150,12 @@ public class tradegame extends AppCompatActivity {
                                                         Log.w("activity_tradegame", "쓰기 실패",e);
                                                     }
                                                 });
+*/
                                     }
 
                                 }else{
                                     Log.d(TAG, "가져오기 실패", task.getException());
+                                    Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                                 });
@@ -149,7 +164,7 @@ public class tradegame extends AppCompatActivity {
 
 
 
-                        Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+ //                       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn2:
                         Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();

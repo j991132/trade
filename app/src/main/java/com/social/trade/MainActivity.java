@@ -4,15 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    private Button connect;
+    private Button finish;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, tradegame.class);
-        startActivity(intent);
+
+
+        connect = (Button)findViewById(R.id.button1);
+        finish =  (Button)findViewById(R.id.button2);
+        connect.setEnabled(true);
+        finish.setEnabled(false);
+        final EditText ename= (EditText) findViewById(R.id.editText);
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, tradegame.class);
+                intent.putExtra("ename", String.valueOf(ename.getText()));
+                startActivity(intent);
+            }
+        });
+
     }
 }
