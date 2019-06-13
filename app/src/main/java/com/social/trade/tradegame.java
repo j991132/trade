@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class tradegame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_tradegame);
 
 
@@ -91,12 +93,15 @@ public class tradegame extends AppCompatActivity {
         });
 
 
+
+
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.nationbtn1:
-
+                        select("nation1", name);
+/*
                         db.collection("나라선택여부").document("selectednation")
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -136,21 +141,7 @@ public class tradegame extends AppCompatActivity {
                                             Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
                                         }
 
- /*                                      db.collection("나라선택여부").document("selectednation")
-                                                .set(selectednation)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("activity_tradegame", "기록이 성공함");
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w("activity_tradegame", "쓰기 실패",e);
-                                                    }
-                                                });
-*/
+
                                     }
 
                                 }else{
@@ -160,26 +151,31 @@ public class tradegame extends AppCompatActivity {
                             }
                                 });
 
-
+*/
 
 
 
  //                       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn2:
-                        Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                        select("nation2", name);
+ //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn3:
-                        Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                        select("nation3", name);
+ //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn4:
-                        Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                        select("nation4", name);
+ //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn5:
-                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                        select("nation5", name);
+//                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn6:
-                        Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                        select("nation6", name);
+ //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -194,6 +190,58 @@ public class tradegame extends AppCompatActivity {
 
 
     }
+
+    public void select(final String nationnum, final String intentname) {
+        db.collection("나라선택여부").document("selectednation")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            Object s = document.getData().get(nationnum).toString();
+
+
+                            if (s.equals("0")){
+                                Log.d(TAG, "기록이 성공함"+s);
+
+
+                                db.collection("나라선택여부").document("selectednation")
+                                        .update(nationnum, intentname)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "필드 업데이트 성공함");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "쓰기 실패",e);
+                                            }
+                                        });
+
+                            }else{
+                                Log.d(TAG,"이미 선택된 버튼임 - 선택자:  "+s);
+                                if(s.equals(intentname)){
+                                    //액티비티 1번 나라로 넘기기
+                                    Toast.makeText(getApplication(), nationnum+" 국가로 이동.", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Log.d(TAG,"선택자  "+s);
+                                    Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+
+                        }else{
+                            Log.d(TAG, "가져오기 실패", task.getException());
+                            Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     public void onBackButtonClicked(View v){
         finish();
     }
