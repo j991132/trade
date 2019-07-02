@@ -23,6 +23,14 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="41dp" />
+        <TextView
+            android:id="@+id/testtext"
+            android:layout_width="218dp"
+            android:layout_height="56dp"
+
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="41dp" />
 
 
         <LinearLayout

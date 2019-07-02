@@ -48,9 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="50"
-        android:paddingTop="20"
-        android:paddingBottom="0">
+        android:padding="50px"
+        android:paddingTop="20px">
 
         <Button
             android:id="@+id/button"
@@ -94,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:paddingLeft="10"
+            android:paddingLeft="10px"
             android:text="목표자원량  "
             android:textSize="14sp"
             app:autoSizeTextType="uniform" />
@@ -230,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:paddingLeft="10"
+            android:paddingLeft="10px"
             android:text="내 자원  "
             android:textSize="14sp"
             app:autoSizeTextType="uniform"  />

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,7 @@ public class tradegame extends AppCompatActivity {
         Button nationbtn4 = (Button) findViewById(R.id.nationbtn4);
         Button nationbtn5 = (Button) findViewById(R.id.nationbtn5);
         Button nationbtn6 = (Button) findViewById(R.id.nationbtn6);
+        final TextView testtext = (TextView) findViewById(R.id.testtext);
 
         Intent intent = getIntent();
         final String name = intent.getStringExtra("ename");
@@ -93,7 +95,7 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-
+testtext.setText("석유량");
 
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
@@ -101,6 +103,7 @@ public class tradegame extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.nationbtn1:
                         select("nation1", name);
+
 /*
                         db.collection("나라선택여부").document("selectednation")
                                 .get()
@@ -200,7 +203,7 @@ public class tradegame extends AppCompatActivity {
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             Object s = document.getData().get(nationnum).toString();
-
+ //                           testtext.setText("기록된 이름: "+s);
 
                             if (s.equals("0")){
                                 Log.d(TAG, "기록이 성공함"+s);
