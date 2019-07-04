@@ -31,6 +31,7 @@ public class tradegame extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String TAG = "activity_tradegame";
+ //   private TextView testtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class tradegame extends AppCompatActivity {
         Button nationbtn4 = (Button) findViewById(R.id.nationbtn4);
         Button nationbtn5 = (Button) findViewById(R.id.nationbtn5);
         Button nationbtn6 = (Button) findViewById(R.id.nationbtn6);
-        final TextView testtext = (TextView) findViewById(R.id.testtext);
+ //       testtext = (TextView) findViewById(R.id.testtext);
 
         Intent intent = getIntent();
         final String name = intent.getStringExtra("ename");
@@ -95,7 +96,7 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-testtext.setText("석유량");
+// testtext.setText("석유량");
 
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
@@ -103,7 +104,7 @@ testtext.setText("석유량");
                 switch (v.getId()) {
                     case R.id.nationbtn1:
                         select("nation1", name);
-
+                        nationstate("kor");
 /*
                         db.collection("나라선택여부").document("selectednation")
                                 .get()
@@ -203,7 +204,7 @@ testtext.setText("석유량");
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             Object s = document.getData().get(nationnum).toString();
- //                           testtext.setText("기록된 이름: "+s);
+//                            testtext.setText("기록된 이름: "+s);
 
                             if (s.equals("0")){
                                 Log.d(TAG, "기록이 성공함"+s);
@@ -243,6 +244,12 @@ testtext.setText("석유량");
                         }
                     }
                 });
+    }
+
+    public void nationstate(final String nationname) {
+        Intent intent = new Intent(tradegame.this, nation.class);
+        intent.putExtra("nationname", nationname);
+        startActivity(intent);
     }
 
     public void onBackButtonClicked(View v){
