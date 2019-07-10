@@ -1,6 +1,7 @@
 package com.social.trade;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -19,7 +20,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -31,7 +34,7 @@ public class tradegame extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String TAG = "activity_tradegame";
- //   private TextView testtext;
+    private TextView testtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class tradegame extends AppCompatActivity {
         Button nationbtn4 = (Button) findViewById(R.id.nationbtn4);
         Button nationbtn5 = (Button) findViewById(R.id.nationbtn5);
         Button nationbtn6 = (Button) findViewById(R.id.nationbtn6);
- //       testtext = (TextView) findViewById(R.id.testtext);
+        testtext = (TextView) findViewById(R.id.testtext);
 
         Intent intent = getIntent();
         final String name = intent.getStringExtra("ename");
@@ -96,7 +99,26 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-// testtext.setText("석유량");
+  testtext.setText("석유량");
+
+        final DocumentReference docRef1 = db.collection("나라선택여부").document("selectednation");
+        docRef1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    Toast.makeText(getApplication(), "내용 바뀌었다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
 
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
@@ -163,6 +185,9 @@ public class tradegame extends AppCompatActivity {
                         break;
                     case R.id.nationbtn2:
                         select("nation2", name);
+
+
+
  //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn3:
