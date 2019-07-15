@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:outlineProvider="paddedBounds"
-                android:text="Nation1"
+                android:text="대한민국"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="173dp" />
 
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:text="Nation2"
+                android:text="중국"
                 tools:layout_editor_absoluteX="256dp"
                 tools:layout_editor_absoluteY="172dp" />
         </LinearLayout>
@@ -69,7 +69,7 @@
                 android:id="@+id/nationbtn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nation3"
+                android:text="호주"
                 tools:layout_editor_absoluteX="55dp"
                 tools:layout_editor_absoluteY="341dp" />
 
@@ -77,7 +77,7 @@
                 android:id="@+id/nationbtn4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nation4"
+                android:text="캐나다"
                 tools:layout_editor_absoluteX="256dp"
                 tools:layout_editor_absoluteY="340dp" />
         </LinearLayout>
@@ -92,7 +92,7 @@
                 android:id="@+id/nationbtn5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nation5"
+                android:text="사우디"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="505dp" />
 
@@ -100,7 +100,7 @@
                 android:id="@+id/nationbtn6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nation6"
+                android:text="남아공"
                 tools:layout_editor_absoluteX="255dp"
                 tools:layout_editor_absoluteY="505dp" />
         </LinearLayout>

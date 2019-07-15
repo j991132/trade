@@ -101,6 +101,7 @@ public class tradegame extends AppCompatActivity {
 
   testtext.setText("석유량");
 
+//실시간 데이터 업데이트 감지하기
         final DocumentReference docRef1 = db.collection("나라선택여부").document("selectednation");
         docRef1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -112,98 +113,49 @@ public class tradegame extends AppCompatActivity {
                 }
 
                 if (snapshot != null && snapshot.exists()) {
+
+                    Object n = snapshot.getData().get("nation6").toString();
+                    testtext.setText("기록된 이름: "+n);
                     Log.d(TAG, "Current data: " + snapshot.getData());
-                    Toast.makeText(getApplication(), "내용 바뀌었다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
             }
         });
 
+//버튼 액션
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.nationbtn1:
-                        select("nation1", name);
-                        nationstate("kor");
-/*
-                        db.collection("나라선택여부").document("selectednation")
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()){
-                                    DocumentSnapshot document = task.getResult();
-                                    Object s = document.getData().get("nation1").toString();
-
-
-                                  if (s.equals("0")){
-                                      Log.d(TAG, "기록이 성공함"+s);
-
-
-                                      db.collection("나라선택여부").document("selectednation")
-                                              .update("nation1", name)
-                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                  @Override
-                                                  public void onSuccess(Void aVoid) {
-                                                      Log.d(TAG, "필드 업데이트 성공함");
-                                                  }
-                                              })
-                                              .addOnFailureListener(new OnFailureListener() {
-                                                  @Override
-                                                  public void onFailure(@NonNull Exception e) {
-                                                      Log.w(TAG, "쓰기 실패",e);
-                                                  }
-                                              });
-
-                                    }else{
-                                        Log.d(TAG,"이미 버튼이 눌림"+s);
-                                        if(s.equals(name)){
-                                            //액티비티 1번 나라로 넘기기
-                                            Toast.makeText(getApplication(), "1번 국가로 이동.", Toast.LENGTH_SHORT).show();
-                                        }else{
-                                            Log.d(TAG,"선택자  "+s);
-                                            Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
-                                        }
-
-
-                                    }
-
-                                }else{
-                                    Log.d(TAG, "가져오기 실패", task.getException());
-                                    Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                                });
-
-*/
-
+                        select("nation1", name, "대한민국");
 
 
  //                       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn2:
-                        select("nation2", name);
+                        select("nation2", name, "중국");
 
 
 
  //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn3:
-                        select("nation3", name);
+                        select("nation3", name, "호주");
  //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn4:
-                        select("nation4", name);
+                        select("nation4", name, "캐나다");
  //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn5:
-                        select("nation5", name);
+                        select("nation5", name, "사우디아라비아");
 //                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn6:
-                        select("nation6", name);
+                        select("nation6", name, "남아프리카공화국");
  //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -220,7 +172,8 @@ public class tradegame extends AppCompatActivity {
 
     }
 
-    public void select(final String nationnum, final String intentname) {
+//나라 선택시 선택여부 데이터 갱신
+    public void select(final String nationnum, final String intentname, final String nationname ) {
         db.collection("나라선택여부").document("selectednation")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -254,6 +207,7 @@ public class tradegame extends AppCompatActivity {
                                 Log.d(TAG,"이미 선택된 버튼임 - 선택자:  "+s);
                                 if(s.equals(intentname)){
                                     //액티비티 1번 나라로 넘기기
+                                    nationstate(nationname);
                                     Toast.makeText(getApplication(), nationnum+" 국가로 이동.", Toast.LENGTH_SHORT).show();
                                 }else{
                                     Log.d(TAG,"선택자  "+s);
@@ -271,6 +225,7 @@ public class tradegame extends AppCompatActivity {
                 });
     }
 
+//나라상태창으로 데이터 인텐트
     public void nationstate(final String nationname) {
         Intent intent = new Intent(tradegame.this, nation.class);
         intent.putExtra("nationname", nationname);

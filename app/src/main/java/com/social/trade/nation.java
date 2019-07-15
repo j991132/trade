@@ -27,9 +27,10 @@ public class nation extends AppCompatActivity {
         nationmark = (ImageView) findViewById(R.id.nationmark);
 
         switch (nationname){
-            case "kor":
-         //       nationmark.setImageBitmap();
-                name.setText("대한민국");
+            case "대한민국":
+                nationmark.setImageResource(R.drawable.kor);
+                name.setText(nationname);
+
                 break;
         }
     }
