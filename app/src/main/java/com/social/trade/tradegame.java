@@ -56,6 +56,7 @@ public class tradegame extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("ename");
 
+//나라선택여부 해시맵저장
         final Map<String, Object> selectednation = new HashMap<>();
         selectednation.put("nation1", 0);
         selectednation.put("nation2", 0);
@@ -63,7 +64,54 @@ public class tradegame extends AppCompatActivity {
         selectednation.put("nation4", 0);
         selectednation.put("nation5", 0);
         selectednation.put("nation6", 0);
-
+//한국자원 해시맵저장
+        final Map<String, Object> kor = new HashMap<>();
+        selectednation.put("oil", 0);
+        selectednation.put("fe", 10);
+        selectednation.put("gold", 0);
+        selectednation.put("wood", 25);
+        selectednation.put("man", 10);
+        selectednation.put("money", 1400);
+//중국자원 해시맵저장
+        final Map<String, Object> cha = new HashMap<>();
+        selectednation.put("oil", 0);
+        selectednation.put("fe", 10);
+        selectednation.put("gold", 10);
+        selectednation.put("wood", 0);
+        selectednation.put("man", 120);
+        selectednation.put("money", 500);
+//호주자원 해시맵저장
+        final Map<String, Object> os = new HashMap<>();
+        selectednation.put("oil", 5);
+        selectednation.put("fe", 120);
+        selectednation.put("gold", 5);
+        selectednation.put("wood", 0);
+        selectednation.put("man", 10);
+        selectednation.put("money", 500);
+//캐나다자원 해시맵저장
+        final Map<String, Object> ca = new HashMap<>();
+        selectednation.put("oil", 0);
+        selectednation.put("fe", 10);
+        selectednation.put("gold", 0);
+        selectednation.put("wood", 30);
+        selectednation.put("man", 20);
+        selectednation.put("money", 1300);
+//사우디자원 해시맵저장
+        final Map<String, Object> saudi = new HashMap<>();
+        selectednation.put("oil", 100);
+        selectednation.put("fe", 0);
+        selectednation.put("gold", 5);
+        selectednation.put("wood", 0);
+        selectednation.put("man", 10);
+        selectednation.put("money", 700);
+//남아공자원 해시맵저장
+        final Map<String, Object> sa = new HashMap<>();
+        selectednation.put("oil", 5);
+        selectednation.put("fe", 0);
+        selectednation.put("gold", 85);
+        selectednation.put("wood", 0);
+        selectednation.put("man", 10);
+        selectednation.put("money", 900);
 
         db = FirebaseFirestore.getInstance();
 
@@ -79,6 +127,96 @@ public class tradegame extends AppCompatActivity {
                         Log.d(TAG,"도큐먼트 찾을 수 없음");
                         db.collection("나라선택여부").document("selectednation")
                                 .set(selectednation)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("대한민국")
+                                .set(kor)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("중국")
+                                .set(cha)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("호주")
+                                .set(os)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("캐나다")
+                                .set(ca)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("사우디")
+                                .set(saudi)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("activity_tradegame", "기록이 성공함");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("activity_tradegame", "쓰기 실패",e);
+                                    }
+                                });
+
+                        db.collection("나라선택여부").document("남아공")
+                                .set(sa)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
