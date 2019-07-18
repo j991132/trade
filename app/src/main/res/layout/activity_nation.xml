@@ -190,36 +190,42 @@
                     android:id="@+id/goil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gfe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/ggold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gwood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gmoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
             </TableRow>
 
@@ -317,36 +323,42 @@
                     android:id="@+id/oil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/fe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/wood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="TextView" />
             </TableRow>
 

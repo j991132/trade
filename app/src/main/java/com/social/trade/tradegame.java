@@ -66,54 +66,61 @@ public class tradegame extends AppCompatActivity {
         selectednation.put("nation6", 0);
 //한국자원 해시맵저장
         final Map<String, Object> kor = new HashMap<>();
-        selectednation.put("oil", 0);
-        selectednation.put("fe", 10);
-        selectednation.put("gold", 0);
-        selectednation.put("wood", 25);
-        selectednation.put("man", 10);
-        selectednation.put("money", 1400);
+        kor.put("lv", 0);
+        kor.put("oil", 0);
+        kor.put("fe", 10);
+        kor.put("gold", 0);
+        kor.put("wood", 25);
+        kor.put("man", 10);
+        kor.put("money", 1400);
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
-        selectednation.put("oil", 0);
-        selectednation.put("fe", 10);
-        selectednation.put("gold", 10);
-        selectednation.put("wood", 0);
-        selectednation.put("man", 120);
-        selectednation.put("money", 500);
+        cha.put("lv", 0);
+        cha.put("oil", 0);
+        cha.put("fe", 10);
+        cha.put("gold", 10);
+        cha.put("wood", 0);
+        cha.put("man", 120);
+        cha.put("money", 500);
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
-        selectednation.put("oil", 5);
-        selectednation.put("fe", 120);
-        selectednation.put("gold", 5);
-        selectednation.put("wood", 0);
-        selectednation.put("man", 10);
-        selectednation.put("money", 500);
+        os.put("lv", 0);
+        os.put("oil", 5);
+        os.put("fe", 120);
+        os.put("gold", 5);
+        os.put("wood", 0);
+        os.put("man", 10);
+        os.put("money", 500);
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
-        selectednation.put("oil", 0);
-        selectednation.put("fe", 10);
-        selectednation.put("gold", 0);
-        selectednation.put("wood", 30);
-        selectednation.put("man", 20);
-        selectednation.put("money", 1300);
+        ca.put("lv", 0);
+        ca.put("oil", 0);
+        ca.put("fe", 10);
+        ca.put("gold", 0);
+        ca.put("wood", 30);
+        ca.put("man", 20);
+        ca.put("money", 1300);
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
-        selectednation.put("oil", 100);
-        selectednation.put("fe", 0);
-        selectednation.put("gold", 5);
-        selectednation.put("wood", 0);
-        selectednation.put("man", 10);
-        selectednation.put("money", 700);
+        saudi.put("lv", 0);
+        saudi.put("oil", 100);
+        saudi.put("fe", 0);
+        saudi.put("gold", 5);
+        saudi.put("wood", 0);
+        saudi.put("man", 10);
+        saudi.put("money", 700);
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
-        selectednation.put("oil", 5);
-        selectednation.put("fe", 0);
-        selectednation.put("gold", 85);
-        selectednation.put("wood", 0);
-        selectednation.put("man", 10);
-        selectednation.put("money", 900);
+        sa.put("lv", 0);
+        sa.put("oil", 5);
+        sa.put("fe", 0);
+        sa.put("gold", 85);
+        sa.put("wood", 0);
+        sa.put("man", 10);
+        sa.put("money", 900);
 
         db = FirebaseFirestore.getInstance();
+
 
         DocumentReference docRef = db.collection("나라선택여부").document("selectednation");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -200,7 +207,7 @@ public class tradegame extends AppCompatActivity {
                                     }
                                 });
 
-                        db.collection("나라선택여부").document("사우디")
+                        db.collection("나라선택여부").document("사우디아라비아")
                                 .set(saudi)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -215,7 +222,7 @@ public class tradegame extends AppCompatActivity {
                                     }
                                 });
 
-                        db.collection("나라선택여부").document("남아공")
+                        db.collection("나라선택여부").document("남아프리카공화국")
                                 .set(sa)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -331,6 +338,7 @@ public class tradegame extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+                                                nationstate(nationname);
                                                 Log.d(TAG, "필드 업데이트 성공함");
                                             }
                                         })
@@ -369,6 +377,8 @@ public class tradegame extends AppCompatActivity {
         intent.putExtra("nationname", nationname);
         startActivity(intent);
     }
+
+
 
     public void onBackButtonClicked(View v){
         finish();
