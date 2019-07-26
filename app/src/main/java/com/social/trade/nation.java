@@ -131,7 +131,7 @@ public class nation extends AppCompatActivity {
     }
 
     private void goalsource(String nationname){
-        //파이어스토어에서 자료 가져오기
+        //레벨에 따라 목적자원량 셋팅하기
         db = FirebaseFirestore.getInstance();
         db.collection("나라선택여부").document(nationname)
                 .get()
