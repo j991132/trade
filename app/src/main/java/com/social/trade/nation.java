@@ -218,3 +218,40 @@ public class nation extends AppCompatActivity {
                 });
     }
 }
+
+/*
+//다이얼로그생성
+				final Dialog reset = new Dialog( context );
+				reset.setTitle( "초기화 할까요?" );
+				reset.setContentView( R.layout.delete );
+				Button delBtn = ( Button ) reset.findViewById( R.id.delete );
+				Button cancelBtn = ( Button ) reset.findViewById( R.id.cancel );
+				// 다이얼로그 삭제버튼 누를 때
+
+				delBtn.setOnClickListener( new View.OnClickListener()
+				{
+					@Override
+					public void onClick( View view )
+					{
+						SharedPreferences pref = getSharedPreferences( "SaveState", MODE_PRIVATE );
+						pref.edit().clear().commit();
+						count = 0;
+						restoreFromSavedState();
+						layout.removeAllViews();
+						reset.dismiss();
+					}
+				} );
+				//다이얼로그 취소버튼 누를 때
+				cancelBtn.setOnClickListener( new View.OnClickListener()
+				{
+					@Override
+					public void onClick( View view )
+					{
+						reset.dismiss();
+					}
+				} );
+				reset.show();
+				//return true;
+			}
+
+ */
