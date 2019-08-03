@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/nationbtn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:orientation="vertical"
+        android:outlineProvider="paddedBounds"
+        android:text="대한민국" />
+
+    <Button
+        android:id="@+id/nationbtn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:text="중국" />
+
+    <Button
+        android:id="@+id/nationbtn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:text="호주" />
+
+    <Button
+        android:id="@+id/nationbtn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:text="캐나다" />
+
+    <Button
+        android:id="@+id/nationbtn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:text="사우디" />
+
+    <Button
+        android:id="@+id/nationbtn6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginBottom="10px"
+        android:text="남아공" />
+</LinearLayout>
