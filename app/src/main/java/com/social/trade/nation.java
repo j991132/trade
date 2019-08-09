@@ -106,6 +106,45 @@ public class nation extends AppCompatActivity {
 
                 tradetargetnation.show();
 
+                Button nation1 = (Button) tradetargetnation.findViewById(R.id.nation1);
+                Button nation2 = (Button) tradetargetnation.findViewById(R.id.nation2);
+                Button nation3 = (Button) tradetargetnation.findViewById(R.id.nation3);
+                Button nation4 = (Button) tradetargetnation.findViewById(R.id.nation4);
+                Button nation5 = (Button) tradetargetnation.findViewById(R.id.nation5);
+                Button nation6 = (Button) tradetargetnation.findViewById(R.id.nation6);
+//내가 선택한 나라 제외하고 버튼 띄우기
+                switch (nationname){
+                    case "대한민국":
+                        nation1.setVisibility(View.INVISIBLE);
+                        break;
+                    case "중국":
+                        nation2.setVisibility(View.INVISIBLE);
+                        break;
+                    case "호주":
+                        nation3.setVisibility(View.INVISIBLE);
+                        break;
+                    case "캐나다":
+                        nation4.setVisibility(View.INVISIBLE);
+                        break;
+                    case "사우디아라비아":
+                        nation5.setVisibility(View.INVISIBLE);
+                        break;
+                    case "남아프리카공화국":
+                        nation6.setVisibility(View.INVISIBLE);
+                        break;
+                }
+
+
+
+
+                Button tradecanale = (Button) tradetargetnation.findViewById(R.id.tradecancle);
+                tradecanale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tradetargetnation.dismiss();
+                    }
+                });
+
             }
         });
 
