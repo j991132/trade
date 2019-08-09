@@ -3,10 +3,13 @@ package com.social.trade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +92,23 @@ public class nation extends AppCompatActivity {
                 goalsource(nationname);
                 break;
         }
+
+//버튼액션
+//무역대상국가 버튼
+        Button tradetartgetbtn = (Button) findViewById(R.id.tradetargetbtn);
+        tradetartgetbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//다이얼로그생성
+                final Dialog tradetargetnation = new Dialog( nation.this );
+                tradetargetnation.setTitle( "어느 나라와 무역할까요?" );
+                tradetargetnation.setContentView( R.layout.tradetargetnation );
+
+                tradetargetnation.show();
+
+            }
+        });
+
     }
 
     private void getsource(String name){
