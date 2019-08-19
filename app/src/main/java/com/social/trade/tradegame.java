@@ -73,6 +73,7 @@ public class tradegame extends AppCompatActivity {
         kor.put("wood", 25);
         kor.put("man", 10);
         kor.put("money", 1400);
+        kor.put("request", 0);
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
         cha.put("lv", 0);
@@ -82,6 +83,7 @@ public class tradegame extends AppCompatActivity {
         cha.put("wood", 0);
         cha.put("man", 120);
         cha.put("money", 500);
+        cha.put("request", 0);
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
         os.put("lv", 0);
@@ -91,6 +93,7 @@ public class tradegame extends AppCompatActivity {
         os.put("wood", 0);
         os.put("man", 10);
         os.put("money", 500);
+        os.put("request", 0);
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
         ca.put("lv", 0);
@@ -100,6 +103,7 @@ public class tradegame extends AppCompatActivity {
         ca.put("wood", 30);
         ca.put("man", 20);
         ca.put("money", 1300);
+        ca.put("request", 0);
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
         saudi.put("lv", 0);
@@ -109,6 +113,7 @@ public class tradegame extends AppCompatActivity {
         saudi.put("wood", 0);
         saudi.put("man", 10);
         saudi.put("money", 700);
+        saudi.put("request", 0);
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
         sa.put("lv", 0);
@@ -118,6 +123,7 @@ public class tradegame extends AppCompatActivity {
         sa.put("wood", 0);
         sa.put("man", 10);
         sa.put("money", 900);
+        sa.put("request", 0);
 
         db = FirebaseFirestore.getInstance();
 

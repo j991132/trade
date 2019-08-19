@@ -101,10 +101,12 @@ public class nation extends AppCompatActivity {
             public void onClick(View view) {
 //다이얼로그생성
                 final Dialog tradetargetnation = new Dialog( nation.this );
-                tradetargetnation.setTitle( "어느 나라와 무역할까요?" );
+
+                tradetargetnation.setTitle("어느 나라와 무역할까요?");
                 tradetargetnation.setContentView( R.layout.tradetargetnation );
 
-                tradetargetnation.show();
+
+
 
                 Button nation1 = (Button) tradetargetnation.findViewById(R.id.nation1);
                 Button nation2 = (Button) tradetargetnation.findViewById(R.id.nation2);
@@ -133,8 +135,49 @@ public class nation extends AppCompatActivity {
                         nation6.setVisibility(View.INVISIBLE);
                         break;
                 }
+//다이얼로그 버튼액션
+                View.OnClickListener Listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.nation1:
 
 
+
+                                //       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nation2:
+                                tradeconfirm("중국");
+
+
+
+                                //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nation3:
+
+                                //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nation4:
+
+                                //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nation5:
+
+//                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nation6:
+
+                                //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+                nation1.setOnClickListener(Listener);
+                nation2.setOnClickListener(Listener);
+                nation3.setOnClickListener(Listener);
+                nation4.setOnClickListener(Listener);
+                nation5.setOnClickListener(Listener);
+                nation6.setOnClickListener(Listener);
 
 
                 Button tradecanale = (Button) tradetargetnation.findViewById(R.id.tradecancle);
@@ -144,6 +187,7 @@ public class nation extends AppCompatActivity {
                         tradetargetnation.dismiss();
                     }
                 });
+                tradetargetnation.show();
 
             }
         });
@@ -272,6 +316,67 @@ public class nation extends AppCompatActivity {
                         }else{
                             Log.d(TAG, "가져오기 실패", task.getException());
                             //   Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+//다이얼로그 나라 선택 확인
+    public void tradeconfirm(final String targetnation){
+        //다이얼로그생성
+        final Dialog tradeok = new Dialog( nation.this );
+
+        tradeok.setTitle(targetnation+" 과(와) 무역할까요?");
+        tradeok.setContentView( R.layout.buytech );
+    }
+//다이얼로그 나라선택 확인버튼 클릭시 요청국가 파이어스토어 업데이트
+    public void traderequest(final String requestnation, final String targetnation) {
+        db.collection("나라선택여부").document(targetnation)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            Object requeststate = document.getData().get("request").toString();
+//                            testtext.setText("기록된 이름: "+s);
+
+                            if (requeststate.equals("0")){
+//                                Log.d(TAG, "기록이 성공함"+requeststate);
+
+
+                                db.collection("나라선택여부").document(targetnation)
+                                        .update("request", requestnation)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+//무역창 띄우기 인서트
+                                                Log.d(TAG, "필드 업데이트 성공함");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "쓰기 실패",e);
+                                            }
+                                        });
+
+                            }else{
+                                Log.d(TAG,"현재 다른 나라와 무역중임 - "+targetnation+" 과 무역중인 나라:  "+requestnation);
+                                if(requeststate.equals(requestnation)){
+                                    //이미 나와 거래중인데 무역창이 실수로 꺼질경우 대비
+//무역창 띄우기 인서트
+                                    Toast.makeText(getApplication(), "현재 우리나라와 무역중이었음. 무역창으로 다시 이동합니다." , Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Log.d(TAG,"현재 다른 나라와 무역중임 - "+targetnation+" 과 무역중인 나라:  "+requestnation);
+                                    Toast.makeText(getApplication(), "현재 다른 나라와 무역중임 - "+targetnation+" 과 무역중인 나라:  "+requestnation, Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+
+                        }else{
+                            Log.d(TAG, "가져오기 실패", task.getException());
+                            Toast.makeText(getApplication(), "자료 업데이트 실패.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
