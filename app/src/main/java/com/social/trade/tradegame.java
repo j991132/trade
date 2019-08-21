@@ -250,7 +250,7 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-  testtext.setText("석유량");
+  testtext.setText("내가 선택할 나라는?");
 
 //실시간 데이터 업데이트 감지하기
         final DocumentReference docRef1 = db.collection("나라선택여부").document("selectednation");

@@ -107,8 +107,6 @@ public class nation extends AppCompatActivity {
                 TextView message = (TextView) tradetargetnation.findViewById(R.id.title);
                 message.setText("무역하고 싶은 나라는?");
 
-
-
                 Button nation1 = (Button) tradetargetnation.findViewById(R.id.nation1);
                 Button nation2 = (Button) tradetargetnation.findViewById(R.id.nation2);
                 Button nation3 = (Button) tradetargetnation.findViewById(R.id.nation3);
@@ -148,7 +146,7 @@ public class nation extends AppCompatActivity {
                                 //       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation2:
-                                tradeconfirm("중국");
+                                tradeconfirm(nationname,"중국");
 
 
 
@@ -322,7 +320,7 @@ public class nation extends AppCompatActivity {
                 });
     }
 //다이얼로그 나라 선택 확인
-    public void tradeconfirm(final String targetnation){
+    public void tradeconfirm(final String nationname, final String targetnation){
         //다이얼로그생성
         final Dialog tradeok = new Dialog( this );
         tradeok.setContentView( R.layout.confirmdialog);
@@ -336,7 +334,9 @@ public class nation extends AppCompatActivity {
         okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                traderequest(nationname, targetnation);
+                tradeok.dismiss();
+//ondismissListener 사용을 해보자                tradetargetnation.dismiss();
             }
         });
 
@@ -344,7 +344,7 @@ public class nation extends AppCompatActivity {
         canclebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tradeok.dismiss();
             }
         });
 
