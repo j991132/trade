@@ -101,10 +101,11 @@ public class nation extends AppCompatActivity {
             public void onClick(View view) {
 //다이얼로그생성
                 final Dialog tradetargetnation = new Dialog( nation.this );
-
-                tradetargetnation.setTitle("어느 나라와 무역할까요?");
                 tradetargetnation.setContentView( R.layout.tradetargetnation );
 
+//setcontentview 를 먼저 연결해준 뒤에 텍스트뷰를 선언해야 널 에러가 안뜬다
+                TextView message = (TextView) tradetargetnation.findViewById(R.id.title);
+                message.setText("무역하고 싶은 나라는?");
 
 
 
@@ -323,10 +324,31 @@ public class nation extends AppCompatActivity {
 //다이얼로그 나라 선택 확인
     public void tradeconfirm(final String targetnation){
         //다이얼로그생성
-        final Dialog tradeok = new Dialog( nation.this );
+        final Dialog tradeok = new Dialog( this );
+        tradeok.setContentView( R.layout.confirmdialog);
 
-        tradeok.setTitle(targetnation+" 과(와) 무역할까요?");
-        tradeok.setContentView( R.layout.buytech );
+        TextView  meg = (TextView) tradeok.findViewById(R.id.confirmtitle);
+        meg.setText(targetnation+"   과 무역할까요?");
+
+        Button okbtn = (Button) tradeok.findViewById(R.id.ok);
+        Button canclebtn = (Button) tradeok.findViewById(R.id.cancel);
+//다이얼로그 ok버튼 클릭액션
+        okbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+//다이얼로그 취소버튼 클릭액션
+        canclebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        tradeok.show();
     }
 //다이얼로그 나라선택 확인버튼 클릭시 요청국가 파이어스토어 업데이트
     public void traderequest(final String requestnation, final String targetnation) {
@@ -338,7 +360,6 @@ public class nation extends AppCompatActivity {
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             Object requeststate = document.getData().get("request").toString();
-//                            testtext.setText("기록된 이름: "+s);
 
                             if (requeststate.equals("0")){
 //                                Log.d(TAG, "기록이 성공함"+requeststate);
