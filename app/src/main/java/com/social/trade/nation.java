@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,13 +22,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class nation extends AppCompatActivity {
+public class nation extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
     private TextView name;
     private ImageView nationmark;
     private TextView nowlv, nowoil, nowfe, nowgold, nowwood, nowman, nowmoney, goil, gfe, ggold, gwood, gman;
     private FirebaseFirestore db;
     private String TAG = "activity_nation";
+    private DialogInterface.OnDismissListener onDismissListener = null;
+    private Dialog tradetargetnation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,8 @@ public class nation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //다이얼로그생성
-                final Dialog tradetargetnation = new Dialog( nation.this );
+//                final Dialog tradetargetnation = new Dialog( nation.this );
+                tradetargetnation = new Dialog( nation.this );
                 tradetargetnation.setContentView( R.layout.tradetargetnation );
 
 //setcontentview 를 먼저 연결해준 뒤에 텍스트뷰를 선언해야 널 에러가 안뜬다
@@ -187,7 +191,7 @@ public class nation extends AppCompatActivity {
                     }
                 });
                 tradetargetnation.show();
-
+                tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
             }
         });
 
@@ -335,6 +339,14 @@ public class nation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 traderequest(nationname, targetnation);
+
+               if( onDismissListener == null ) {} else {
+                   onDismissListener.onDismiss((DialogInterface) nation.this) ;
+               }
+                Log.d(TAG,"onDismissListener" + onDismissListener);
+
+
+
                 tradeok.dismiss();
 //ondismissListener 사용을 해보자                tradetargetnation.dismiss();
             }
@@ -401,6 +413,11 @@ public class nation extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+tradetargetnation.dismiss();
     }
 }
 
