@@ -144,7 +144,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.nation1:
-
+                                tradeconfirm(nationname,"대한민국");
 
 
                                 //       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
@@ -157,19 +157,19 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation3:
-
+                                tradeconfirm(nationname,"호주");
                                 //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation4:
-
+                                tradeconfirm(nationname,"캐나다");
                                 //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation5:
-
+                                tradeconfirm(nationname,"사우디아라비아");
 //                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation6:
-
+                                tradeconfirm(nationname,"남아프리카공화국");
                                 //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                         }
@@ -191,7 +191,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     }
                 });
                 tradetargetnation.show();
-                tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
+  //              tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
             }
         });
 
@@ -339,15 +339,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
             @Override
             public void onClick(View view) {
                 traderequest(nationname, targetnation);
-
-               if( onDismissListener == null ) {} else {
-                   onDismissListener.onDismiss((DialogInterface) nation.this) ;
-               }
-                Log.d(TAG,"onDismissListener" + onDismissListener);
-
-
-
+//tradeok 다이얼로그가 사라질때 리스너를 달아서 액티비티에 신호 전달 ondismiss 매서드 실행
+                tradeok.setOnDismissListener(nation.this);
                 tradeok.dismiss();
+
 //ondismissListener 사용을 해보자                tradetargetnation.dismiss();
             }
         });
@@ -383,6 +378,11 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                             @Override
                                             public void onSuccess(Void aVoid) {
 //무역창 띄우기 인서트
+                                                Intent intent = new Intent(nation.this, tradewindow.class);
+                                                intent.putExtra("requestnation", requestnation);
+                                                intent.putExtra("targetnation", targetnation);
+                                                startActivity(intent);
+
                                                 Log.d(TAG, "필드 업데이트 성공함");
                                             }
                                         })
@@ -398,6 +398,11 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 if(requeststate.equals(requestnation)){
                                     //이미 나와 거래중인데 무역창이 실수로 꺼질경우 대비
 //무역창 띄우기 인서트
+                                    Intent intent = new Intent(nation.this, tradewindow.class);
+                                    intent.putExtra("requestnation", requestnation);
+                                    intent.putExtra("targetnation", targetnation);
+                                    startActivity(intent);
+
                                     Toast.makeText(getApplication(), "현재 우리나라와 무역중이었음. 무역창으로 다시 이동합니다." , Toast.LENGTH_SHORT).show();
                                 }else{
                                     Log.d(TAG,"현재 다른 나라와 무역중임 - "+targetnation+" 과 무역중인 나라:  "+requestnation);
