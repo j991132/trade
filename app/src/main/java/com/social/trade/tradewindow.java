@@ -88,23 +88,23 @@ public class tradewindow extends AppCompatActivity {
                 break;
             case "중국":
                 targetnationmark.setImageResource(R.drawable.cha);
-                targetnationname.setText(requestnation);
+                targetnationname.setText(targetnation);
                 break;
             case "호주":
                 targetnationmark.setImageResource(R.drawable.os);
-                targetnationname.setText(requestnation);
+                targetnationname.setText(targetnation);
                 break;
             case "캐나다":
                 targetnationmark.setImageResource(R.drawable.ca);
-                targetnationname.setText(requestnation);
+                targetnationname.setText(targetnation);
                 break;
             case "사우디아라비아":
                 targetnationmark.setImageResource(R.drawable.saudi);
-                targetnationname.setText(requestnation);
+                targetnationname.setText(targetnation);
                 break;
             case "남아프리카공화국":
                 targetnationmark.setImageResource(R.drawable.sa);
-                targetnationname.setText(requestnation);
+                targetnationname.setText(targetnation);
                 break;
         }
 
