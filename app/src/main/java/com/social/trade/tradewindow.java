@@ -3,11 +3,14 @@ package com.social.trade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class tradewindow extends AppCompatActivity {
 
     private TextView requestnationname, targetnationname;
-    private ImageView requestnationmark, targetnationmark;
+    private ImageView requestnationmark, targetnationmark, mysource;
     private TextView nowlv, nowoil, nowfe, nowgold, nowwood, nowman, nowmoney;
     private FirebaseFirestore db;
     private String TAG = "activity_tradewindow";
@@ -52,6 +55,91 @@ public class tradewindow extends AppCompatActivity {
         nowwood = (TextView) findViewById(R.id.wood);
         nowman = (TextView) findViewById(R.id.man);
         nowmoney = (TextView) findViewById(R.id.money);
+        mysource = (ImageView) findViewById(R.id.mysource);
+
+        mysource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//다이얼로그생성
+                final Dialog selectsource = new Dialog( tradewindow.this );
+                selectsource.setContentView( R.layout.selectsource);
+
+                TextView  meg = (TextView) selectsource.findViewById(R.id.selectsourcetext);
+                meg.setText("거래할 자원을 선택하세요!");
+
+                Button moneybtn = (Button) selectsource.findViewById(R.id.moneybtn);
+                Button oilbtn = (Button) selectsource.findViewById(R.id.oilbtn);
+                Button febtn = (Button) selectsource.findViewById(R.id.febtn);
+                Button goldbtn = (Button) selectsource.findViewById(R.id.goldbtn);
+                Button woodbtn = (Button) selectsource.findViewById(R.id.woodbtn);
+                Button manbtn = (Button) selectsource.findViewById(R.id.manbtn);
+
+
+                Button canclebtn = (Button) selectsource.findViewById(R.id.selectcancle);
+//다이얼로그 버튼 클릭액션
+                View.OnClickListener Listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.moneybtn:
+
+                            mysource.setImageResource(R.drawable.money);
+
+                            selectsource.dismiss();
+                                //       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.oilbtn:
+
+                                mysource.setImageResource(R.drawable.oil);
+
+                                selectsource.dismiss();
+                                //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.febtn:
+                                mysource.setImageResource(R.drawable.fe);
+                                selectsource.dismiss();
+                                //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.goldbtn:
+                                mysource.setImageResource(R.drawable.gold);
+                                selectsource.dismiss();
+                                //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.woodbtn:
+                                mysource.setImageResource(R.drawable.wood);
+                                selectsource.dismiss();
+//                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.manbtn:
+                                mysource.setImageResource(R.drawable.man);
+                                selectsource.dismiss();
+                                //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+                moneybtn.setOnClickListener(Listener);
+                oilbtn.setOnClickListener(Listener);
+                febtn.setOnClickListener(Listener);
+                goldbtn.setOnClickListener(Listener);
+                woodbtn.setOnClickListener(Listener);
+                manbtn.setOnClickListener(Listener);
+
+
+//다이얼로그 취소버튼 클릭액션
+                canclebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectsource.dismiss();
+                    }
+                });
+
+                selectsource.show();
+                    }
+                });
+
+
+
 
         switch (requestnation){
             case "대한민국":
