@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:background="#5277FF">
 
+    <TextView
+        android:id="@+id/tradesourcetext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="얼마나 거래할까요?"
+        android:textSize="24sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
