@@ -56,7 +56,10 @@ public class tradewindow extends AppCompatActivity {
         nowman = (TextView) findViewById(R.id.man);
         nowmoney = (TextView) findViewById(R.id.money);
         mysource = (ImageView) findViewById(R.id.mysource);
-
+        imgmoney = (ImageView) findViewById(R.id.imgmoney);
+        imgoil = (ImageView) findViewById(R.id.imgoil);
+        imgfe = (ImageView) findViewById(R.id.imgfe);
+        imggold
         mysource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +133,7 @@ public class tradewindow extends AppCompatActivity {
                 canclebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mysource.setImageResource(R.drawable.ic_launcher_background);
                         selectsource.dismiss();
                     }
                 });

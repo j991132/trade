@@ -275,7 +275,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView17"
+                    android:id="@+id/imgmoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
@@ -283,7 +283,7 @@
                     app:srcCompat="@drawable/money" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/imgoil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
@@ -291,7 +291,7 @@
                     app:srcCompat="@drawable/oil" />
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/imgfe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
@@ -299,7 +299,7 @@
                     app:srcCompat="@drawable/fe" />
 
                 <ImageView
-                    android:id="@+id/imageView14"
+                    android:id="@+id/imggold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
@@ -307,7 +307,7 @@
                     app:srcCompat="@drawable/gold" />
 
                 <ImageView
-                    android:id="@+id/imageView15"
+                    android:id="@+id/imgwood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
@@ -315,7 +315,7 @@
                     app:srcCompat="@drawable/wood" />
 
                 <ImageView
-                    android:id="@+id/imageView16"
+                    android:id="@+id/imgman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
