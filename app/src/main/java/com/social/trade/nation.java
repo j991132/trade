@@ -1,6 +1,7 @@
 package com.social.trade;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -19,8 +20,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class nation extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
@@ -194,8 +198,30 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
   //              tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
             }
         });
+// 실시간 데이터 감지
+        final DocumentReference docRef = db.collection("나라선택여부").document(nationname);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
 
-    }
+                if (snapshot != null && snapshot.exists()) {
+// 실시간 데이터변화 감지시 실행
+                    getsource(nationname);
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                  //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+    }  // 메인 끝
+
+
 
     private void getsource(String name){
         //파이어스토어에서 자료 가져오기
@@ -425,40 +451,3 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 tradetargetnation.dismiss();
     }
 }
-
-/*
-//다이얼로그생성
-				final Dialog reset = new Dialog( context );
-				reset.setTitle( "초기화 할까요?" );
-				reset.setContentView( R.layout.delete );
-				Button delBtn = ( Button ) reset.findViewById( R.id.delete );
-				Button cancelBtn = ( Button ) reset.findViewById( R.id.cancel );
-				// 다이얼로그 삭제버튼 누를 때
-
-				delBtn.setOnClickListener( new View.OnClickListener()
-				{
-					@Override
-					public void onClick( View view )
-					{
-						SharedPreferences pref = getSharedPreferences( "SaveState", MODE_PRIVATE );
-						pref.edit().clear().commit();
-						count = 0;
-						restoreFromSavedState();
-						layout.removeAllViews();
-						reset.dismiss();
-					}
-				} );
-				//다이얼로그 취소버튼 누를 때
-				cancelBtn.setOnClickListener( new View.OnClickListener()
-				{
-					@Override
-					public void onClick( View view )
-					{
-						reset.dismiss();
-					}
-				} );
-				reset.show();
-				//return true;
-			}
-
- */

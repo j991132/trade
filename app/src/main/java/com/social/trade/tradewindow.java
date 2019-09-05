@@ -1,6 +1,7 @@
 package com.social.trade;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -18,8 +19,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class tradewindow extends AppCompatActivity {
 
@@ -133,6 +137,28 @@ public class tradewindow extends AppCompatActivity {
                 targetnationname.setText(targetnation);
                 break;
         }
+//버튼 액션
+            Button resetbtn = (Button)findViewById(R.id.resetbtn);
+            Button tradeokbtn = (Button)findViewById(R.id.tradeokbtn);
+
+            View.OnClickListener Listener2 = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.resetbtn:
+                            mysource.setImageResource(R.drawable.ic_launcher_background);
+                            tradewindowmynum.setText("0");
+                            break;
+                        case R.id.tradeokbtn:
+//거래수락 버튼 클릭시 액션
+
+                            break;
+                    }
+                }
+            };
+            resetbtn.setOnClickListener(Listener2);
+            tradeokbtn.setOnClickListener(Listener2);
+
 //내 거래자원 이미지 누를때
         mysource.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +297,28 @@ public class tradewindow extends AppCompatActivity {
         imggold.setOnClickListener(Listener);
         imgwood.setOnClickListener(Listener);
         imgman.setOnClickListener(Listener);
+
+// 실시간 데이터 감지
+        final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+// 실시간 데이터변화 감지시 실행
+                    getsource(requestnation);
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
 
     }  //본문 끝
 
