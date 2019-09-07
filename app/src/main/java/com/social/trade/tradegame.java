@@ -74,9 +74,12 @@ public class tradegame extends AppCompatActivity {
         kor.put("man", 10);
         kor.put("money", 1400);
         kor.put("request", 0);
-        kor.put("allow", 0);
+        kor.put("myallow", 0);
         kor.put("mysource",0);
         kor.put("mysourcenum",0);
+        kor.put("yourallow",0);
+        kor.put("yoursource",0);
+        kor.put("yoursourcenum",0);
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
         cha.put("lv", 0);
@@ -87,9 +90,12 @@ public class tradegame extends AppCompatActivity {
         cha.put("man", 120);
         cha.put("money", 500);
         cha.put("request", 0);
-        cha.put("allow", 0);
+        cha.put("myallow", 0);
         cha.put("mysource",0);
         cha.put("mysourcenum",0);
+        cha.put("yourallow",0);
+        cha.put("yoursource",0);
+        cha.put("yoursourcenum",0);
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
         os.put("lv", 0);
@@ -100,9 +106,12 @@ public class tradegame extends AppCompatActivity {
         os.put("man", 10);
         os.put("money", 500);
         os.put("request", 0);
-        os.put("allow", 0);
+        os.put("myallow", 0);
         os.put("mysource",0);
         os.put("mysourcenum",0);
+        os.put("yourallow",0);
+        os.put("yoursource",0);
+        os.put("yoursourcenum",0);
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
         ca.put("lv", 0);
@@ -113,9 +122,12 @@ public class tradegame extends AppCompatActivity {
         ca.put("man", 20);
         ca.put("money", 1300);
         ca.put("request", 0);
-        ca.put("allow", 0);
+        ca.put("myallow", 0);
         ca.put("mysource",0);
         ca.put("mysourcenum",0);
+        ca.put("yourallow",0);
+        ca.put("yoursource",0);
+        ca.put("yoursourcenum",0);
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
         saudi.put("lv", 0);
@@ -126,9 +138,12 @@ public class tradegame extends AppCompatActivity {
         saudi.put("man", 10);
         saudi.put("money", 700);
         saudi.put("request", 0);
-        saudi.put("allow", 0);
+        saudi.put("myallow", 0);
         saudi.put("mysource",0);
         saudi.put("mysourcenum",0);
+        saudi.put("yourallow",0);
+        saudi.put("yoursource",0);
+        saudi.put("yoursourcenum",0);
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
         sa.put("lv", 0);
@@ -139,9 +154,12 @@ public class tradegame extends AppCompatActivity {
         sa.put("man", 10);
         sa.put("money", 900);
         sa.put("request", 0);
-        sa.put("allow", 0);
+        sa.put("myallow", 0);
         sa.put("mysource",0);
         sa.put("mysourcenum",0);
+        sa.put("yourallow",0);
+        sa.put("yoursource",0);
+        sa.put("yoursourcenum",0);
 
         db = FirebaseFirestore.getInstance();
 
