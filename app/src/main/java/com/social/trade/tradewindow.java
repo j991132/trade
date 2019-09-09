@@ -35,7 +35,7 @@ public class tradewindow extends AppCompatActivity {
     private FirebaseFirestore db;
     private String TAG = "activity_tradewindow";
     private int presentsource, wantsource, yoursourcenum, yourwantsourcenum;
-
+    private Object yoursname, yoursnum;
     private String mya, youra, mysourcename, requestnation, targetnation ;
     private String yoursourcename = "0";
 
@@ -393,8 +393,9 @@ public class tradewindow extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists()) {
 // 실시간 데이터변화 감지시 실행
-                    getsource(requestnation);
                     getmyallow(requestnation);
+                    getsource(requestnation);
+
                     //무역창에 상대국 자료 보이기
                     switch (yoursourcename){
                         case "money":
@@ -403,23 +404,23 @@ public class tradewindow extends AppCompatActivity {
                             break;
                         case "oil":
                             yoursource.setImageResource(R.drawable.oil);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "fe":
                             yoursource.setImageResource(R.drawable.fe);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "gold":
                             yoursource.setImageResource(R.drawable.gold);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "wood":
                             yoursource.setImageResource(R.drawable.wood);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "man":
                             yoursource.setImageResource(R.drawable.man);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "0":
                             break;
@@ -439,65 +440,7 @@ public class tradewindow extends AppCompatActivity {
                 }
             }
         });
-/*
-// 실시간 너의 데이터 감지
-        final DocumentReference yourdocRef = db.collection("나라선택여부").document(targetnation);
-        yourdocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
 
-                if (snapshot != null && snapshot.exists()) {
-// 실시간 데이터변화 감지시 실행
-                    getyourallow(targetnation);
-                    String youra = yourallow.toString();
-//무역창에 상대국 자료 보이기
-                    switch (yoursourcename){
-                        case "money":
-                            yoursource.setImageResource(R.drawable.money);
-                            yournum.setText(yoursourcenum);
-                            break;
-                        case "oil":
-                            yoursource.setImageResource(R.drawable.oil);
-                            yournum.setText(yoursourcenum);
-                            break;
-                        case "fe":
-                            yoursource.setImageResource(R.drawable.fe);
-                            yournum.setText(yoursourcenum);
-                            break;
-                        case "gold":
-                            yoursource.setImageResource(R.drawable.gold);
-                            yournum.setText(yoursourcenum);
-                            break;
-                        case "wood":
-                            yoursource.setImageResource(R.drawable.wood);
-                            yournum.setText(yoursourcenum);
-                            break;
-                        case "man":
-                            yoursource.setImageResource(R.drawable.man);
-                            yournum.setText(yoursourcenum);
-                            break;
-                    }
-                    if(mya=="yes"&& youra=="yes"){
-//db에 업데이트
-                        dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
-                        dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum-yoursourcenum));
-                        dbupdate(requestnation,"allow","0");
-                    }
-
-
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                    //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-            }
-        });
-*/
     }  //본문 끝
 
 //내 자원 이미지 누를때 다이얼로그 불러오기
@@ -523,13 +466,14 @@ public class tradewindow extends AppCompatActivity {
                     tradewindowmynum.setText(mysourcenum.getText().toString());
 //db에 나의 자원 업데이트
                     //내 자원종류 db 업데이트
-                    dbupdate(requestnation,"mysource",mysourcename);
+//                    dbupdate(requestnation,"mysource",mysourcename);
 //내 자원수량 db업데이트
-                    dbupdate(requestnation,"mysourcenum", String.valueOf(wantsource));
+//                    dbupdate(requestnation,"mysourcenum", String.valueOf(wantsource));
 //내 거래자원 명 상대방 db에 업데이트
-                    dbupdate(targetnation,"yoursource",mysourcename);
+//                    dbupdate(targetnation,"yoursource",mysourcename);
 //내 거래자원 량 상대방 db에 업데이트
-                    dbupdate(targetnation,"yoursourcenum", String.valueOf(wantsource));
+//                    dbupdate(targetnation,"yoursourcenum", String.valueOf(wantsource));
+                      dbupdate2(targetnation, "yoursource",mysourcename, "yoursourcenum", String.valueOf(wantsource));
                     sourceconfirm.dismiss();
                 }else{
                     Log.w(TAG, ""+presentsource+"   "+wantsource);
@@ -601,10 +545,9 @@ public class tradewindow extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             Object myallow = document.getData().get("myallow").toString() ;
                             Object yourallow = document.getData().get("yourallow").toString() ;
-//                            Object mysname = document.getData().get("mysource").toString() ;
-//                            Object mysnum = document.getData().get("mysourcenum").toString() ;
-                            Object yoursname = document.getData().get("yoursource").toString() ;
-                            Object yoursnum = document.getData().get("yoursourcenum").toString() ;
+
+                            yoursname = document.getData().get("yoursource").toString() ;
+                            yoursnum = document.getData().get("yoursourcenum").toString() ;
                             mya = myallow.toString();
                             youra = yourallow.toString();
                             yoursourcename = yoursname.toString();
@@ -638,4 +581,22 @@ private void dbupdate(String name, String field, String data){
                 }
             });
 }
+//db 2개 데이터 업데이트
+    private void dbupdate2(String name, String field1, String data1, String field2, String data2){
+        db.collection("나라선택여부").document(name)
+                .update(field1, data1, field2, data2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Log.d(TAG, "필드 업데이트 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "쓰기 실패",e);
+                    }
+                });
+    }
 }
