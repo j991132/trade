@@ -36,7 +36,8 @@ public class tradewindow extends AppCompatActivity {
     private String TAG = "activity_tradewindow";
     private int presentsource, wantsource, yoursourcenum, yourwantsourcenum;
 
-    private String mya, youra, mysourcename, yoursourcename,requestnation, targetnation ;
+    private String mya, youra, mysourcename, requestnation, targetnation ;
+    private String yoursourcename = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -398,7 +399,7 @@ public class tradewindow extends AppCompatActivity {
                     switch (yoursourcename){
                         case "money":
                             yoursource.setImageResource(R.drawable.money);
-                            yournum.setText(yoursourcenum);
+                            yournum.setText(String.valueOf(yoursourcenum));
                             break;
                         case "oil":
                             yoursource.setImageResource(R.drawable.oil);
@@ -419,6 +420,8 @@ public class tradewindow extends AppCompatActivity {
                         case "man":
                             yoursource.setImageResource(R.drawable.man);
                             yournum.setText(yoursourcenum);
+                            break;
+                        case "0":
                             break;
                     }
                     if(mya=="yes"&& youra=="yes"){
@@ -523,6 +526,10 @@ public class tradewindow extends AppCompatActivity {
                     dbupdate(requestnation,"mysource",mysourcename);
 //내 자원수량 db업데이트
                     dbupdate(requestnation,"mysourcenum", String.valueOf(wantsource));
+//내 거래자원 명 상대방 db에 업데이트
+                    dbupdate(targetnation,"yoursource",mysourcename);
+//내 거래자원 량 상대방 db에 업데이트
+                    dbupdate(targetnation,"yoursourcenum", String.valueOf(wantsource));
                     sourceconfirm.dismiss();
                 }else{
                     Log.w(TAG, ""+presentsource+"   "+wantsource);
@@ -602,8 +609,8 @@ public class tradewindow extends AppCompatActivity {
                             youra = yourallow.toString();
                             yoursourcename = yoursname.toString();
                             yoursourcenum = Integer.parseInt(yoursnum.toString());
-                            Object yourwant = document.getData().get(yoursourcename).toString() ;
-                            yourwantsourcenum = Integer.parseInt(yourwant.toString());
+//                            Object yourwant = document.getData().get(yoursourcename).toString() ;
+//                            yourwantsourcenum = Integer.parseInt(yourwant.toString());
 
                         }else{
                             Log.d(TAG, "가져오기 실패", task.getException());
