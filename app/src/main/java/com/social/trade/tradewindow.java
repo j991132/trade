@@ -166,23 +166,23 @@ public class tradewindow extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
                                                 DocumentSnapshot document = task.getResult();
-                                                Object presentallow = document.getData().get("allow").toString();
+                                                Object presentallow = document.getData().get("myallow").toString();
 //                            testtext.setText("기록된 이름: "+s);
 
                                                 if (presentallow.equals("0")){
                                                     Log.d(TAG, "기록이 성공함"+presentallow);
 //나는 거래수락 눌렀다고 db업데이트
-                                                    dbupdate(requestnation,"myallow","yes");
-                                                    dbupdate(targetnation,"yourallow","yes");
+                                                    dbupdate(requestnation,"myallow","1");
+                                                    dbupdate(targetnation,"yourallow","1");
 
 //
 
                                                 }else{
                                                     Log.d(TAG,"이미 선택된 버튼임 - 선택자:  "+presentallow);
-                                                    if(presentallow.equals("yes")){
+                                                    if(presentallow.equals("1")){
                                                         //거래수락창에 이미 yes 상태일때
 
-                                                        Toast.makeText(getApplication(), "현재 거래수락여부   "+presentallow, Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplication(), "현재 거래수락여부는 yes 상태입니다.   "+presentallow, Toast.LENGTH_SHORT).show();
                                                     }else{
                                                         Log.d(TAG,"선택자  "+presentallow);
                                                         Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
@@ -395,7 +395,7 @@ public class tradewindow extends AppCompatActivity {
 // 실시간 데이터변화 감지시 실행
                     getmyallow(requestnation);
                     getsource(requestnation);
-
+/*
                     //무역창에 상대국 자료 보이기
                     switch (yoursourcename){
                         case "money":
@@ -425,6 +425,8 @@ public class tradewindow extends AppCompatActivity {
                         case "0":
                             break;
                     }
+
+
                     if(mya=="yes"&& youra=="yes"){
 //db에 업데이트
                         dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
@@ -432,7 +434,7 @@ public class tradewindow extends AppCompatActivity {
                         dbupdate(requestnation,"myallow","0");
                         dbupdate(requestnation,"yourallow","0");
                     }
-
+ */
                     Log.d(TAG, "Current data: " + snapshot.getData());
                     //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                 } else {
@@ -462,7 +464,7 @@ public class tradewindow extends AppCompatActivity {
             // 각 자원별 수량이 입력 수량보다 넘지 않도록 비교하는 부분 필요
                 wantsource = Integer.parseInt(mysourcenum.getText().toString());
                 if (presentsource >= wantsource) {
-                    int a = Integer.parseInt(mysourcenum.getText().toString());
+
                     tradewindowmynum.setText(mysourcenum.getText().toString());
 //db에 나의 자원 업데이트
                     //내 자원종류 db 업데이트
@@ -548,12 +550,58 @@ public class tradewindow extends AppCompatActivity {
 
                             yoursname = document.getData().get("yoursource").toString() ;
                             yoursnum = document.getData().get("yoursourcenum").toString() ;
+                            int a = Integer.parseInt(myallow.toString());
+                            int b = Integer.parseInt(yourallow.toString());
                             mya = myallow.toString();
                             youra = yourallow.toString();
+                            Log.d(TAG, "a"+a+"b"+b);
+
+
                             yoursourcename = yoursname.toString();
                             yoursourcenum = Integer.parseInt(yoursnum.toString());
-//                            Object yourwant = document.getData().get(yoursourcename).toString() ;
-//                            yourwantsourcenum = Integer.parseInt(yourwant.toString());
+                            Object yourwant = document.getData().get(yoursourcename).toString() ;
+                            yourwantsourcenum = Integer.parseInt(yourwant.toString());
+
+                            if(a == 1 && b == 1){
+                                Log.d(TAG, "이후   "+mya+youra+a+b);
+//db에 업데이트
+                                Log.d(TAG, "에러   "+mysourcename+"   "+presentsource+"    "+wantsource);
+                                dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
+                                dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
+                                dbupdate(requestnation,"myallow","0");
+                                dbupdate(requestnation,"yourallow","0");
+                            }
+//무역창에 상대국 자료 보이기
+                            switch (yoursourcename){
+                                case "money":
+                                    yoursource.setImageResource(R.drawable.money);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "oil":
+                                    yoursource.setImageResource(R.drawable.oil);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "fe":
+                                    yoursource.setImageResource(R.drawable.fe);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "gold":
+                                    yoursource.setImageResource(R.drawable.gold);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "wood":
+                                    yoursource.setImageResource(R.drawable.wood);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "man":
+                                    yoursource.setImageResource(R.drawable.man);
+                                    yournum.setText(String.valueOf(yoursourcenum));
+                                    break;
+                                case "0":
+                                    break;
+                            }
+                            Log.d(TAG, "이전   "+mya+youra);
+
 
                         }else{
                             Log.d(TAG, "가져오기 실패", task.getException());
