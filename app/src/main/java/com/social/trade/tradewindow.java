@@ -371,7 +371,9 @@ public class tradewindow extends AppCompatActivity {
                         sourcedialog("man");
                         break;
                 }
+                Log.d (TAG, "내 자원 이름   "+mysourcename);
             }
+
         };
         imgmoney.setOnClickListener(Listener);
         imgoil.setOnClickListener(Listener);
@@ -568,8 +570,11 @@ public class tradewindow extends AppCompatActivity {
                                 Log.d(TAG, "에러   "+mysourcename+"   "+presentsource+"    "+wantsource);
                                 dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
                                 dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
-                                dbupdate(requestnation,"myallow","0");
-                                dbupdate(requestnation,"yourallow","0");
+                                dbupdate2(requestnation,"myallow","0", "yourallow","0");
+                                dbupdate2(requestnation, "yoursource", "0", "yoursourcenum", "0");
+                                dbupdate(requestnation, "request", "0");
+                                Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
 //무역창에 상대국 자료 보이기
                             switch (yoursourcename){
