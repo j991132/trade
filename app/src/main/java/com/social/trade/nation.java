@@ -221,9 +221,11 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         });
     }  // 메인 끝
 
+    private void lvupdate(){
 
+    }
 
-    private void getsource(String name){
+    private void getsource(final String name){
         //파이어스토어에서 자료 가져오기
         db = FirebaseFirestore.getInstance();
         db.collection("나라선택여부").document(name)
@@ -240,16 +242,70 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             Object nationwood = document.getData().get("wood").toString() ;
                             Object nationman = document.getData().get("man").toString() ;
                             Object nationmoney = document.getData().get("money").toString() ;
+                            Object nationtech = document.getData().get("tech").toString() ;
 
+                            nowlv.setText(nationlv.toString());
+                            nowoil.setText(nationoil.toString());
+                            nowfe.setText(nationfe.toString());
+                            nowgold.setText(nationgold.toString());
+                            nowwood.setText(nationwood.toString());
+                            nowman.setText(nationman.toString());
+                            nowmoney.setText(nationmoney.toString());
 
-                            nowlv.setText(""+nationlv);
-                            nowoil.setText(""+nationoil);
-                            nowfe.setText(""+nationfe);
-                            nowgold.setText(""+nationgold);
-                            nowwood.setText(""+nationwood);
-                            nowman.setText(""+nationman);
-                            nowmoney.setText(""+nationmoney);
+                            int lvnum = Integer.parseInt(nationlv.toString());
+                            int oilnum = Integer.parseInt(nationoil.toString());
+                            int fenum = Integer.parseInt(nationfe.toString());
+                            int goldnum = Integer.parseInt(nationgold.toString());
+                            int woodnum = Integer.parseInt(nationwood.toString());
+                            int mannum = Integer.parseInt(nationman.toString());
+                            int moneynum = Integer.parseInt(nationmoney.toString());
+                            int technum = Integer.parseInt(nationtech.toString());
 
+                            if (lvnum==0 && technum>=1 && woodnum>=6 && mannum>=6){
+                //레벨을 1로 올리고 원래 자원에서 숫자 빼서 db에 업데이트
+
+                                String woodnumber = String.valueOf(woodnum-6);
+                                String mannumber = String.valueOf(mannum-6);
+                                dbupdate3(name, "lv", "1", "wood", woodnumber, "man", mannumber);
+                            }else if(lvnum==1 && technum>=2 && oilnum>=4 && mannum>=8){
+                //레벨을 2로 올리고 원래 자원에서 숫자 빼서 db 업데이트
+                                String oilnumber = String.valueOf(oilnum-4);
+                                String mannumber = String.valueOf(mannum-8);
+                                dbupdate3(name, "lv", "2", "oil", oilnumber, "man", mannumber);
+                            }else if(lvnum==2 && technum>=3 && oilnum>=7 && goldnum>=1 && woodnum>=1 &&mannum>=3){
+                 //
+                                String oilnumber = String.valueOf(oilnum-7);
+                                String goldnumber = String.valueOf(goldnum-1);
+                                String woodnumber = String.valueOf(woodnum-1);
+                                String mannumber = String.valueOf(mannum-3);
+                                dbupdate3(name, "lv", "3", "oil", oilnumber, "gold", goldnumber);
+                                dbupdate2(name, "wood", woodnumber, "man", mannumber);
+                            }else if(lvnum==3 && technum>=4 && fenum>=8 && goldnum>=1 && mannum>=3){
+                 //
+                                String fenumber = String.valueOf(fenum-8);
+                                String goldnumber = String.valueOf(goldnum-1);
+                                String mannumber = String.valueOf(mannum-3);
+                                dbupdate2(name, "lv", "4", "fe", fenumber);
+                                dbupdate2(name, "gold", goldnumber, "man", mannumber);
+                            }else if(lvnum==4 && technum>=5 && oilnum>=2 && goldnum>=2 && fenum>=5 && mannum>=3){
+                                String oilnumber = String.valueOf(oilnum-2);
+                                String goldnumber = String.valueOf(goldnum-2);
+                                String fenumber = String.valueOf(fenum-5);
+                                String mannumber = String.valueOf(mannum-3);
+                                dbupdate3(name, "lv", "5", "oil", oilnumber, "gold", goldnumber);
+                                dbupdate2(name, "fe",fenumber, "man", mannumber);
+                            }else if(lvnum==5 && technum>=6 && oilnum>=1 && goldnum>=5 && fenum>=4 &&mannum>=2){
+                                String oilnumber = String.valueOf(oilnum-1);
+                                String goldnumber = String.valueOf(goldnum-5);
+                                String fenumber = String.valueOf(fenum-4);
+                                String mannumber = String.valueOf(mannum-2);
+                                dbupdate3(name, "lv", "6", "oil", oilnumber, "gold", goldnumber);
+                                dbupdate2(name, "fe",fenumber, "man", mannumber);
+                            }else if(lvnum==6 && technum>=7 && oilnum>=1 && goldnum>=6 && fenum>=3 &&mannum>=2){
+
+                            }else if(lvnum==7 && technum>=8 && oilnum>=3 && goldnum>=2 && fenum>=5 && woodnum>=2 && mannum>=3){
+
+                            }
 
 
 
@@ -261,7 +317,42 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     }
                 });
     }
+    //db 2개 데이터 업데이트
+    private void dbupdate2(String name, String field1, String data1, String field2, String data2){
+        db.collection("나라선택여부").document(name)
+                .update(field1, data1, field2, data2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
 
+                        Log.d(TAG, "필드 업데이트 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "쓰기 실패",e);
+                    }
+                });
+    }
+    //db 3개 데이터 업데이트
+    private void dbupdate3(String name, String field1, String data1, String field2, String data2, String field3, String data3){
+        db.collection("나라선택여부").document(name)
+                .update(field1, data1, field2, data2, field3, data3)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Log.d(TAG, "필드 업데이트 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "쓰기 실패",e);
+                    }
+                });
+    }
     private void goalsource(String nationname){
         //레벨에 따라 목적자원량 셋팅하기
         db = FirebaseFirestore.getInstance();
@@ -287,50 +378,50 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                     goil.setText("4");
                                     gfe.setText("0");
                                     ggold.setText("0");
-                                    gwood.setText("6");
-                                    gman.setText("14");
+                                    gwood.setText("0");
+                                    gman.setText("8");
                                     break;
                                 case "2" :
-                                    goil.setText("11");
+                                    goil.setText("7");
                                     gfe.setText("0");
                                     ggold.setText("1");
-                                    gwood.setText("7");
-                                    gman.setText("17");
+                                    gwood.setText("1");
+                                    gman.setText("3");
                                     break;
                                 case "3" :
-                                    goil.setText("11");
+                                    goil.setText("0");
                                     gfe.setText("8");
-                                    ggold.setText("2");
-                                    gwood.setText("7");
-                                    gman.setText("20");
+                                    ggold.setText("1");
+                                    gwood.setText("0");
+                                    gman.setText("3");
                                     break;
                                 case "4" :
-                                    goil.setText("13");
-                                    gfe.setText("13");
-                                    ggold.setText("4");
-                                    gwood.setText("7");
-                                    gman.setText("23");
+                                    goil.setText("2");
+                                    gfe.setText("5");
+                                    ggold.setText("2");
+                                    gwood.setText("0");
+                                    gman.setText("3");
                                     break;
                                 case "5" :
-                                    goil.setText("14");
-                                    gfe.setText("17");
-                                    ggold.setText("9");
-                                    gwood.setText("7");
-                                    gman.setText("25");
+                                    goil.setText("1");
+                                    gfe.setText("4");
+                                    ggold.setText("5");
+                                    gwood.setText("0");
+                                    gman.setText("2");
                                     break;
                                 case "6" :
-                                    goil.setText("15");
-                                    gfe.setText("20");
-                                    ggold.setText("15");
-                                    gwood.setText("7");
-                                    gman.setText("27");
+                                    goil.setText("1");
+                                    gfe.setText("3");
+                                    ggold.setText("6");
+                                    gwood.setText("0");
+                                    gman.setText("2");
                                     break;
                                 case "7" :
-                                    goil.setText("18");
-                                    gfe.setText("25");
-                                    ggold.setText("17");
-                                    gwood.setText("9");
-                                    gman.setText("30");
+                                    goil.setText("3");
+                                    gfe.setText("5");
+                                    ggold.setText("2");
+                                    gwood.setText("2");
+                                    gman.setText("3");
                                     break;
                             }
 
