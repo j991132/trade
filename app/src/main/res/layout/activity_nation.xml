@@ -186,7 +186,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView10"
+                    android:id="@+id/imagetech"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"

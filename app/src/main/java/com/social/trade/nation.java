@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 public class nation extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
     private TextView name;
-    private ImageView nationmark;
+    private ImageView nationmark, imagetech;
     private TextView nowlv, nowoil, nowfe, nowgold, nowwood, nowman, nowmoney, goil, gfe, ggold, gwood, gman;
+    private int technum, cost;
     private FirebaseFirestore db;
     private String TAG = "activity_nation";
     private DialogInterface.OnDismissListener onDismissListener = null;
@@ -101,6 +103,99 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         }
 
 //버튼액션
+
+//기술수준 버튼
+        imagetech = (ImageView)findViewById(R.id.imagetech);
+        imagetech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //다이얼로그생성
+                final Dialog techbuy = new Dialog( nation.this );
+                techbuy.setContentView( R.layout.confirmdialog);
+
+                TextView  meg = (TextView) techbuy.findViewById(R.id.confirmtitle);
+
+                getsource(nationname);
+                switch (technum){
+                    case 0:
+                        cost = 30;
+
+                        break;
+                    case 1:
+                        cost = 40;
+
+                        break;
+                    case 2:
+                        cost = 50;
+
+                        break;
+                    case 3:
+                        cost = 60;
+                        break;
+                    case 4:
+                        cost = 80;
+
+                        break;
+                    case 5:
+                        cost = 100;
+
+                        break;
+                    case 6:
+                        cost = 200;
+
+                        break;
+                    case 7:
+                        cost = 300;
+
+                        break;
+                    case 8:
+
+
+                        break;
+                }
+
+                meg.setText("개발비용  "+cost+" 원을 지불하고 사겠습니까?");
+
+                Button okbtn = (Button) techbuy.findViewById(R.id.ok);
+                Button canclebtn = (Button) techbuy.findViewById(R.id.cancel);
+
+
+//확인버튼
+                okbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // 각 자원별 수량이 입력 수량보다 넘지 않도록 비교하는 부분 필요
+                        int mymoney = Integer.parseInt(nowmoney.getText().toString());
+                        if (mymoney >= cost) {
+
+
+//db에 나의 자원 업데이트
+
+                    dbupdate(nationname,"money", String.valueOf(mymoney-cost));
+
+
+                            techbuy.dismiss();
+                        }else{
+                            Log.w(TAG, "mymoney  "+mymoney+"  cost  "+cost);
+                            Toast.makeText(getApplication(), "가지고 있는 금액이 모자랍니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+//취소버튼
+                canclebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        techbuy.dismiss();
+                    }
+                });
+
+                techbuy.show();
+            }
+        });
+
 //무역대상국가 버튼
         Button tradetartgetbtn = (Button) findViewById(R.id.tradetargetbtn);
         tradetartgetbtn.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +307,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 if (snapshot != null && snapshot.exists()) {
 // 실시간 데이터변화 감지시 실행
                     getsource(nationname);
+                    goalsource(nationname);
                     Log.d(TAG, "Current data: " + snapshot.getData());
                   //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                 } else {
@@ -221,9 +317,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         });
     }  // 메인 끝
 
-    private void lvupdate(){
 
-    }
 
     private void getsource(final String name){
         //파이어스토어에서 자료 가져오기
@@ -259,7 +353,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             int woodnum = Integer.parseInt(nationwood.toString());
                             int mannum = Integer.parseInt(nationman.toString());
                             int moneynum = Integer.parseInt(nationmoney.toString());
-                            int technum = Integer.parseInt(nationtech.toString());
+                            technum = Integer.parseInt(nationtech.toString());
 
                             if (lvnum==0 && technum>=1 && woodnum>=6 && mannum>=6){
                 //레벨을 1로 올리고 원래 자원에서 숫자 빼서 db에 업데이트
@@ -302,9 +396,20 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 dbupdate3(name, "lv", "6", "oil", oilnumber, "gold", goldnumber);
                                 dbupdate2(name, "fe",fenumber, "man", mannumber);
                             }else if(lvnum==6 && technum>=7 && oilnum>=1 && goldnum>=6 && fenum>=3 &&mannum>=2){
-
+                                String oilnumber = String.valueOf(oilnum-1);
+                                String goldnumber = String.valueOf(goldnum-6);
+                                String fenumber = String.valueOf(fenum-3);
+                                String mannumber = String.valueOf(mannum-2);
+                                dbupdate3(name, "lv", "7", "oil", oilnumber, "gold", goldnumber);
+                                dbupdate2(name, "fe",fenumber, "man", mannumber);
                             }else if(lvnum==7 && technum>=8 && oilnum>=3 && goldnum>=2 && fenum>=5 && woodnum>=2 && mannum>=3){
-
+                                String oilnumber = String.valueOf(oilnum-3);
+                                String goldnumber = String.valueOf(goldnum-2);
+                                String fenumber = String.valueOf(fenum-5);
+                                String woodnumber = String.valueOf(woodnum-2);
+                                String mannumber = String.valueOf(mannum-3);
+                                dbupdate3(name, "lv", "8", "oil", oilnumber, "gold", goldnumber);
+                                dbupdate3(name, "fe",fenumber, "man", mannumber, "wood", woodnumber);
                             }
 
 
@@ -314,6 +419,24 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             Log.d(TAG, "가져오기 실패", task.getException());
                             //   Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+    }
+    //db 1개 데이터 업데이트
+    private void dbupdate(String name, String field1, String data1){
+        db.collection("나라선택여부").document(name)
+                .update(field1, data1)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Log.d(TAG, "필드 업데이트 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "쓰기 실패",e);
                     }
                 });
     }
