@@ -298,7 +298,8 @@ public class tradegame extends AppCompatActivity {
         });
 
 
-  testtext.setText("내가 선택할 나라는?");
+//  testtext.setText("내가 선택할 나라는?");
+        testtext.setText("기록된 이름: "+name);
 
 //실시간 데이터 업데이트 감지하기
         final DocumentReference docRef1 = db.collection("나라선택여부").document("selectednation");
@@ -311,11 +312,59 @@ public class tradegame extends AppCompatActivity {
                     return;
                 }
 
+
                 if (snapshot != null && snapshot.exists()) {
 
+                    Object n1 = snapshot.getData().get("nation1").toString();
+                    Object n2 = snapshot.getData().get("nation2").toString();
+                    Object n3 = snapshot.getData().get("nation3").toString();
+                    Object n4 = snapshot.getData().get("nation4").toString();
+                    Object n5 = snapshot.getData().get("nation5").toString();
+                    Object n6 = snapshot.getData().get("nation6").toString();
+                    Log.e(TAG, n1+""+n2+""+n3+""+n4+""+n5+""+n6);
+                        if (n1.equals("0") || n1.equals(name)){
+                            nationbtn1.setEnabled(true);
+                            Log.e(TAG, "네이션1 true   "+snapshot.getData().get("nation1").toString());
+                        }else{
+                            nationbtn1.setEnabled(false);
+                            Log.e(TAG, "네이션1 false   "+snapshot.getData().get("nation1").toString());
+                        }
+                    if (n2.equals("0") || n2.equals(name)){
+                        nationbtn2.setEnabled(true);
+
+                    }else{
+                        nationbtn2.setEnabled(false);
+                    }
+                    if (n3.equals("0") || n3.equals(name)){
+                        nationbtn3.setEnabled(true);
+
+                    }else{
+                        nationbtn3.setEnabled(false);
+                    }
+                    if (n4.equals("0") || n4.equals(name)){
+                        nationbtn4.setEnabled(true);
+
+                    }else{
+                        nationbtn4.setEnabled(false);
+                    }
+                    if (n5.equals("0") || n5.equals(name)){
+                        nationbtn5.setEnabled(true);
+
+                    }else{
+                        nationbtn5.setEnabled(false);
+                    }
+                    if (n6.equals("0") || n6.equals(name)){
+                        nationbtn6.setEnabled(true);
+
+                    }else{
+                        nationbtn6.setEnabled(false);
+                    }
+
+
+
                     Object n = snapshot.getData().get("nation6").toString();
-                    testtext.setText("기록된 이름: "+n);
-                    Log.d(TAG, "Current data: " + snapshot.getData());
+
+                    Log.e(TAG, "Current data: " + snapshot.getData());
                     Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "Current data: null");
