@@ -316,8 +316,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                     //상대국가 거래 요청 감지
                     requeststate = snapshot.getData().get("request").toString();
-
+                    myallow = snapshot.getData().get("myallow").toString();
+                    Log.e("myallow 업데이트", myallow.toString());
                     if (!requeststate.equals("0") && myallow.equals("0")) {
+                        Log.e("myallow 업데이트2", myallow.toString());
                         tradeconfirm(nationname, requeststate.toString());
                     } else if (!requeststate.equals("0") && myallow.equals("1")) {
 
@@ -351,7 +353,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             Object nationman = document.getData().get("man").toString();
                             Object nationmoney = document.getData().get("money").toString();
                             Object nationtech = document.getData().get("tech").toString();
-                            myallow = document.getData().get("myallow").toString();
+
 
                             nowlv.setText(nationlv.toString());
                             nowoil.setText(nationoil.toString());
@@ -594,12 +596,14 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
             @Override
             public void onClick(View view) {
 
-                dbupdate(nationname, "myallow", "1");
-                traderequest(nationname, targetnation);
+
 //tradeok 다이얼로그가 사라질때 리스너를 달아서 액티비티에 신호 전달 ondismiss 매서드 실행
                 tradeok.setOnDismissListener(nation.this);
                 tradeok.dismiss();
-
+                dbupdate(nationname, "myallow", "1");
+                Log.e("myallow 업데이트3", myallow.toString());
+                traderequest(nationname, targetnation);
+                Log.e("myallow 업데이트4", myallow.toString());
 
 //ondismissListener 사용을 해보자                tradetargetnation.dismiss();
             }
@@ -676,6 +680,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                                     Toast.makeText(getApplication(), "현재 우리나라와 무역중이었음. 무역창으로 다시 이동합니다.", Toast.LENGTH_SHORT).show();
                                 } else {
+                                    dbupdate2(requestnation, "request", "0", "myallow", "0");
                                     Log.d(TAG, "현재 다른 나라와 무역중임 - " + targetnation + " 과 무역중인 나라:  " + requeststate);
                                     Toast.makeText(getApplication(), "현재 다른 나라와 무역중임 - " + targetnation + " 과 무역중인 나라:  " + requeststate, Toast.LENGTH_SHORT).show();
                                 }
