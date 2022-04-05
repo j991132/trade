@@ -140,10 +140,15 @@
                 <TextView
                     android:id="@+id/tech"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
-                    android:text="기술수준" />
+                    android:layout_weight="1"
+                    android:text="기술수준"
+                    app:autoSizeMaxTextSize="100sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -201,10 +206,11 @@
 
                 <ImageView
                     android:id="@+id/imagetech"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/btn_dialog" />
 
                 <TextView
@@ -376,8 +382,8 @@
 
                 <ImageView
                     android:id="@+id/imageView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
