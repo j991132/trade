@@ -321,10 +321,12 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     if (!requeststate.equals("0") && myallow.equals("0")) {
                         Log.e("myallow 업데이트2", myallow.toString());
                         tradeconfirm(nationname, requeststate.toString());
-                    } else if (!requeststate.equals("0") && myallow.equals("1")) {
-
-//                            asyncDialog.dismiss();
-
+                    } else if (requeststate.equals("0") && myallow.equals("0")) {
+                        try {
+                            loadingEnd();
+                            tradeok.dismiss();
+                        } catch (Exception exception) {
+                        }
 
                     }
                 } else {
@@ -614,7 +616,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
             @Override
             public void onClick(View view) {
                 dbupdate2(nationname, "request", "0", "myallow", "0");
-//                dbupdate(targetnation, "request", "0");
+                dbupdate2(targetnation, "request", "0", "myallow", "0");
                 tradeok.dismiss();
             }
         });
@@ -641,7 +643,11 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 new Runnable() {
                     @Override
                     public void run() {
-                        progressDialog.dismiss();
+                        try {
+                            progressDialog.dismiss();
+                        } catch (Exception e) {
+                        }
+
                     }
                 }, 0
         );
@@ -668,7 +674,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
- // 실시간 데이터 감지
+                                                // 실시간 데이터 감지
                                                 final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
                                                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                     @Override
@@ -686,15 +692,16 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                                             Object myrequeststate = snapshot.getData().get("request").toString();
                                                             myallow = snapshot.getData().get("myallow").toString();
 
-                                                            if (myrequeststate.equals("0")) {
+                                                            if (myrequeststate.equals("0") && myallow.equals("1")) {
                                                                 loading();
-                                                            } else if (myrequeststate.equals(targetnation)) {
+                                                            } else if (myrequeststate.equals(targetnation) && myallow.equals("1")) {
                                                                 loadingEnd();
 //무역창 띄우기 인서트
                                                                 Intent intent = new Intent(nation.this, tradewindow.class);
                                                                 intent.putExtra("requestnation", requestnation);
                                                                 intent.putExtra("targetnation", targetnation);
                                                                 startActivity(intent);
+
 
                                                                 Log.d(TAG, "필드 업데이트 성공함");
                                                             }
@@ -728,6 +735,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                     Toast.makeText(getApplication(), "현재 우리나라와 무역중이었음. 무역창으로 다시 이동합니다.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     dbupdate2(requestnation, "request", "0", "myallow", "0");
+                                    loadingEnd();
                                     Log.d(TAG, "현재 다른 나라와 무역중임 - " + targetnation + " 과 무역중인 나라:  " + requeststate);
                                     Toast.makeText(getApplication(), "현재 다른 나라와 무역중임 - " + targetnation + " 과 무역중인 나라:  " + requeststate, Toast.LENGTH_SHORT).show();
                                 }
