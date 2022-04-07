@@ -691,11 +691,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                                                             Object myrequeststate = snapshot.getData().get("request").toString();
                                                             myallow = snapshot.getData().get("myallow").toString();
+                                                            Object my0 = snapshot.getData().get("0").toString();
 
                                                             if (myrequeststate.equals("0") && myallow.equals("1")) {
                                                                 loading();
-                                                            } else if (myrequeststate.equals(targetnation) && myallow.equals("1")) {
+                                                            } else if (myrequeststate.equals(targetnation) && myallow.equals("1")&& my0.equals("0")) {
                                                                 loadingEnd();
+                                                                dbupdate(requestnation, "0", "1" );
 //무역창 띄우기 인서트
                                                                 Intent intent = new Intent(nation.this, tradewindow.class);
                                                                 intent.putExtra("requestnation", requestnation);
