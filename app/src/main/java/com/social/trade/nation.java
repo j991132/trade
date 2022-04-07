@@ -698,9 +698,9 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                                             if (myrequeststate.equals("0") && myallow2.equals("1")) {
                                                                 loadingEnd();
                                                                 loading();
-                                                            } else if (myrequeststate.equals(targetnation) && myallow2.equals("1")) {
+                                                            } else if (myrequeststate.equals(targetnation) && myallow2.equals("1") && my0.equals("0")) {
                                                                 loadingEnd();
-//                                                                dbupdate(requestnation, "0", "1" );
+                                                                dbupdate(requestnation, "0", "1" );
 //무역창 띄우기 인서트
                                                                 Intent intent = new Intent(nation.this, tradewindow.class);
                                                                 intent.putExtra("requestnation", requestnation);
