@@ -40,7 +40,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
     private DialogInterface.OnDismissListener onDismissListener = null;
     private Dialog tradetargetnation, tradeok;
     private Object myallow, requeststate;
-    private ProgressDialog asyncDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -622,6 +622,30 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         tradeok.show();
     }
 
+    //프로그레스 다이얼로그
+    public void loading() {
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog = new ProgressDialog(nation.this);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("상대국가의 요청 수락을 기다리는 중입니다...");
+                        progressDialog.show();
+                    }
+                }, 0);
+    }
+
+    public void loadingEnd() {
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 0
+        );
+    }
 
     //다이얼로그 나라선택 확인버튼 클릭시 요청국가 파이어스토어 업데이트
     public void traderequest(final String requestnation, final String targetnation) {
@@ -644,20 +668,43 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
-                                                asyncDialog = new ProgressDialog(nation.this);
-                                                asyncDialog.setMessage("요청을 보내고 수락을 기다리는 중입니다...");
-                                                asyncDialog.setCancelable(true);
-                                                asyncDialog.setProgressStyle(android.R.style.Widget_ProgressBar);
-                                                asyncDialog.show();
+ // 실시간 데이터 감지
+                                                final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
+                                                docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                                                        @Nullable FirebaseFirestoreException e) {
+                                                        if (e != null) {
+                                                            Log.w(TAG, "Listen failed.", e);
+                                                            return;
+                                                        }
 
+                                                        if (snapshot != null && snapshot.exists()) {
 
+// 실시간 데이터변화 감지시 실행
+
+                                                            Object myrequeststate = snapshot.getData().get("request").toString();
+                                                            myallow = snapshot.getData().get("myallow").toString();
+
+                                                            if (myrequeststate.equals("0")) {
+                                                                loading();
+                                                            } else if (myrequeststate.equals(targetnation)) {
+                                                                loadingEnd();
 //무역창 띄우기 인서트
-                                                Intent intent = new Intent(nation.this, tradewindow.class);
-                                                intent.putExtra("requestnation", requestnation);
-                                                intent.putExtra("targetnation", targetnation);
-                                                startActivity(intent);
-//                                                tradeok.dismiss();
-                                                Log.d(TAG, "필드 업데이트 성공함");
+                                                                Intent intent = new Intent(nation.this, tradewindow.class);
+                                                                intent.putExtra("requestnation", requestnation);
+                                                                intent.putExtra("targetnation", targetnation);
+                                                                startActivity(intent);
+
+                                                                Log.d(TAG, "필드 업데이트 성공함");
+                                                            }
+                                                        } else {
+                                                            Log.d(TAG, "Current data: null");
+                                                        }
+                                                    }
+                                                });
+
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
