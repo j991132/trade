@@ -322,8 +322,9 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         Log.e("myallow 업데이트2", myallow.toString());
                         tradeconfirm(nationname, requeststate.toString());
                     } else if (requeststate.equals("0") && myallow.equals("0")) {
+                        loadingEnd();
                         try {
-                            loadingEnd();
+
                             tradeok.dismiss();
                         } catch (Exception exception) {
                         }
@@ -634,6 +635,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         progressDialog.setIndeterminate(true);
                         progressDialog.setMessage("상대국가의 요청 수락을 기다리는 중입니다...");
                         progressDialog.show();
+
                     }
                 }, 0);
     }
@@ -690,14 +692,15 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 // 실시간 데이터변화 감지시 실행
 
                                                             Object myrequeststate = snapshot.getData().get("request").toString();
-                                                            myallow = snapshot.getData().get("myallow").toString();
+                                                            Object myallow2 = snapshot.getData().get("myallow").toString();
                                                             Object my0 = snapshot.getData().get("0").toString();
 
-                                                            if (myrequeststate.equals("0") && myallow.equals("1")) {
-                                                                loading();
-                                                            } else if (myrequeststate.equals(targetnation) && myallow.equals("1")&& my0.equals("0")) {
+                                                            if (myrequeststate.equals("0") && myallow2.equals("1")) {
                                                                 loadingEnd();
-                                                                dbupdate(requestnation, "0", "1" );
+                                                                loading();
+                                                            } else if (myrequeststate.equals(targetnation) && myallow2.equals("1")) {
+                                                                loadingEnd();
+//                                                                dbupdate(requestnation, "0", "1" );
 //무역창 띄우기 인서트
                                                                 Intent intent = new Intent(nation.this, tradewindow.class);
                                                                 intent.putExtra("requestnation", requestnation);
@@ -706,6 +709,8 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
 
                                                                 Log.d(TAG, "필드 업데이트 성공함");
+                                                            } else if (myrequeststate.equals("0") && myallow2.equals("0")) {
+                                                                loadingEnd();
                                                             }
                                                         } else {
                                                             Log.d(TAG, "Current data: null");
