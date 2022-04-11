@@ -36,7 +36,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
     private TextView nowlv, nowoil, nowfe, nowgold, nowwood, nowman, nowmoney, goil, gfe, ggold, gwood, gman;
     private int technum, cost;
     private FirebaseFirestore db;
-    private String TAG = "activity_nation";
+    private String TAG = "activity_nation", nationname;
     private DialogInterface.OnDismissListener onDismissListener = null;
     private Dialog tradetargetnation, tradeok;
     private Object myallow, requeststate;
@@ -49,7 +49,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         setContentView(R.layout.activity_nation);
 
         Intent intent = getIntent();
-        final String nationname = intent.getStringExtra("nationname");
+        nationname = intent.getStringExtra("nationname");
 
         name = (TextView) findViewById(R.id.Textnation);
         nationmark = (ImageView) findViewById(R.id.nationmark);
@@ -321,6 +321,15 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     if (!requeststate.equals("0") && myallow.equals("0")) {
                         Log.e("myallow 업데이트2", myallow.toString());
                         tradeconfirm(nationname, requeststate.toString());
+                    } else if (requeststate.equals("0") && myallow.equals("1")) {
+                        loading();
+
+                    } else if (!requeststate.equals("0") && myallow.equals("1")) {
+                        loadingEnd();
+                        Intent intent = new Intent(nation.this, tradewindow.class);
+                        intent.putExtra("requestnation", nationname);
+                        intent.putExtra("targetnation", requeststate.toString());
+                        startActivity(intent);
                     } else if (requeststate.equals("0") && myallow.equals("0")) {
                         loadingEnd();
                         try {
@@ -333,6 +342,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
+
+// 로딩불러오기
+
+
             }
         });
     }  // 메인 끝
@@ -449,7 +462,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     @Override
                     public void onSuccess(Void aVoid) {
 
-                        Log.d(TAG, "필드 업데이트 성공함");
+                        Log.d(TAG, "필드1 업데이트 성공함");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -468,7 +481,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     @Override
                     public void onSuccess(Void aVoid) {
 
-                        Log.d(TAG, "필드 업데이트 성공함");
+                        Log.d(TAG, "필드2 업데이트 성공함");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -487,7 +500,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     @Override
                     public void onSuccess(Void aVoid) {
 
-                        Log.d(TAG, "필드 업데이트 성공함");
+                        Log.d(TAG, "필드3 업데이트 성공함");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -603,7 +616,9 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 //tradeok 다이얼로그가 사라질때 리스너를 달아서 액티비티에 신호 전달 ondismiss 매서드 실행
                 tradeok.setOnDismissListener(nation.this);
                 tradeok.dismiss();
-                dbupdate(nationname, "myallow", "1");
+                if (myallow.equals("0")) {
+                    dbupdate(nationname, "myallow", "1");
+                }
                 Log.e("myallow 업데이트3", myallow.toString());
                 traderequest(nationname, targetnation);
                 Log.e("myallow 업데이트4", myallow.toString());
@@ -616,8 +631,9 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         canclebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dbupdate(targetnation, "myallow", "0");
                 dbupdate2(nationname, "request", "0", "myallow", "0");
-                dbupdate2(targetnation, "request", "0", "myallow", "0");
+
                 tradeok.dismiss();
             }
         });
@@ -634,7 +650,11 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         progressDialog = new ProgressDialog(nation.this);
                         progressDialog.setIndeterminate(true);
                         progressDialog.setMessage("상대국가의 요청 수락을 기다리는 중입니다...");
-                        progressDialog.show();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        } else {
+                            progressDialog.show();
+                        }
 
                     }
                 }, 0);
@@ -677,46 +697,52 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                             public void onSuccess(Void aVoid) {
 
                                                 // 실시간 데이터 감지
-                                                final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
-                                                docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                                                        @Nullable FirebaseFirestoreException e) {
-                                                        if (e != null) {
-                                                            Log.w(TAG, "Listen failed.", e);
-                                                            return;
-                                                        }
-
-                                                        if (snapshot != null && snapshot.exists()) {
-
-// 실시간 데이터변화 감지시 실행
-
-                                                            Object myrequeststate = snapshot.getData().get("request").toString();
-                                                            Object myallow2 = snapshot.getData().get("myallow").toString();
-                                                            Object my0 = snapshot.getData().get("0").toString();
-
-                                                            if (myrequeststate.equals("0") && myallow2.equals("1")) {
-                                                                loadingEnd();
-                                                                loading();
-                                                            } else if (myrequeststate.equals(targetnation) && myallow2.equals("1") && my0.equals("0")) {
-                                                                loadingEnd();
-                                                                dbupdate(requestnation, "0", "1" );
-//무역창 띄우기 인서트
-                                                                Intent intent = new Intent(nation.this, tradewindow.class);
-                                                                intent.putExtra("requestnation", requestnation);
-                                                                intent.putExtra("targetnation", targetnation);
-                                                                startActivity(intent);
-
-
-                                                                Log.d(TAG, "필드 업데이트 성공함");
-                                                            } else if (myrequeststate.equals("0") && myallow2.equals("0")) {
-                                                                loadingEnd();
-                                                            }
-                                                        } else {
-                                                            Log.d(TAG, "Current data: null");
-                                                        }
-                                                    }
-                                                });
+//                                                final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
+//                                                docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                                                    @Override
+//                                                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+//                                                                        @Nullable FirebaseFirestoreException e) {
+//                                                        if (e != null) {
+//                                                            Log.w(TAG, "Listen failed.", e);
+//                                                            return;
+//                                                        }
+//
+//                                                        if (snapshot != null && snapshot.exists()) {
+//
+//// 실시간 데이터변화 감지시 실행
+//
+//                                                            Object myrequeststate = snapshot.getData().get("request").toString();
+//                                                            Object myallow2 = snapshot.getData().get("myallow").toString();
+//                                                            Object my0 = snapshot.getData().get("0").toString();
+//
+//                                                            if (myrequeststate.equals("0") && myallow2.equals("1")) {
+////                                                                loadingEnd();
+//                                                                Log.e("데이터확인 로딩 전", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+//                                                                loading();
+//                                                                Log.e("데이터확인 로딩 후", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+//                                                            }else if (myrequeststate.equals(targetnation) && myallow2.equals("1")) {
+//                                                                Log.e("로딩 엔드 전  내 리퀘스트에 요청 들어옴", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+//                                                                loadingEnd();
+//                                                                Log.e("로딩 엔드 후 내 리퀘스트에 요청 들어옴", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+////                                                                dbupdate(requestnation, "0", "1" );
+////무역창 띄우기 인서트
+//                                                                Intent intent = new Intent(nation.this, tradewindow.class);
+//                                                                intent.putExtra("requestnation", requestnation);
+//                                                                intent.putExtra("targetnation", targetnation);
+//                                                                startActivity(intent);
+//
+//
+//                                                                Log.d(TAG, "필드 업데이트 성공함");
+//                                                            } else if (myrequeststate.equals("0") && myallow2.equals("0")) {
+//                                                                Log.e("둘다 0", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+//                                                                loadingEnd();
+//                                                                Log.e("둘다0 로딩앤드 후", "request"+myrequeststate.toString() +"  myallow"+myallow2);
+//                                                            }
+//                                                        } else {
+//                                                            Log.d(TAG, "Current data: null");
+//                                                        }
+//                                                    }
+//                                                });
 
 
                                             }
