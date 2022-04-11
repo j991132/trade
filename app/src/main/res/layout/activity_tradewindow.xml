@@ -11,7 +11,8 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="#FFEB3B"
         android:gravity="center"
         android:lines="2"
@@ -21,8 +22,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="right|fill|left">
 
 
@@ -69,20 +71,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@android:drawable/ic_media_ff" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TableLayout
@@ -152,13 +156,15 @@
             <Button
                 android:id="@+id/resetbtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="Reset" />
 
             <Button
                 android:id="@+id/tradeokbtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="거래 수락" />
         </LinearLayout>
 
@@ -223,7 +229,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
         android:orientation="horizontal">
 
         <ImageView
@@ -235,15 +242,15 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/colorAccent"
             android:paddingLeft="10px"
             android:text="내 자원  "
@@ -253,7 +260,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -270,6 +278,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -327,6 +336,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -335,54 +345,54 @@
                     android:id="@+id/money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/oil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/fe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/gold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/wood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
+                    android:gravity="center"
                     android:text="TextView" />
 
             </TableRow>
