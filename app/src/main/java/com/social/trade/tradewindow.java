@@ -166,22 +166,20 @@ public class tradewindow extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
                                                 DocumentSnapshot document = task.getResult();
-                                                Object presentallow = document.getData().get("myallow").toString();
+                                                Object presentallow = document.getData().get("myallow2").toString();
 //                            testtext.setText("기록된 이름: "+s);
 
                                                 if (presentallow.equals("0")){
                                                     Log.d(TAG, "기록이 성공함"+presentallow);
 //나는 거래수락 눌렀다고 db업데이트
-                                                    dbupdate(requestnation,"myallow","1");
+                                                    dbupdate(requestnation,"myallow2","1");
                                                     dbupdate(targetnation,"yourallow","1");
 
 //
 
-                                                }else{
-                                                    Log.d(TAG,"이미 선택된 버튼임 - 선택자:  "+presentallow);
-                                                    if(presentallow.equals("1")){
+                                                }else if(presentallow.equals("1")){
                                                         //거래수락창에 이미 yes 상태일때
-
+                                                    Log.d(TAG,"현재 거래수락여부는 yes 상태입니다 - 선택자:  "+presentallow);
                                                         Toast.makeText(getApplication(), "현재 거래수락여부는 yes 상태입니다.   "+presentallow, Toast.LENGTH_SHORT).show();
                                                     }else{
                                                         Log.d(TAG,"선택자  "+presentallow);
@@ -189,7 +187,7 @@ public class tradewindow extends AppCompatActivity {
                                                     }
 
 
-                                                }
+
 
                                             }else{
                                                 Log.d(TAG, "가져오기 실패", task.getException());
@@ -491,6 +489,7 @@ public class tradewindow extends AppCompatActivity {
             public void onClick(View view) {
                 mysource.setImageResource(R.drawable.ic_launcher_background);
                 tradewindowmynum.setText("0");
+                dbupdate2(targetnation, "yoursource","0", "yoursourcenum", "0");
                 sourceconfirm.dismiss();
             }
         });
@@ -547,7 +546,7 @@ public class tradewindow extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
-                            Object myallow = document.getData().get("myallow").toString() ;
+                            Object myallow = document.getData().get("myallow2").toString() ;
                             Object yourallow = document.getData().get("yourallow").toString() ;
 
                             yoursname = document.getData().get("yoursource").toString() ;
@@ -570,7 +569,7 @@ public class tradewindow extends AppCompatActivity {
                                 Log.d(TAG, "에러   "+mysourcename+"   "+presentsource+"    "+wantsource);
                                 dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
                                 dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
-                                dbupdate2(requestnation,"myallow","0", "yourallow","0");
+                                dbupdate2(requestnation,"myallow2","0", "yourallow","0");
                                 dbupdate2(requestnation, "yoursource", "0", "yoursourcenum", "0");
                                 dbupdate(requestnation, "request", "0");
                                 Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
