@@ -567,11 +567,11 @@ public class tradewindow extends AppCompatActivity {
                                 Log.d(TAG, "이후   "+mya+youra+a+b);
 //db에 업데이트
                                 Log.d(TAG, "에러   "+mysourcename+"   "+presentsource+"    "+wantsource);
-                                dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
-                                dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
-                                dbupdate2(requestnation,"myallow2","0", "yourallow","0");
-                                dbupdate2(requestnation, "yoursource", "0", "yoursourcenum", "0");
-                                dbupdate(requestnation, "request", "0");
+                                dbupdate8(requestnation, mysourcename, String.valueOf(presentsource-wantsource), yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum),"myallow2","0", "yourallow","0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+//                                dbupdate2(requestnation, mysourcename, String.valueOf(presentsource-wantsource), yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
+//                                dbupdate2(requestnation,"myallow2","0", "yourallow","0");
+//                                dbupdate2(requestnation, "yoursource", "0", "yoursourcenum", "0");
+//                                dbupdate2(requestnation, "request", "0", "myallow", "0");
                                 Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
@@ -651,4 +651,22 @@ private void dbupdate(String name, String field, String data){
                     }
                 });
     }
+//db 8개 업데이트
+private void dbupdate8(String name, String field1, String data1, String field2, String data2, String field3, String data3, String field4, String data4, String field5, String data5, String field6, String data6, String field7, String data7, String field8, String data8){
+    db.collection("나라선택여부").document(name)
+            .update(field1, data1, field2, data2, field3, data3, field4, data4, field5, data5, field6, data6, field7, data7, field8, data8)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                    Log.d(TAG, "필드 업데이트 성공함");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "쓰기 실패",e);
+                }
+            });
+}
 }

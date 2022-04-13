@@ -326,7 +326,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                     } else if (!requeststate.equals("0") && myallow.equals("1")) {
                         loadingEnd();
-                        Intent intent = new Intent(nation.this, tradewindow.class);
+                        Intent intent = new Intent(nation.this, tradewindow.class)
+                                .setAction(Intent.ACTION_MAIN)
+                                .addCategory(Intent.CATEGORY_LAUNCHER)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("requestnation", nationname);
                         intent.putExtra("targetnation", requeststate.toString());
                         startActivity(intent);
@@ -760,7 +763,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                     //이미 나와 거래중인데 무역창이 실수로 꺼질경우 대비
 
 //무역창 띄우기 인서트
-                                    Intent intent = new Intent(nation.this, tradewindow.class);
+                                    Intent intent = new Intent(nation.this, tradewindow.class)
+                                            .setAction(Intent.ACTION_MAIN)
+                                            .addCategory(Intent.CATEGORY_LAUNCHER)
+                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.putExtra("requestnation", requestnation);
                                     intent.putExtra("targetnation", targetnation);
                                     startActivity(intent);
