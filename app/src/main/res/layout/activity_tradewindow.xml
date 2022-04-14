@@ -109,8 +109,8 @@
             android:layout_weight="1">
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TableRow
                 android:layout_width="match_parent"
@@ -124,7 +124,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="거래할 자원" />
+                    android:text="거래할 자원"
+                    app:autoSizeMaxTextSize="100sp"
+                    app:autoSizeMinTextSize="1sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"/>
 
                 <TextView
                     android:id="@+id/textView6"
@@ -132,7 +136,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="수량" />
+                    android:text="수량"
+                    app:autoSizeMaxTextSize="100sp"
+                    app:autoSizeMinTextSize="1sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"/>
             </TableRow>
 
             <TableRow
@@ -162,8 +170,8 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableLayout>
 
         <LinearLayout
@@ -211,7 +219,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="상대국 자원" />
+                    android:text="상대국 자원"
+                    app:autoSizeMaxTextSize="100sp"
+                    app:autoSizeMinTextSize="1sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
 
                 <TextView
                     android:id="@+id/textView8"
@@ -219,7 +231,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="수량" />
+                    android:text="수량"
+                    app:autoSizeMaxTextSize="100sp"
+                    app:autoSizeMinTextSize="1sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"/>
             </TableRow>
 
             <TableRow
@@ -263,7 +279,7 @@
 
         <ImageView
             android:id="@+id/imageView18"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_media_rew" />
@@ -298,7 +314,7 @@
             android:layout_height="match_parent">
 
             <TableRow
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </TableRow>
