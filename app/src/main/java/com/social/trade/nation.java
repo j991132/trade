@@ -176,8 +176,8 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
 //db에 나의 자원 업데이트
 
-                            dbupdate(nationname, "money", String.valueOf(mymoney - cost));
-                            dbupdate(nationname, "tech", String.valueOf(technum + 1));
+                            dbupdate2(nationname, "money", String.valueOf(mymoney - cost), "tech", String.valueOf(technum + 1));
+//                            dbupdate(nationname, "tech", String.valueOf(technum + 1));
 
                             techbuy.dismiss();
                         } else {
@@ -390,6 +390,37 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             int mannum = Integer.parseInt(nationman.toString());
                             int moneynum = Integer.parseInt(nationmoney.toString());
                             technum = Integer.parseInt(nationtech.toString());
+
+                            //기술수준 이미지
+                            switch (technum) {
+                                case 0:
+                                    imagetech.setImageResource(R.drawable.step0);
+                                    break;
+                                case 1:
+                                    imagetech.setImageResource(R.drawable.step1);
+                                    break;
+                                case 2:
+                                    imagetech.setImageResource(R.drawable.step2);
+                                    break;
+                                case 3:
+                                    imagetech.setImageResource(R.drawable.step3);
+                                    break;
+                                case 4:
+                                    imagetech.setImageResource(R.drawable.step4);
+                                    break;
+                                case 5:
+                                    imagetech.setImageResource(R.drawable.step5);
+                                    break;
+                                case 6:
+                                    imagetech.setImageResource(R.drawable.step6);
+                                    break;
+                                case 7:
+                                    imagetech.setImageResource(R.drawable.step7);
+                                    break;
+                                case 8:
+                                    imagetech.setImageResource(R.drawable.step8);
+                                    break;
+                            }
 
                             if (lvnum == 0 && technum >= 1 && woodnum >= 6 && mannum >= 6) {
                                 //레벨을 1로 올리고 원래 자원에서 숫자 빼서 db에 업데이트
