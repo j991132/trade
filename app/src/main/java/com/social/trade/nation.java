@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.protobuf.StringValue;
 
 public class nation extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
@@ -215,7 +213,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 tradetargetnation.setContentView(R.layout.tradetargetnation);
 
 //setcontentview 를 먼저 연결해준 뒤에 텍스트뷰를 선언해야 널 에러가 안뜬다
-                TextView message = (TextView) tradetargetnation.findViewById(R.id.title);
+                TextView message = (TextView) tradetargetnation.findViewById(R.id.gamenumber);
                 message.setText("무역하고 싶은 나라는?");
 
                 Button nation1 = (Button) tradetargetnation.findViewById(R.id.nation1);

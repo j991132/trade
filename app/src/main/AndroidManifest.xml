@@ -9,10 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tradewindow" android:launchMode="singleTop"></activity>
-        <activity android:name=".nation"></activity>
-        <activity android:name=".tradegame"></activity>
-        <activity android:name=".MainActivity" android:windowSoftInputMode="stateVisible|adjustPan">
+        <activity
+            android:name=".TeacherPage"
+            android:exported="false" />
+        <activity
+            android:name=".tradewindow"
+            android:launchMode="singleTop" />
+        <activity android:name=".nation" />
+        <activity android:name=".tradegame" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
