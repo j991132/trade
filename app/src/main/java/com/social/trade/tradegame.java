@@ -42,7 +42,7 @@ public class tradegame extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_tradegame);
 
-
+        MySoundPlayer.initSounds(getApplicationContext());
 
 
         final Button nationbtn1 = (Button) findViewById(R.id.nationbtn1);
@@ -384,12 +384,14 @@ public class tradegame extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.nationbtn1:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation1", name, "대한민국");
 
 
  //                       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn2:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation2", name, "중국");
 
 
@@ -397,18 +399,22 @@ public class tradegame extends AppCompatActivity {
  //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn3:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation3", name, "호주");
  //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn4:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation4", name, "캐나다");
  //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn5:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation5", name, "사우디아라비아");
 //                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nationbtn6:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         select("nation6", name, "남아프리카공화국");
  //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                         break;
@@ -465,6 +471,7 @@ public class tradegame extends AppCompatActivity {
                                     nationstate(nationname);
                                     Toast.makeText(getApplication(), nationnum+" 국가로 이동.", Toast.LENGTH_SHORT).show();
                                 }else{
+                                    MySoundPlayer.play(MySoundPlayer.b);
                                     Log.d(TAG,"선택자  "+s);
                                     Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
                                 }
@@ -473,6 +480,7 @@ public class tradegame extends AppCompatActivity {
                             }
 
                         }else{
+                            MySoundPlayer.play(MySoundPlayer.b);
                             Log.d(TAG, "가져오기 실패", task.getException());
                             Toast.makeText(getApplication(), "이미 선택된 나라입니다.", Toast.LENGTH_SHORT).show();
                         }

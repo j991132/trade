@@ -52,6 +52,8 @@ public class tradewindow extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_tradewindow);
+        MySoundPlayer.initSounds(getApplicationContext());
+
 //인텐트 된 값 저장하기
         Intent intent = getIntent();
         requestnation = intent.getStringExtra("requestnation");
@@ -151,6 +153,7 @@ public class tradewindow extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.resetbtn:
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         mysource.setImageResource(R.drawable.ic_launcher_background);
                         tradewindowmynum.setText("0");
                         break;
@@ -168,6 +171,8 @@ public class tradewindow extends AppCompatActivity {
 //                            testtext.setText("기록된 이름: "+s);
 
                                             if (presentallow.equals("0")) {
+                                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                                 Log.d(TAG, "기록이 성공함" + presentallow);
 //나는 거래수락 눌렀다고 db업데이트
                                                 dbupdate(requestnation, "myallow2", "1");
@@ -177,6 +182,8 @@ public class tradewindow extends AppCompatActivity {
 //
 
                                             } else if (presentallow.equals("1")) {
+                                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                                 //거래수락창에 이미 yes 상태일때
                                                 Log.d(TAG, "현재 거래수락여부는 yes 상태입니다 - 선택자:  " + presentallow);
                                                 Toast.makeText(getApplication(), "현재 거래수락여부는 yes 상태입니다.   " + presentallow, Toast.LENGTH_SHORT).show();
@@ -184,6 +191,8 @@ public class tradewindow extends AppCompatActivity {
 
 
                                         } else {
+                                            MySoundPlayer.play(MySoundPlayer.b);
+
                                             Log.d(TAG, "가져오기 실패", task.getException());
                                             Toast.makeText(getApplication(), "거래수락여부를 가져올수 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
@@ -226,6 +235,8 @@ public class tradewindow extends AppCompatActivity {
         mysource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MySoundPlayer.play(MySoundPlayer.diring);
+
 //다이얼로그생성
                 final Dialog selectsource = new Dialog(tradewindow.this);
                 selectsource.setContentView(R.layout.selectsource);
@@ -248,6 +259,8 @@ public class tradewindow extends AppCompatActivity {
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.moneybtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
 
                                 mysource.setImageResource(R.drawable.money);
                                 presentsource = Integer.parseInt(nowmoney.getText().toString());
@@ -257,6 +270,8 @@ public class tradewindow extends AppCompatActivity {
 
                                 break;
                             case R.id.oilbtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
 
                                 mysource.setImageResource(R.drawable.oil);
                                 presentsource = Integer.parseInt(nowoil.getText().toString());
@@ -266,6 +281,8 @@ public class tradewindow extends AppCompatActivity {
 
                                 break;
                             case R.id.febtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                 mysource.setImageResource(R.drawable.fe);
                                 presentsource = Integer.parseInt(nowfe.getText().toString());
                                 mysourcename = "fe";
@@ -274,6 +291,8 @@ public class tradewindow extends AppCompatActivity {
 
                                 break;
                             case R.id.goldbtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                 mysource.setImageResource(R.drawable.gold);
                                 presentsource = Integer.parseInt(nowgold.getText().toString());
                                 mysourcename = "gold";
@@ -282,6 +301,8 @@ public class tradewindow extends AppCompatActivity {
 
                                 break;
                             case R.id.woodbtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                 mysource.setImageResource(R.drawable.wood);
                                 presentsource = Integer.parseInt(nowwood.getText().toString());
                                 mysourcename = "wood";
@@ -290,6 +311,8 @@ public class tradewindow extends AppCompatActivity {
 
                                 break;
                             case R.id.manbtn:
+                                MySoundPlayer.play(MySoundPlayer.diring);
+
                                 mysource.setImageResource(R.drawable.man);
                                 presentsource = Integer.parseInt(nowman.getText().toString());
                                 mysourcename = "man";
@@ -312,6 +335,8 @@ public class tradewindow extends AppCompatActivity {
                 canclebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.ic_launcher_background);
                         tradewindowmynum.setText("0");
                         selectsource.dismiss();
@@ -327,36 +352,48 @@ public class tradewindow extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.imgmoney:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.money);
                         presentsource = Integer.parseInt(nowmoney.getText().toString());
                         mysourcename = "money";
                         sourcedialog("money");
                         break;
                     case R.id.imgoil:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.oil);
                         presentsource = Integer.parseInt(nowoil.getText().toString());
                         mysourcename = "oil";
                         sourcedialog("oil");
                         break;
                     case R.id.imgfe:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.fe);
                         presentsource = Integer.parseInt(nowfe.getText().toString());
                         mysourcename = "fe";
                         sourcedialog("fe");
                         break;
                     case R.id.imggold:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.gold);
                         presentsource = Integer.parseInt(nowgold.getText().toString());
                         mysourcename = "gold";
                         sourcedialog("gold");
                         break;
                     case R.id.imgwood:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.wood);
                         presentsource = Integer.parseInt(nowwood.getText().toString());
                         mysourcename = "wood";
                         sourcedialog("wood");
                         break;
                     case R.id.imgman:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+
                         mysource.setImageResource(R.drawable.man);
                         presentsource = Integer.parseInt(nowman.getText().toString());
                         mysourcename = "man";
@@ -486,6 +523,7 @@ public class tradewindow extends AppCompatActivity {
                 // 각 자원별 수량이 입력 수량보다 넘지 않도록 비교하는 부분 필요
                 wantsource = Integer.parseInt(mysourcenum.getText().toString());
                 if (presentsource >= wantsource) {
+                    MySoundPlayer.play(MySoundPlayer.diring);
 
                     tradewindowmynum.setText(mysourcenum.getText().toString());
 //db에 나의 자원 업데이트
@@ -500,6 +538,8 @@ public class tradewindow extends AppCompatActivity {
                     dbupdate2(targetnation, "yoursource", mysourcename, "yoursourcenum", String.valueOf(wantsource));
                     sourceconfirm.dismiss();
                 } else {
+                    MySoundPlayer.play(MySoundPlayer.b);
+
                     Log.w(TAG, "" + presentsource + "   " + wantsource);
                     Toast.makeText(getApplication(), "가지고 있는 수량이 모자랍니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -509,6 +549,8 @@ public class tradewindow extends AppCompatActivity {
         selectcanclebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MySoundPlayer.play(MySoundPlayer.diring);
+
                 mysource.setImageResource(R.drawable.ic_launcher_background);
                 tradewindowmynum.setText("0");
                 dbupdate2(targetnation, "yoursource", "0", "yoursourcenum", "0");
@@ -620,6 +662,8 @@ public class tradewindow extends AppCompatActivity {
 
                             if (a == 1 && b == 1) {
                                 loadingEnd();
+                                MySoundPlayer.play(MySoundPlayer.tradeok);
+
                                 Log.d(TAG, "이후   " + mya + youra + a + b);
 //db에 업데이트
                                 Log.d(TAG, "에러   " + mysourcename + "   " + presentsource + "    " + wantsource);

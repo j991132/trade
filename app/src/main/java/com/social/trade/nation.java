@@ -47,7 +47,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_nation);
-
+        MySoundPlayer.initSounds(getApplicationContext());
         Intent intent = getIntent();
         nationname = intent.getStringExtra("nationname");
 
@@ -113,6 +113,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         imagetech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MySoundPlayer.play(MySoundPlayer.diring);
                 //다이얼로그생성
                 final Dialog techbuy = new Dialog(nation.this);
                 techbuy.setContentView(R.layout.confirmdialog);
@@ -173,7 +174,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         int mymoney = Integer.parseInt(nowmoney.getText().toString());
                         if (mymoney >= cost) {
 
-
+                            MySoundPlayer.play(MySoundPlayer.diring);
 //db에 나의 자원 업데이트
 
                             dbupdate2(nationname, "money", String.valueOf(mymoney - cost), "tech", String.valueOf(technum + 1));
@@ -181,6 +182,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                             techbuy.dismiss();
                         } else {
+                            MySoundPlayer.play(MySoundPlayer.b);
                             Log.w(TAG, "mymoney  " + mymoney + "  cost  " + cost);
                             Toast.makeText(getApplication(), "가지고 있는 금액이 모자랍니다.", Toast.LENGTH_SHORT).show();
                         }
@@ -191,12 +193,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     @Override
                     public void onClick(View view) {
 
-
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         techbuy.dismiss();
                     }
                 });
 
                 techbuy.show();
+                MySoundPlayer.play(MySoundPlayer.confirm);
             }
         });
 
@@ -205,6 +208,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         tradetartgetbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MySoundPlayer.play(MySoundPlayer.diring);
 //다이얼로그생성
 //                final Dialog tradetargetnation = new Dialog( nation.this );
                 tradetargetnation = new Dialog(nation.this);
@@ -248,30 +252,34 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         switch (v.getId()) {
                             case R.id.nation1:
                                 tradeconfirm(nationname, "대한민국");
-
+                                MySoundPlayer.play(MySoundPlayer.diring);
 
                                 //       Toast.makeText(getApplication(), "첫번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation2:
                                 tradeconfirm(nationname, "중국");
-
+                                MySoundPlayer.play(MySoundPlayer.diring);
 
                                 //                       Toast.makeText(getApplication(), "두번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation3:
                                 tradeconfirm(nationname, "호주");
+                                MySoundPlayer.play(MySoundPlayer.diring);
                                 //                       Toast.makeText(getApplication(), "세번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation4:
                                 tradeconfirm(nationname, "캐나다");
+                                MySoundPlayer.play(MySoundPlayer.diring);
                                 //                       Toast.makeText(getApplication(), "네번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation5:
                                 tradeconfirm(nationname, "사우디아라비아");
+                                MySoundPlayer.play(MySoundPlayer.diring);
 //                        Toast.makeText(getApplication(), "다섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.nation6:
                                 tradeconfirm(nationname, "남아프리카공화국");
+                                MySoundPlayer.play(MySoundPlayer.diring);
                                 //                       Toast.makeText(getApplication(), "여섯번째 버튼입니다.", Toast.LENGTH_SHORT).show();
                                 break;
                         }
@@ -289,10 +297,12 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 tradecanale.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        MySoundPlayer.play(MySoundPlayer.diring);
                         tradetargetnation.dismiss();
                     }
                 });
                 tradetargetnation.show();
+                MySoundPlayer.play(MySoundPlayer.confirm);
                 //              tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
             }
         });
@@ -352,6 +362,44 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
             }
         });
     }  // 메인 끝
+
+//다이얼로그
+//private void MakeDialog(String lv){
+//    //다이얼로그생성
+//    final Dialog lvup = new Dialog(nation.this);
+//    lvup.setContentView(R.layout.confirmdialog);
+//
+//    TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+//    meg.setText(" 레벨 "+ lv + " 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+//
+//    Button okbtn = (Button) lvup.findViewById(R.id.ok);
+//    Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+//
+//
+////확인버튼
+//    okbtn.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//
+//             lvup.dismiss();
+//
+//            }
+//
+//    });
+////취소버튼
+//    canclebtn.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//
+//            MySoundPlayer.play(MySoundPlayer.diring);
+//            lvup.dismiss();
+//        }
+//    });
+//
+//    lvup.show();
+//    MySoundPlayer.play(MySoundPlayer.confirm);
+//}
+
 
 
     private void getsource(final String name) {
@@ -423,60 +471,357 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             }
 
                             if (lvnum == 0 && technum >= 1 && woodnum >= 6 && mannum >= 6) {
-                                //레벨을 1로 올리고 원래 자원에서 숫자 빼서 db에 업데이트
 
-                                String woodnumber = String.valueOf(woodnum - 6);
-                                String mannumber = String.valueOf(mannum - 6);
-                                dbupdate3(name, "lv", "1", "wood", woodnumber, "man", mannumber);
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 1 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //레벨을 1로 올리고 원래 자원에서 숫자 빼서 db에 업데이트
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        String woodnumber = String.valueOf(woodnum - 6);
+                                        String mannumber = String.valueOf(mannum - 6);
+                                        dbupdate3(name, "lv", "1", "wood", woodnumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
                             } else if (lvnum == 1 && technum >= 2 && oilnum >= 4 && mannum >= 8) {
-                                //레벨을 2로 올리고 원래 자원에서 숫자 빼서 db 업데이트
-                                String oilnumber = String.valueOf(oilnum - 4);
-                                String mannumber = String.valueOf(mannum - 8);
-                                dbupdate3(name, "lv", "2", "oil", oilnumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 2 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //레벨을 2로 올리고 원래 자원에서 숫자 빼서 db 업데이트
+                                        String oilnumber = String.valueOf(oilnum - 4);
+                                        String mannumber = String.valueOf(mannum - 8);
+                                        dbupdate3(name, "lv", "2", "oil", oilnumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 2 && technum >= 3 && oilnum >= 7 && goldnum >= 1 && woodnum >= 1 && mannum >= 3) {
-                                //
-                                String oilnumber = String.valueOf(oilnum - 7);
-                                String goldnumber = String.valueOf(goldnum - 1);
-                                String woodnumber = String.valueOf(woodnum - 1);
-                                String mannumber = String.valueOf(mannum - 3);
-                                dbupdate3(name, "lv", "3", "oil", oilnumber, "gold", goldnumber);
-                                dbupdate2(name, "wood", woodnumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 3 으로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String oilnumber = String.valueOf(oilnum - 7);
+                                        String goldnumber = String.valueOf(goldnum - 1);
+                                        String woodnumber = String.valueOf(woodnum - 1);
+                                        String mannumber = String.valueOf(mannum - 3);
+                                        dbupdate3(name, "lv", "3", "oil", oilnumber, "gold", goldnumber);
+                                        dbupdate2(name, "wood", woodnumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 3 && technum >= 4 && fenum >= 8 && goldnum >= 1 && mannum >= 3) {
-                                //
-                                String fenumber = String.valueOf(fenum - 8);
-                                String goldnumber = String.valueOf(goldnum - 1);
-                                String mannumber = String.valueOf(mannum - 3);
-                                dbupdate2(name, "lv", "4", "fe", fenumber);
-                                dbupdate2(name, "gold", goldnumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 4 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String fenumber = String.valueOf(fenum - 8);
+                                        String goldnumber = String.valueOf(goldnum - 1);
+                                        String mannumber = String.valueOf(mannum - 3);
+                                        dbupdate2(name, "lv", "4", "fe", fenumber);
+                                        dbupdate2(name, "gold", goldnumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 4 && technum >= 5 && oilnum >= 2 && goldnum >= 2 && fenum >= 5 && mannum >= 3) {
-                                String oilnumber = String.valueOf(oilnum - 2);
-                                String goldnumber = String.valueOf(goldnum - 2);
-                                String fenumber = String.valueOf(fenum - 5);
-                                String mannumber = String.valueOf(mannum - 3);
-                                dbupdate3(name, "lv", "5", "oil", oilnumber, "gold", goldnumber);
-                                dbupdate2(name, "fe", fenumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 5 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String oilnumber = String.valueOf(oilnum - 2);
+                                        String goldnumber = String.valueOf(goldnum - 2);
+                                        String fenumber = String.valueOf(fenum - 5);
+                                        String mannumber = String.valueOf(mannum - 3);
+                                        dbupdate3(name, "lv", "5", "oil", oilnumber, "gold", goldnumber);
+                                        dbupdate2(name, "fe", fenumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 5 && technum >= 6 && oilnum >= 1 && goldnum >= 5 && fenum >= 4 && mannum >= 2) {
-                                String oilnumber = String.valueOf(oilnum - 1);
-                                String goldnumber = String.valueOf(goldnum - 5);
-                                String fenumber = String.valueOf(fenum - 4);
-                                String mannumber = String.valueOf(mannum - 2);
-                                dbupdate3(name, "lv", "6", "oil", oilnumber, "gold", goldnumber);
-                                dbupdate2(name, "fe", fenumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 6 으로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String oilnumber = String.valueOf(oilnum - 1);
+                                        String goldnumber = String.valueOf(goldnum - 5);
+                                        String fenumber = String.valueOf(fenum - 4);
+                                        String mannumber = String.valueOf(mannum - 2);
+                                        dbupdate3(name, "lv", "6", "oil", oilnumber, "gold", goldnumber);
+                                        dbupdate2(name, "fe", fenumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 6 && technum >= 7 && oilnum >= 1 && goldnum >= 6 && fenum >= 3 && mannum >= 2) {
-                                String oilnumber = String.valueOf(oilnum - 1);
-                                String goldnumber = String.valueOf(goldnum - 6);
-                                String fenumber = String.valueOf(fenum - 3);
-                                String mannumber = String.valueOf(mannum - 2);
-                                dbupdate3(name, "lv", "7", "oil", oilnumber, "gold", goldnumber);
-                                dbupdate2(name, "fe", fenumber, "man", mannumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 7 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String oilnumber = String.valueOf(oilnum - 1);
+                                        String goldnumber = String.valueOf(goldnum - 6);
+                                        String fenumber = String.valueOf(fenum - 3);
+                                        String mannumber = String.valueOf(mannum - 2);
+                                        dbupdate3(name, "lv", "7", "oil", oilnumber, "gold", goldnumber);
+                                        dbupdate2(name, "fe", fenumber, "man", mannumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             } else if (lvnum == 7 && technum >= 8 && oilnum >= 3 && goldnum >= 2 && fenum >= 5 && woodnum >= 2 && mannum >= 3) {
-                                String oilnumber = String.valueOf(oilnum - 3);
-                                String goldnumber = String.valueOf(goldnum - 2);
-                                String fenumber = String.valueOf(fenum - 5);
-                                String woodnumber = String.valueOf(woodnum - 2);
-                                String mannumber = String.valueOf(mannum - 3);
-                                dbupdate3(name, "lv", "8", "oil", oilnumber, "gold", goldnumber);
-                                dbupdate3(name, "fe", fenumber, "man", mannumber, "wood", woodnumber);
+
+                                //다이얼로그생성
+                                final Dialog lvup = new Dialog(nation.this);
+                                lvup.setContentView(R.layout.confirmdialog);
+
+                                TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
+                                meg.setText(" 레벨 8 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
+
+                                Button okbtn = (Button) lvup.findViewById(R.id.ok);
+                                Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        //
+                                        String oilnumber = String.valueOf(oilnum - 3);
+                                        String goldnumber = String.valueOf(goldnum - 2);
+                                        String fenumber = String.valueOf(fenum - 5);
+                                        String woodnumber = String.valueOf(woodnum - 2);
+                                        String mannumber = String.valueOf(mannum - 3);
+                                        dbupdate3(name, "lv", "8", "oil", oilnumber, "gold", goldnumber);
+                                        dbupdate3(name, "fe", fenumber, "man", mannumber, "wood", woodnumber);
+                                        lvup.dismiss();
+
+                                    }
+
+                                });
+//취소버튼
+                                canclebtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        lvup.dismiss();
+                                    }
+                                });
+
+                                lvup.show();
+                                MySoundPlayer.play(MySoundPlayer.confirm);
+
+
                             }
 
 
@@ -646,7 +991,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
             @Override
             public void onClick(View view) {
 
-
+                MySoundPlayer.play(MySoundPlayer.diring);
 //tradeok 다이얼로그가 사라질때 리스너를 달아서 액티비티에 신호 전달 ondismiss 매서드 실행
                 tradeok.setOnDismissListener(nation.this);
                 tradeok.dismiss();
@@ -665,6 +1010,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         canclebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MySoundPlayer.play(MySoundPlayer.diring);
                 dbupdate(targetnation, "myallow", "0");
                 dbupdate2(nationname, "request", "0", "myallow", "0");
 

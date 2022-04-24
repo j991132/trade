@@ -12,7 +12,7 @@
         <activity android:name=".tradewindow" android:launchMode="singleTop"></activity>
         <activity android:name=".nation"></activity>
         <activity android:name=".tradegame"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
