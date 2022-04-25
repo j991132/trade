@@ -35,6 +35,7 @@ public class tradegame extends AppCompatActivity {
     private FirebaseFirestore db;
     private String TAG = "activity_tradegame";
     private TextView testtext;
+    private String gameId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class tradegame extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String name = intent.getStringExtra("ename");
+        gameId = intent.getStringExtra("gameId");
+        Log.e(TAG, "게임아이디 넘어온 값   "+gameId);
 
 //나라선택여부 해시맵저장
         final Map<String, Object> selectednation = new HashMap<>();

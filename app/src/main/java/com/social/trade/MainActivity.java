@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //오프닝 음악
-mediaPlayer = MediaPlayer.create(this, R.raw.reopening);
-mediaPlayer.start();
+        mediaPlayer = MediaPlayer.create(this, R.raw.reopening);
+        mediaPlayer.start();
 // 효과음 으로는 안돌아가더라 로딩하고 시간이 필요한 듯
 //       MySoundPlayer.initSounds(getApplicationContext());
 
@@ -41,8 +41,8 @@ mediaPlayer.start();
         connect.setEnabled(true);
         finish.setEnabled(false);
         final EditText ename = (EditText) findViewById(R.id.editText);
-        EditText gamenum = (EditText)findViewById(R.id.gamenum);
-        EditText sname = (EditText)findViewById(R.id.sname);
+        EditText gamenum = (EditText) findViewById(R.id.gamenum);
+        EditText sname = (EditText) findViewById(R.id.sname);
 
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ mediaPlayer.start();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
                 String nowDate = dateFormat.format(date);
 
-                if(String.valueOf(ename.getText()).trim().equals("teacher") ){
+                if (String.valueOf(ename.getText()).trim().equals("teacher")) {
 
 //선생님 화면으로 인텐트
                     intent = new Intent(MainActivity.this, TeacherPage.class);
@@ -62,15 +62,15 @@ mediaPlayer.start();
                     connect.setEnabled(false);
                     finish.setEnabled(true);
 
-                }else if(!String.valueOf(ename.getText()).trim().equals("teacher") && !String.valueOf(gamenum.getText()).trim().equals(null) && !String.valueOf(sname.getText()).trim().equals(null)) {
-                   String nowgameId = nowDate + sname.getText() + gamenum.getText();
+                } else if (!String.valueOf(ename.getText()).trim().equals("teacher") && !String.valueOf(gamenum.getText()).trim().equals(null) && !String.valueOf(sname.getText()).trim().equals(null)) {
+                    String nowgameId = nowDate + sname.getText().toString().trim() + gamenum.getText().toString().trim();
                     intent = new Intent(MainActivity.this, tradegame.class);
                     intent.putExtra("ename", String.valueOf(ename.getText()));
                     intent.putExtra("gameId", nowgameId);
                     startActivity(intent);
                     connect.setEnabled(false);
                     finish.setEnabled(true);
-                }else{
+                } else {
                     Toast.makeText(getApplication(), "학교이름 또는 방번호 또는 모둠이름이 비어있습니다", Toast.LENGTH_SHORT).show();
                 }
 

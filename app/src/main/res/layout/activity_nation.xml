@@ -150,6 +150,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/oil" />
 
                 <ImageView
@@ -159,6 +160,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/fe" />
 
                 <ImageView
@@ -168,6 +170,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/gold" />
 
                 <ImageView
@@ -177,6 +180,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/wood" />
 
                 <ImageView
@@ -186,6 +190,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/man" />
 
             </TableRow>
@@ -204,6 +209,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@android:drawable/btn_dialog" />
 
                 <TextView
@@ -334,6 +340,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/money" />
 
                 <ImageView
@@ -343,6 +350,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/oil" />
 
                 <ImageView
@@ -352,6 +360,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/fe" />
 
                 <ImageView
@@ -361,6 +370,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/gold" />
 
                 <ImageView
@@ -370,6 +380,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/wood" />
 
                 <ImageView
@@ -379,6 +390,7 @@
                     android:layout_marginLeft="50px"
                     android:layout_marginRight="50px"
                     android:layout_weight="1"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/man" />
 
             </TableRow>

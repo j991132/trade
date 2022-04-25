@@ -479,7 +479,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -513,13 +513,14 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
+                                lvup.setCancelable(false);
 
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 2 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -555,13 +556,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 3 으로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -600,13 +601,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 4 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -644,13 +645,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 5 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -689,13 +690,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 6 으로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -734,13 +735,13 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 7 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
-
+                                canclebtn.setVisibility(View.GONE);
 
 //확인버튼
                                 okbtn.setOnClickListener(new View.OnClickListener() {
@@ -779,12 +780,14 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
-
+                                lvup.setCancelable(false);
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 8 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
 
                                 Button okbtn = (Button) lvup.findViewById(R.id.ok);
                                 Button canclebtn = (Button) lvup.findViewById(R.id.cancel);
+
+                                canclebtn.setVisibility(View.GONE);
 
 
 //확인버튼
@@ -1031,7 +1034,9 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         } else {
-                            progressDialog.show();
+                            if(! nation.this.isFinishing()) {
+                                progressDialog.show();
+                            }
                         }
 
                     }

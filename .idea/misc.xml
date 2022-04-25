@@ -3,17 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/pjw/AndroidStudioProjects/trade/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/pjw/AndroidStudioProjects/trade/app/src/main/res/layout/activity_teacher_page.xml" value="0.26811594202898553" />
-        <entry key="..\:/Users/pjw/AndroidStudioProjects/trade/app/src/main/res/layout/confirmdialog.xml" value="0.26811594202898553" />
-        <entry key="..\:/Users/pjw/AndroidStudioProjects/trade/app/src/main/res/layout/makegame_dialog.xml" value="0.26811594202898553" />
-        <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout-sw600dp/activity_tradewindow.xml" value="0.140625" />
+        <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout-sw600dp/activity_tradewindow.xml" value="0.25" />
         <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/activity_nation.xml" value="0.25" />
         <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/activity_tradegame.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/activity_tradewindow.xml" value="0.25" />
         <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/confirmdialog.xml" value="0.1875" />
-        <entry key="..\:/Users/user/StudioProjects/trade/app/src/main/res/layout/tradesource.xml" value="0.11354166666666667" />
       </map>
     </option>
   </component>
