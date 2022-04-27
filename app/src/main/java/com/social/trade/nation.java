@@ -102,6 +102,12 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                 getsource(nationname);
                 goalsource(nationname);
                 break;
+            case "선생님나라":
+//                nationmark.setImageResource(R.drawable.sa);
+                name.setText(nationname);
+                getsource(nationname);
+                goalsource(nationname);
+                break;
         }
 
 //버튼액션
