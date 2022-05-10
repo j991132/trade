@@ -33,6 +33,7 @@ public class TeacherPage extends AppCompatActivity {
     private FirebaseFirestore db;
     private String TAG = "activity_TeacherPage";
     private String nowDate, nowgameId;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class TeacherPage extends AppCompatActivity {
 //다이얼로그
                         Dialog MakeGameDialog = new Dialog(TeacherPage.this);
                         MakeGameDialog.setContentView(R.layout.makegame_dialog);
+                        MakeGameDialog.setCancelable(false);
 
                         gamenumber = (EditText) MakeGameDialog.findViewById(R.id.gamenumber);
                         schoolname = (EditText) MakeGameDialog.findViewById(R.id.schoolname);
@@ -107,6 +109,7 @@ public class TeacherPage extends AppCompatActivity {
                         //다이얼로그
                         Dialog ResetGameDialog = new Dialog(TeacherPage.this);
                         ResetGameDialog.setContentView(R.layout.confirmdialog);
+                        ResetGameDialog.setCancelable(false);
 
                         Button okbtn2 = (Button) ResetGameDialog.findViewById(R.id.ok);
                         Button cancle2 = (Button) ResetGameDialog.findViewById(R.id.cancel);
@@ -118,11 +121,11 @@ public class TeacherPage extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                    MySoundPlayer.play(MySoundPlayer.diring);
+                                MySoundPlayer.play(MySoundPlayer.diring);
 
-                                    Log.e("게임아이디", nowgameId);
-                                    ResetDb(nowgameId);
-                                    ResetGameDialog.dismiss();
+                                Log.e("게임아이디", nowgameId);
+                                ResetDb(nowgameId);
+                                ResetGameDialog.dismiss();
 
 
                             }
@@ -142,12 +145,16 @@ public class TeacherPage extends AppCompatActivity {
 
                         MySoundPlayer.play(MySoundPlayer.diring);
 
+                        intent = new Intent(TeacherPage.this, RankList.class);
+                        intent.putExtra("gameId", nowgameId);
+                        startActivity(intent);
+
                         break;
                     case R.id.teachernation_btn:
 
                         MySoundPlayer.play(MySoundPlayer.diring);
 
-                        Intent intent = new Intent(TeacherPage.this, nation.class);
+                        intent = new Intent(TeacherPage.this, nation.class);
                         intent.putExtra("nationname", "선생님나라");
                         startActivity(intent);
 
@@ -316,7 +323,7 @@ public class TeacherPage extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Toast.makeText(getApplication(), "이미 방번호 "+gamenumber.getText() +" (으)로 생성된 게임이 있습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), "이미 방번호 " + gamenumber.getText() + " (으)로 생성된 게임이 있습니다.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "스탭샷 데이터" + document.getData());
                     } else {
                         Log.d(TAG, "도큐먼트 찾을 수 없음");
@@ -687,12 +694,10 @@ public class TeacherPage extends AppCompatActivity {
                                 });
 
 
-
-
                         Log.d(TAG, "스탭샷 데이터" + document.getData());
                     } else {
                         Log.d(TAG, "도큐먼트 찾을 수 없음");
-                        Toast.makeText(getApplication(), "해당번호  "+gamenumber.getText() +" (으)로 생성된 게임이 없습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), "해당번호  " + gamenumber.getText() + " (으)로 생성된 게임이 없습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.d(TAG, "가져오기 실패", task.getException());

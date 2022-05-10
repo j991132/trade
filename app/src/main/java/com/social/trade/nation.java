@@ -217,7 +217,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 //                final Dialog tradetargetnation = new Dialog( nation.this );
                 tradetargetnation = new Dialog(nation.this);
                 tradetargetnation.setContentView(R.layout.tradetargetnation);
-
+tradetargetnation.setCancelable(false);
 //setcontentview 를 먼저 연결해준 뒤에 텍스트뷰를 선언해야 널 에러가 안뜬다
                 TextView message = (TextView) tradetargetnation.findViewById(R.id.gamenumber);
                 message.setText("무역하고 싶은 나라는?");
@@ -479,6 +479,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                                 //다이얼로그생성
                                 final Dialog lvup = new Dialog(nation.this);
                                 lvup.setContentView(R.layout.confirmdialog);
+                                lvup.setCancelable(false);
 
                                 TextView meg = (TextView) lvup.findViewById(R.id.confirmtitle);
                                 meg.setText(" 레벨 1 로 업그레이드 가능합니다. 레벨 업 하시겠습니까?  ");
@@ -983,7 +984,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         //다이얼로그생성
         tradeok = new Dialog(this);
         tradeok.setContentView(R.layout.confirmdialog);
-
+tradeok.setCancelable(false);
         TextView meg = (TextView) tradeok.findViewById(R.id.confirmtitle);
         if (myallow.equals("0") && !requeststate.equals("0")) {
             meg.setText(requeststate.toString() + "   에서 무역요청이 들어왔습니다. 수락할까요?");
@@ -1037,6 +1038,8 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                         progressDialog = new ProgressDialog(nation.this);
                         progressDialog.setIndeterminate(true);
                         progressDialog.setMessage("상대국가의 요청 수락을 기다리는 중입니다...");
+                        progressDialog.setCancelable(false);
+
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         } else {

@@ -240,7 +240,7 @@ public class tradewindow extends AppCompatActivity {
 //다이얼로그생성
                 final Dialog selectsource = new Dialog(tradewindow.this);
                 selectsource.setContentView(R.layout.selectsource);
-
+selectsource.setCancelable(false);
                 TextView meg = (TextView) selectsource.findViewById(R.id.selectsourcetext);
                 meg.setText("거래할 자원을 선택하세요!");
 
@@ -481,7 +481,7 @@ public class tradewindow extends AppCompatActivity {
         //다이얼로그생성
         final Dialog sourceconfirm = new Dialog(tradewindow.this);
         sourceconfirm.setContentView(R.layout.tradesource);
-
+sourceconfirm.setCancelable(false);
         ImageView mysourceImage = (ImageView) sourceconfirm.findViewById(R.id.tradesourceimage);
         final EditText mysourcenum = (EditText) sourceconfirm.findViewById(R.id.tradesourcenum);
         Button selectokbtn = (Button) sourceconfirm.findViewById(R.id.tradesourceok);
@@ -607,6 +607,7 @@ public class tradewindow extends AppCompatActivity {
                         progressDialog = new ProgressDialog(tradewindow.this);
                         progressDialog.setIndeterminate(true);
                         progressDialog.setMessage("상대국가의 거래 수락을 기다리는 중입니다...");
+                        progressDialog.setCancelable(false);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         } else {

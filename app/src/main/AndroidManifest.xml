@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".RankList"
+            android:exported="false" />
+        <activity
             android:name=".TeacherPage"
             android:exported="false" />
         <activity
