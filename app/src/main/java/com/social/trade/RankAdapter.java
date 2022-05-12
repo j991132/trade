@@ -29,17 +29,23 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
     @Override
     //실제 리스트뷰가 어댑터에 연결된 다음에 뷰 홀더를 최초로 만들어낸다.
     public RankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rank_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rank_item, parent, false);
         RankViewHolder holder = new RankViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RankViewHolder holder, int position) {
-        holder.nationname.setText(arrayList.get(position).getNationName());
-        holder.nationlv.setText(arrayList.get(position).getLv());
-        holder.teamname.setText(arrayList.get(position).getTeamname());
-        switch (arrayList.get(position).getNationName()){
+
+        Rank rank = arrayList.get(position);
+
+        holder.nationname.setText(rank.getNationName());
+        holder.nationlv.setText(rank.getLv());
+        holder.teamname.setText(rank.getTeamname());
+//        holder.nationname.setText(arrayList.get(position).getNationName());
+//        holder.nationlv.setText(arrayList.get(position).getLv());
+//        holder.teamname.setText(arrayList.get(position).getTeamname());
+        switch (rank.getNationName()){
             case "대한민국" :
 holder.nationimage.setImageResource(R.drawable.kor);
                 break;

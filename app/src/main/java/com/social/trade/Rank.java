@@ -7,12 +7,16 @@ public class Rank {
     private ImageView nationImage;
     private String nationName;
     private String lv;
-
-
-
     private String teamname;
 
     public Rank(){}
+
+    public Rank(ImageView nationImage, String nationName, String lv, String teamname) {
+        this.nationImage = nationImage;
+        this.nationName = nationName;
+        this.lv = lv;
+        this.teamname = teamname;
+    }
 
     public ImageView getNationImage() {
         return nationImage;
