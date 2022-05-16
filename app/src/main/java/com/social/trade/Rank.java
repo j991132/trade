@@ -4,12 +4,14 @@ import android.widget.ImageView;
 
 public class Rank {
 
-    private ImageView nationImage;
-    private String nationName;
-    private String lv;
-    private String teamname;
+    ImageView nationImage;
+    String nationName;
+    String teamname;
+    String lv;
 
-    public Rank(){}
+    public Rank() {
+    }
+
 
     public Rank(ImageView nationImage, String nationName, String lv, String teamname) {
         this.nationImage = nationImage;
@@ -27,7 +29,6 @@ public class Rank {
     }
 
 
-
     public String getNationName() {
         return nationName;
     }
@@ -35,7 +36,6 @@ public class Rank {
     public void setNationName(String nationName) {
         this.nationName = nationName;
     }
-
 
 
     public String getLv() {
@@ -53,7 +53,6 @@ public class Rank {
     public void setTeamname(String teamname) {
         this.teamname = teamname;
     }
-
 
 
 }

@@ -36,6 +36,7 @@ public class tradegame extends AppCompatActivity {
     private String TAG = "activity_tradegame";
     private TextView testtext;
     private String gameId;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class tradegame extends AppCompatActivity {
         testtext = (TextView) findViewById(R.id.testtext);
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra("ename");
+        name = intent.getStringExtra("ename");
         gameId = intent.getStringExtra("gameId");
         Log.e(TAG, "게임아이디 넘어온 값   "+gameId);
 
@@ -69,7 +70,7 @@ public class tradegame extends AppCompatActivity {
         selectednation.put("nation6", 0);
 //한국자원 해시맵저장
         final Map<String, Object> kor = new HashMap<>();
-        kor.put("lv", 0);
+        kor.put("lv", "0");
         kor.put("oil", 0);
         kor.put("fe", 10);
         kor.put("gold", 0);
@@ -86,9 +87,11 @@ public class tradegame extends AppCompatActivity {
         kor.put("0","0");
         kor.put("tech",0);
         kor.put("myallow2", 0);
+        kor.put("nationName","대한민국");
+        kor.put("teamname", "0");
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
-        cha.put("lv", 0);
+        cha.put("lv", "0");
         cha.put("oil", 0);
         cha.put("fe", 10);
         cha.put("gold", 10);
@@ -105,9 +108,11 @@ public class tradegame extends AppCompatActivity {
         cha.put("0","0");
         cha.put("tech",0);
         cha.put("myallow2", 0);
+        cha.put("nationName","중국");
+        cha.put("teamname", "0");
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
-        os.put("lv", 0);
+        os.put("lv", "0");
         os.put("oil", 5);
         os.put("fe", 120);
         os.put("gold", 5);
@@ -124,9 +129,11 @@ public class tradegame extends AppCompatActivity {
         os.put("0","0");
         os.put("tech",0);
         os.put("myallow2", 0);
+        os.put("nationName","호주");
+        os.put("teamname", "0");
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
-        ca.put("lv", 0);
+        ca.put("lv", "0");
         ca.put("oil", 0);
         ca.put("fe", 10);
         ca.put("gold", 0);
@@ -143,9 +150,11 @@ public class tradegame extends AppCompatActivity {
         ca.put("0","0");
         ca.put("tech",0);
         ca.put("myallow2", 0);
+        ca.put("nationName","캐나다");
+        ca.put("teamname", "0");
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
-        saudi.put("lv", 0);
+        saudi.put("lv", "0");
         saudi.put("oil", 100);
         saudi.put("fe", 0);
         saudi.put("gold", 5);
@@ -162,9 +171,11 @@ public class tradegame extends AppCompatActivity {
         saudi.put("0","0");
         saudi.put("tech",0);
         saudi.put("myallow2", 0);
+        saudi.put("nationName","사우디아라비아");
+        saudi.put("teamname", "0");
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
-        sa.put("lv", 0);
+        sa.put("lv", "0");
         sa.put("oil", 5);
         sa.put("fe", 0);
         sa.put("gold", 85);
@@ -181,6 +192,8 @@ public class tradegame extends AppCompatActivity {
         sa.put("0","0");
         sa.put("tech",0);
         sa.put("myallow2", 0);
+        sa.put("nationName","남아프리카공화국");
+        sa.put("teamname", "0");
 
         db = FirebaseFirestore.getInstance();
 
@@ -464,6 +477,21 @@ public class tradegame extends AppCompatActivity {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.w(TAG, "쓰기 실패",e);
+                                            }
+                                        });
+//모둠이름 업데이트하기
+                                db.collection("나라선택여부").document(nationname)
+                                        .update("teamname", name)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("activity_tradegame", "기록이 성공함");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("activity_tradegame", "쓰기 실패",e);
                                             }
                                         });
 

@@ -55,37 +55,52 @@ public class RankList extends AppCompatActivity {
 
         adapter = new RankAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
-//        EventChangeListener();
+        EventChangeListener();
 
-        db.collection("나라선택여부").orderBy("lv", Query.Direction.ASCENDING)
+
+    }
+
+    private void EventChangeListener() {
+        db.collection("나라선택여부").orderBy("lv", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
 
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    if(progressDialog.isShowing()){
-                        progressDialog.dismiss();
-                        Log.e("RankList 액티비티", "Listen failed.", e);
-                    return;
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                                Log.e("RankList 액티비티", "Listen failed.", e);
+                                return;
 
-                }
+                            }
+                        }
 //                arrayList.clear();
-                for (DocumentChange dc : value.getDocumentChanges()) {
-                    if (dc.getType()==DocumentChange.Type.ADDED) {
-                        arrayList.add(dc.getDocument().toObject(Rank.class));
-                        Log.e("RankList arrayList", ""+arrayList, e);
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                arrayList.add(dc.getDocument().toObject(Rank.class));
+                                Log.e("RankList arrayList", "" + arrayList, e);
+                            } else if (dc.getType() == DocumentChange.Type.MODIFIED) {
+//                                if (dc.getOldIndex() == dc.getNewIndex()) {
+                                arrayList.remove(dc.getOldIndex());
+                                arrayList.add(dc.getNewIndex(), dc.getDocument().toObject(Rank.class));
+                                adapter.notifyItemMoved(dc.getOldIndex(), dc.getNewIndex());
+//                                    arrayList.set(dc.getOldIndex(), dc.getDocument().toObject(Rank.class));
+//                                    adapter.notifyItemChanged(dc.getOldIndex());
+//                                }
+//                                arrayList.add(dc.getDocument().toObject(Rank.class));
+                                Log.e("RankList arrayList2", "" + arrayList, e);
+                            }
+                            //어답터 갱신
+                            adapter.notifyDataSetChanged();
+//                                if(progressDialog.isShowing()){
+//                                    progressDialog.dismiss();
+//                                }
+                        }
                     }
-                    //어답터 갱신
-                    adapter.notifyDataSetChanged();
-                    if(progressDialog.isShowing()){
-                    progressDialog.dismiss();
-                    }
-                }
-                }
 
-            }
-        });
-        Log.e("RankList arrayList", ""+arrayList);
+
+                });
+        Log.e("RankList arrayList3", "" + arrayList);
     }
 
 }

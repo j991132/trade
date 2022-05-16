@@ -39,38 +39,42 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
 
         Rank rank = arrayList.get(position);
 
-        holder.nationname.setText(rank.getNationName());
         holder.nationlv.setText(rank.getLv());
+        holder.nationname.setText(rank.getNationName());
         holder.teamname.setText(rank.getTeamname());
+//        holder.nationname.setText(rank.getNationName());
+//        holder.nationlv.setText(rank.getLv());
+//        holder.teamname.setText(rank.getTeamname());
 //        holder.nationname.setText(arrayList.get(position).getNationName());
 //        holder.nationlv.setText(arrayList.get(position).getLv());
 //        holder.teamname.setText(arrayList.get(position).getTeamname());
-        switch (rank.getNationName()){
-            case "대한민국" :
-holder.nationimage.setImageResource(R.drawable.kor);
-                break;
-            case "남아프리카공화국" :
-                holder.nationimage.setImageResource(R.drawable.sa);
-                break;
-            case "중국" :
-                holder.nationimage.setImageResource(R.drawable.cha);
-               break;
-            case "사우디아라비아" :
-                holder.nationimage.setImageResource(R.drawable.saudi);
-                break;
-            case "캐나다" :
-                holder.nationimage.setImageResource(R.drawable.ca);
-                break;
-            case "호주" :
-                holder.nationimage.setImageResource(R.drawable.os);
-                break;
-        }
+//        switch (rank.getNationName()) {
+//            case "대한민국":
+//                holder.nationimage.setImageResource(R.drawable.kor);
+//                break;
+//            case "남아프리카공화국":
+//                holder.nationimage.setImageResource(R.drawable.sa);
+//                break;
+//            case "중국":
+//                holder.nationimage.setImageResource(R.drawable.cha);
+//                break;
+//            case "사우디아라비아":
+//                holder.nationimage.setImageResource(R.drawable.saudi);
+//                break;
+//            case "캐나다":
+//                holder.nationimage.setImageResource(R.drawable.ca);
+//                break;
+//            case "호주":
+//                holder.nationimage.setImageResource(R.drawable.os);
+//                break;
+//        }
     }
 
     @Override
     public int getItemCount() {
         // 삼항 연산자
         return (arrayList != null ? arrayList.size() : 0);
+//        return arrayList.size();
     }
 
     public class RankViewHolder extends RecyclerView.ViewHolder {
