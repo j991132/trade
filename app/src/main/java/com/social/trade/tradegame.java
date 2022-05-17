@@ -56,10 +56,10 @@ public class tradegame extends AppCompatActivity {
         testtext = (TextView) findViewById(R.id.testtext);
 
         Intent intent = getIntent();
-        name = intent.getStringExtra("ename");
-        gameId = intent.getStringExtra("gameId");
+        name = intent.getStringExtra("ename").trim();
+        gameId = intent.getStringExtra("gameId").trim();
         Log.e(TAG, "게임아이디 넘어온 값   "+gameId);
-
+/*
 //나라선택여부 해시맵저장
         final Map<String, Object> selectednation = new HashMap<>();
         selectednation.put("nation1", 0);
@@ -318,13 +318,13 @@ public class tradegame extends AppCompatActivity {
                 }
             }
         });
-
-
+*/
+        db = FirebaseFirestore.getInstance();
 //  testtext.setText("내가 선택할 나라는?");
-        testtext.setText("기록된 이름: "+name);
+        testtext.setText("우리모둠 이름: "+name);
 
 //실시간 데이터 업데이트 감지하기
-        final DocumentReference docRef1 = db.collection("나라선택여부").document("selectednation");
+        final DocumentReference docRef1 = db.collection(gameId).document("selectednation");
         docRef1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -450,7 +450,7 @@ public class tradegame extends AppCompatActivity {
 
 //나라 선택시 선택여부 데이터 갱신
     public void select(final String nationnum, final String intentname, final String nationname ) {
-        db.collection("나라선택여부").document("selectednation")
+        db.collection(gameId).document("selectednation")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -464,7 +464,7 @@ public class tradegame extends AppCompatActivity {
                                 Log.d(TAG, "기록이 성공함"+s);
 
 
-                                db.collection("나라선택여부").document("selectednation")
+                                db.collection(gameId).document("selectednation")
                                         .update(nationnum, intentname)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -480,7 +480,7 @@ public class tradegame extends AppCompatActivity {
                                             }
                                         });
 //모둠이름 업데이트하기
-                                db.collection("나라선택여부").document(nationname)
+                                db.collection(gameId).document(nationname)
                                         .update("teamname", name)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -523,6 +523,7 @@ public class tradegame extends AppCompatActivity {
     public void nationstate(final String nationname) {
         Intent intent = new Intent(tradegame.this, nation.class);
         intent.putExtra("nationname", nationname);
+        intent.putExtra("gameId", gameId);
         startActivity(intent);
     }
 

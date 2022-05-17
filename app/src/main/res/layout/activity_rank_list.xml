@@ -12,7 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="9"
-        android:text="현재 무역순위는?" />
+        android:gravity="center"
+        android:text="현재 무역순위는?"
+        app:autoSizeMaxTextSize="100dp"
+        app:autoSizeMinTextSize="1dp"
+        app:autoSizeStepGranularity="1dp"
+        app:autoSizeTextType="uniform" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

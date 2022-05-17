@@ -3,11 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/border_layout"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="fill_horizontal"
         android:orientation="horizontal">
 
         <ImageView
@@ -19,23 +22,53 @@
 
         <TextView
             android:id="@+id/nationname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="나라이름" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="나라이름"
+            app:autoSizeMaxTextSize="100dp"
+            app:autoSizeMinTextSize="1dp"
+            app:autoSizeStepGranularity="1dp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="LV: "
+            app:autoSizeMaxTextSize="100dp"
+            app:autoSizeMinTextSize="1dp"
+            app:autoSizeStepGranularity="1dp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/nationlv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="TextView" />
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="TextView"
+            app:autoSizeMaxTextSize="100dp"
+            app:autoSizeMinTextSize="1dp"
+            app:autoSizeStepGranularity="1dp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/teamname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="모둠이름" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="모둠이름"
+            app:autoSizeMaxTextSize="100dp"
+            app:autoSizeMinTextSize="1dp"
+            app:autoSizeStepGranularity="1dp"
+            app:autoSizeTextType="uniform" />
     </LinearLayout>
 </LinearLayout>

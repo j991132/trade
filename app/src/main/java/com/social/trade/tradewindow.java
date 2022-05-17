@@ -37,7 +37,7 @@ public class tradewindow extends AppCompatActivity {
     private String TAG = "activity_tradewindow";
     private int presentsource, wantsource, yoursourcenum, yourwantsourcenum;
     private Object yoursname, yoursnum;
-    private String mya, youra, mysourcename, requestnation, targetnation;
+    private String mya, youra, mysourcename, requestnation, targetnation, gameId;
     private String yoursourcename = "0";
     private ProgressDialog progressDialog;
 
@@ -58,6 +58,7 @@ public class tradewindow extends AppCompatActivity {
         Intent intent = getIntent();
         requestnation = intent.getStringExtra("requestnation");
         targetnation = intent.getStringExtra("targetnation");
+        gameId = intent.getStringExtra("gameId");
 
         requestnationname = (TextView) findViewById(R.id.mynationname);
         requestnationmark = (ImageView) findViewById(R.id.mynationmark);
@@ -160,7 +161,7 @@ public class tradewindow extends AppCompatActivity {
                     case R.id.tradeokbtn:
 //거래수락 버튼 클릭시 액션
 //db 거래수락 업데이트
-                        db.collection("나라선택여부").document(requestnation)
+                        db.collection(gameId).document(requestnation)
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
@@ -412,7 +413,7 @@ selectsource.setCancelable(false);
         imgman.setOnClickListener(Listener);
 
 // 실시간 나의 데이터 감지
-        final DocumentReference docRef = db.collection("나라선택여부").document(requestnation);
+        final DocumentReference docRef = db.collection(gameId).document(requestnation);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -565,7 +566,7 @@ sourceconfirm.setCancelable(false);
     private void getsource(String name) {
 
         db = FirebaseFirestore.getInstance();
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -637,7 +638,7 @@ sourceconfirm.setCancelable(false);
     private void getmyallow(String name) {
 
         db = FirebaseFirestore.getInstance();
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -718,7 +719,7 @@ sourceconfirm.setCancelable(false);
 
     //db업데이트
     private void dbupdate(String name, String field, String data) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field, data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -737,7 +738,7 @@ sourceconfirm.setCancelable(false);
 
     //db 2개 데이터 업데이트
     private void dbupdate2(String name, String field1, String data1, String field2, String data2) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field1, data1, field2, data2)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -756,7 +757,7 @@ sourceconfirm.setCancelable(false);
 
     //db 8개 업데이트
     private void dbupdate8(String name, String field1, String data1, String field2, String data2, String field3, String data3, String field4, String data4, String field5, String data5, String field6, String data6, String field7, String data7, String field8, String data8) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field1, data1, field2, data2, field3, data3, field4, data4, field5, data5, field6, data6, field7, data7, field8, data8)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

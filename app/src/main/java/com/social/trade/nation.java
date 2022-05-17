@@ -34,7 +34,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
     private TextView nowlv, nowoil, nowfe, nowgold, nowwood, nowman, nowmoney, goil, gfe, ggold, gwood, gman;
     private int technum, cost;
     private FirebaseFirestore db;
-    private String TAG = "activity_nation", nationname;
+    private String TAG = "activity_nation", nationname, gameId;
     private DialogInterface.OnDismissListener onDismissListener = null;
     private Dialog tradetargetnation, tradeok;
     private Object myallow, requeststate;
@@ -48,6 +48,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         MySoundPlayer.initSounds(getApplicationContext());
         Intent intent = getIntent();
         nationname = intent.getStringExtra("nationname");
+        gameId = intent.getStringExtra("gameId");
 
         name = (TextView) findViewById(R.id.Textnation);
         nationmark = (ImageView) findViewById(R.id.nationmark);
@@ -311,7 +312,7 @@ tradetargetnation.setCancelable(false);
             }
         });
 // 실시간 데이터 감지
-        final DocumentReference docRef = db.collection("나라선택여부").document(nationname);
+        final DocumentReference docRef = db.collection(gameId).document(nationname);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -346,6 +347,7 @@ tradetargetnation.setCancelable(false);
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("requestnation", nationname);
                         intent.putExtra("targetnation", requeststate.toString());
+                        intent.putExtra("gameId", gameId);
                         startActivity(intent);
                     } else if (requeststate.equals("0") && myallow.equals("0")) {
                         loadingEnd();
@@ -409,7 +411,7 @@ tradetargetnation.setCancelable(false);
     private void getsource(final String name) {
         //파이어스토어에서 자료 가져오기
         db = FirebaseFirestore.getInstance();
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -424,7 +426,37 @@ tradetargetnation.setCancelable(false);
                             Object nationman = document.getData().get("man").toString();
                             Object nationmoney = document.getData().get("money").toString();
                             Object nationtech = document.getData().get("tech").toString();
+                            Object nationName = document.getData().get("nationName").toString();
 
+                            if(nationlv.equals("8")) {
+//다이얼로그생성
+                                final Dialog endgame = new Dialog(nation.this);
+                                endgame.setContentView(R.layout.confirmdialog);
+                                endgame.setCancelable(false);
+
+                                TextView meg = (TextView) endgame.findViewById(R.id.confirmtitle);
+
+                                meg.setText(" 무역왕 국가가 탄생하였습니다. 게임이 종료됩니다.  ");
+
+                                Button okbtn = (Button) endgame.findViewById(R.id.ok);
+                                Button canclebtn = (Button) endgame.findViewById(R.id.cancel);
+                                canclebtn.setVisibility(View.GONE);
+
+//확인버튼
+                                okbtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        MySoundPlayer.play(MySoundPlayer.diring);
+                                        endgame.dismiss();
+
+                                    }
+
+                                });
+
+
+                                endgame.show();
+                                MySoundPlayer.play(MySoundPlayer.result);
+                            }
 
                             nowlv.setText(nationlv.toString());
                             nowoil.setText(nationoil.toString());
@@ -843,7 +875,7 @@ tradetargetnation.setCancelable(false);
 
     //db 1개 데이터 업데이트
     private void dbupdate(String name, String field1, String data1) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field1, data1)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -862,7 +894,7 @@ tradetargetnation.setCancelable(false);
 
     //db 2개 데이터 업데이트
     private void dbupdate2(String name, String field1, String data1, String field2, String data2) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field1, data1, field2, data2)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -881,7 +913,7 @@ tradetargetnation.setCancelable(false);
 
     //db 3개 데이터 업데이트
     private void dbupdate3(String name, String field1, String data1, String field2, String data2, String field3, String data3) {
-        db.collection("나라선택여부").document(name)
+        db.collection(gameId).document(name)
                 .update(field1, data1, field2, data2, field3, data3)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -901,7 +933,7 @@ tradetargetnation.setCancelable(false);
     private void goalsource(String nationname) {
         //레벨에 따라 목적자원량 셋팅하기
         db = FirebaseFirestore.getInstance();
-        db.collection("나라선택여부").document(nationname)
+        db.collection(gameId).document(nationname)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -1069,7 +1101,7 @@ tradeok.setCancelable(false);
 
     //다이얼로그 나라선택 확인버튼 클릭시 요청국가 파이어스토어 업데이트
     public void traderequest(final String requestnation, final String targetnation) {
-        db.collection("나라선택여부").document(targetnation)
+        db.collection(gameId).document(targetnation)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -1082,7 +1114,7 @@ tradeok.setCancelable(false);
 //                                Log.d(TAG, "기록이 성공함"+requeststate);
 
 
-                                db.collection("나라선택여부").document(targetnation)
+                                db.collection(gameId).document(targetnation)
                                         .update("request", requestnation)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -1158,6 +1190,7 @@ tradeok.setCancelable(false);
                                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.putExtra("requestnation", requestnation);
                                     intent.putExtra("targetnation", targetnation);
+                                    intent.putExtra("gameId", gameId);
                                     startActivity(intent);
 
                                     Toast.makeText(getApplication(), "현재 우리나라와 무역중이었음. 무역창으로 다시 이동합니다.", Toast.LENGTH_SHORT).show();

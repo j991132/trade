@@ -80,9 +80,9 @@ public class TeacherPage extends AppCompatActivity {
                             public void onClick(View v) {
                                 if (!gamenumber.equals(null) && !schoolname.equals(null)) {
                                     MySoundPlayer.play(MySoundPlayer.diring);
-                                    schoolmsg.setText(String.valueOf(schoolname.getText()));
+                                    schoolmsg.setText(String.valueOf(schoolname.getText()).trim());
                                     teachermsg.setText(String.valueOf(gamenumber.getText()));
-                                    nowgameId = nowDate + schoolname.getText() + gamenumber.getText();
+                                    nowgameId = nowDate + schoolname.getText().toString().trim() + gamenumber.getText().toString().trim();
                                     Log.e("게임아이디", nowgameId);
                                     MakeDb(nowgameId);
                                     MakeGameDialog.dismiss();
@@ -199,6 +199,7 @@ public class TeacherPage extends AppCompatActivity {
         kor.put("tech",0);
         kor.put("myallow2", 0);
         kor.put("nationName","대한민국");
+        kor.put("teamname", "0");
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
         cha.put("lv", "0");
@@ -219,6 +220,7 @@ public class TeacherPage extends AppCompatActivity {
         cha.put("tech",0);
         cha.put("myallow2", 0);
         cha.put("nationName","중국");
+        cha.put("teamname", "0");
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
         os.put("lv", "0");
@@ -239,6 +241,7 @@ public class TeacherPage extends AppCompatActivity {
         os.put("tech",0);
         os.put("myallow2", 0);
         os.put("nationName","호주");
+        os.put("teamname", "0");
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
         ca.put("lv", "0");
@@ -259,6 +262,7 @@ public class TeacherPage extends AppCompatActivity {
         ca.put("tech",0);
         ca.put("myallow2", 0);
         ca.put("nationName","캐나다");
+        ca.put("teamname", "0");
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
         saudi.put("lv", "0");
@@ -279,6 +283,7 @@ public class TeacherPage extends AppCompatActivity {
         saudi.put("tech",0);
         saudi.put("myallow2", 0);
         saudi.put("nationName","사우디아라비아");
+        saudi.put("teamname", "0");
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
         sa.put("lv", "0");
@@ -299,6 +304,7 @@ public class TeacherPage extends AppCompatActivity {
         sa.put("tech",0);
         sa.put("myallow2", 0);
         sa.put("nationName","남아프리카공화국");
+        sa.put("teamname", "0");
 //선생님나라 자원
         final Map<String, Object> tnara = new HashMap<>();
         tnara.put("lv", "0");
@@ -318,6 +324,8 @@ public class TeacherPage extends AppCompatActivity {
         tnara.put("0", "0");
         tnara.put("tech", 0);
         tnara.put("myallow2", 0);
+        tnara.put("nationName","선생님나라");
+        tnara.put("teamname", "선생님");
 
         db = FirebaseFirestore.getInstance();
 
@@ -488,6 +496,7 @@ public class TeacherPage extends AppCompatActivity {
         kor.put("tech",0);
         kor.put("myallow2", 0);
         kor.put("nationName","대한민국");
+        kor.put("teamname", "0");
 //중국자원 해시맵저장
         final Map<String, Object> cha = new HashMap<>();
         cha.put("lv", "0");
@@ -508,6 +517,7 @@ public class TeacherPage extends AppCompatActivity {
         cha.put("tech",0);
         cha.put("myallow2", 0);
         cha.put("nationName","중국");
+        cha.put("teamname", "0");
 //호주자원 해시맵저장
         final Map<String, Object> os = new HashMap<>();
         os.put("lv", "0");
@@ -528,6 +538,7 @@ public class TeacherPage extends AppCompatActivity {
         os.put("tech",0);
         os.put("myallow2", 0);
         os.put("nationName","호주");
+        os.put("teamname", "0");
 //캐나다자원 해시맵저장
         final Map<String, Object> ca = new HashMap<>();
         ca.put("lv", "0");
@@ -548,6 +559,7 @@ public class TeacherPage extends AppCompatActivity {
         ca.put("tech",0);
         ca.put("myallow2", 0);
         ca.put("nationName","캐나다");
+        ca.put("teamname", "0");
 //사우디자원 해시맵저장
         final Map<String, Object> saudi = new HashMap<>();
         saudi.put("lv", "0");
@@ -568,6 +580,7 @@ public class TeacherPage extends AppCompatActivity {
         saudi.put("tech",0);
         saudi.put("myallow2", 0);
         saudi.put("nationName","사우디아라비아");
+        saudi.put("teamname", "0");
 //남아공자원 해시맵저장
         final Map<String, Object> sa = new HashMap<>();
         sa.put("lv", "0");
@@ -588,6 +601,7 @@ public class TeacherPage extends AppCompatActivity {
         sa.put("tech",0);
         sa.put("myallow2", 0);
         sa.put("nationName","남아프리카공화국");
+        sa.put("teamname", "0");
 
         db = FirebaseFirestore.getInstance();
 

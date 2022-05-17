@@ -48,26 +48,29 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
 //        holder.nationname.setText(arrayList.get(position).getNationName());
 //        holder.nationlv.setText(arrayList.get(position).getLv());
 //        holder.teamname.setText(arrayList.get(position).getTeamname());
-//        switch (rank.getNationName()) {
-//            case "대한민국":
-//                holder.nationimage.setImageResource(R.drawable.kor);
-//                break;
-//            case "남아프리카공화국":
-//                holder.nationimage.setImageResource(R.drawable.sa);
-//                break;
-//            case "중국":
-//                holder.nationimage.setImageResource(R.drawable.cha);
-//                break;
-//            case "사우디아라비아":
-//                holder.nationimage.setImageResource(R.drawable.saudi);
-//                break;
-//            case "캐나다":
-//                holder.nationimage.setImageResource(R.drawable.ca);
-//                break;
-//            case "호주":
-//                holder.nationimage.setImageResource(R.drawable.os);
-//                break;
-//        }
+        switch (rank.getNationName()) {
+            case "대한민국":
+                holder.nationimage.setImageResource(R.drawable.kor);
+                break;
+            case "남아프리카공화국":
+                holder.nationimage.setImageResource(R.drawable.sa);
+                break;
+            case "중국":
+                holder.nationimage.setImageResource(R.drawable.cha);
+                break;
+            case "사우디아라비아":
+                holder.nationimage.setImageResource(R.drawable.saudi);
+                break;
+            case "캐나다":
+                holder.nationimage.setImageResource(R.drawable.ca);
+                break;
+            case "호주":
+                holder.nationimage.setImageResource(R.drawable.os);
+                break;
+            case "선생님나라":
+                holder.nationimage.setImageResource(R.drawable.gold);
+                break;
+        }
     }
 
     @Override
