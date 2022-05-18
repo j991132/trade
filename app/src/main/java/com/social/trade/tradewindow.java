@@ -54,6 +54,8 @@ public class tradewindow extends AppCompatActivity {
         setContentView(R.layout.activity_tradewindow);
         MySoundPlayer.initSounds(getApplicationContext());
 
+        db = FirebaseFirestore.getInstance();
+
 //인텐트 된 값 저장하기
         Intent intent = getIntent();
         requestnation = intent.getStringExtra("requestnation");
@@ -160,48 +162,51 @@ public class tradewindow extends AppCompatActivity {
                         break;
                     case R.id.tradeokbtn:
 //거래수락 버튼 클릭시 액션
+                        if(tradewindowmynum.getText().equals("0") || yournum.getText().equals("0")) {
+                            Toast.makeText(getApplication(), "거래에 올라온 자원이 0개입니다. 다시 입력해주세요 ", Toast.LENGTH_SHORT).show();
+                        }else {
 //db 거래수락 업데이트
-                        db.collection(gameId).document(requestnation)
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            Object presentallow = document.getData().get("myallow2").toString();
+                            db.collection(gameId).document(requestnation)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                Object presentallow = document.getData().get("myallow2").toString();
 //                            testtext.setText("기록된 이름: "+s);
 
-                                            if (presentallow.equals("0")) {
-                                                MySoundPlayer.play(MySoundPlayer.diring);
+                                                if (presentallow.equals("0")) {
+                                                    MySoundPlayer.play(MySoundPlayer.diring);
 
-                                                Log.d(TAG, "기록이 성공함" + presentallow);
+                                                    Log.d(TAG, "기록이 성공함" + presentallow);
 //나는 거래수락 눌렀다고 db업데이트
-                                                dbupdate(requestnation, "myallow2", "1");
-                                                dbupdate(targetnation, "yourallow", "1");
-                                                loading();
+                                                    dbupdate(requestnation, "myallow2", "1");
+                                                    dbupdate(targetnation, "yourallow", "1");
+                                                    loading();
 
 //
 
-                                            } else if (presentallow.equals("1")) {
-                                                MySoundPlayer.play(MySoundPlayer.diring);
+                                                } else if (presentallow.equals("1")) {
+                                                    MySoundPlayer.play(MySoundPlayer.diring);
 
-                                                //거래수락창에 이미 yes 상태일때
-                                                Log.d(TAG, "현재 거래수락여부는 yes 상태입니다 - 선택자:  " + presentallow);
-                                                Toast.makeText(getApplication(), "현재 거래수락여부는 yes 상태입니다.   " + presentallow, Toast.LENGTH_SHORT).show();
+                                                    //거래수락창에 이미 yes 상태일때
+                                                    Log.d(TAG, "현재 거래수락여부는 yes 상태입니다 - 선택자:  " + presentallow);
+                                                    Toast.makeText(getApplication(), "현재 거래수락여부는 yes 상태입니다.   " + presentallow, Toast.LENGTH_SHORT).show();
+                                                }
+
+
+                                            } else {
+                                                MySoundPlayer.play(MySoundPlayer.b);
+
+                                                Log.d(TAG, "가져오기 실패", task.getException());
+                                                Toast.makeText(getApplication(), "거래수락여부를 가져올수 없습니다.", Toast.LENGTH_SHORT).show();
                                             }
-
-
-                                        } else {
-                                            MySoundPlayer.play(MySoundPlayer.b);
-
-                                            Log.d(TAG, "가져오기 실패", task.getException());
-                                            Toast.makeText(getApplication(), "거래수락여부를 가져올수 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                });
-                        getmyallow(requestnation);
+                                    });
+                            getmyallow(requestnation);
 
-
+                        }
 /*
 //현재 거래하려는 자료 변수만들기
                     switch (yoursource.getId()){

@@ -156,6 +156,7 @@ public class TeacherPage extends AppCompatActivity {
 
                         intent = new Intent(TeacherPage.this, nation.class);
                         intent.putExtra("nationname", "선생님나라");
+                        intent.putExtra("gameId", nowgameId);
                         startActivity(intent);
 
                         break;

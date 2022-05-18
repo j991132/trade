@@ -1059,6 +1059,7 @@ tradeok.setCancelable(false);
         });
 
         tradeok.show();
+        MySoundPlayer.play(MySoundPlayer.confirm);
     }
 
     //프로그레스 다이얼로그
