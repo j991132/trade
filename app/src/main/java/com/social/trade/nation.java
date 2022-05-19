@@ -39,6 +39,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
     private Dialog tradetargetnation, tradeok;
     private Object myallow, requeststate;
     private ProgressDialog progressDialog;
+    private BackkeyHandler backkeyHandler = new BackkeyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -368,7 +369,15 @@ tradetargetnation.setCancelable(false);
             }
         });
     }  // 메인 끝
+    @Override
+    public void onBackPressed() {
+        /* 다음 4가지 형태 중 하나 선택해서 사용 */
 
+        backkeyHandler.onBackPressed();
+        //backkeyHandler.onBackPressed("\'뒤로\' 버튼을 두 번 누르면 종료됩니다.\n입력한 내용이 지워집니다.");
+        //backkeyHandler.onBackPressed(5);
+//        backkeyHandler.onBackPressed("5초 내로 한번 더 누르세요", 5);
+    }
 //다이얼로그
 //private void MakeDialog(String lv){
 //    //다이얼로그생성

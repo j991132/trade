@@ -151,6 +151,7 @@ public class tradewindow extends AppCompatActivity {
 //버튼 액션
         Button resetbtn = (Button) findViewById(R.id.resetbtn);
         Button tradeokbtn = (Button) findViewById(R.id.tradeokbtn);
+        Button tradecanclebtn = (Button) findViewById(R.id.tradecanclebtn);
 
         View.OnClickListener Listener2 = new View.OnClickListener() {
             @Override
@@ -163,9 +164,9 @@ public class tradewindow extends AppCompatActivity {
                         break;
                     case R.id.tradeokbtn:
 //거래수락 버튼 클릭시 액션
-                        if(tradewindowmynum.getText().equals("0") || yournum.getText().equals("0")) {
+                        if (tradewindowmynum.getText().equals("0") || yournum.getText().equals("0")) {
                             Toast.makeText(getApplication(), "거래에 올라온 자원이 0개입니다. 다시 입력해주세요 ", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
 //db 거래수락 업데이트
                             db.collection(gameId).document(requestnation)
                                     .get()
@@ -232,11 +233,21 @@ public class tradewindow extends AppCompatActivity {
                     }
 */
                         break; //거래수락버튼 종료
+                    //거래취소버튼
+                    case R.id.tradecanclebtn:
+                        MySoundPlayer.play(MySoundPlayer.diring);
+                        mysource.setImageResource(R.drawable.ic_launcher_background);
+                        tradewindowmynum.setText("0");
+                        dbupdate6(requestnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+                        dbupdate6(targetnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+                        finish();
+                        break;  //거래취소 버튼 종료
                 }
             }
         };
         resetbtn.setOnClickListener(Listener2);
         tradeokbtn.setOnClickListener(Listener2);
+        tradecanclebtn.setOnClickListener(Listener2);
 
 //내 거래자원 이미지 누를때
         mysource.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +258,7 @@ public class tradewindow extends AppCompatActivity {
 //다이얼로그생성
                 final Dialog selectsource = new Dialog(tradewindow.this);
                 selectsource.setContentView(R.layout.selectsource);
-selectsource.setCancelable(false);
+                selectsource.setCancelable(false);
                 TextView meg = (TextView) selectsource.findViewById(R.id.selectsourcetext);
                 meg.setText("거래할 자원을 선택하세요!");
 
@@ -488,6 +499,8 @@ selectsource.setCancelable(false);
         /* 다음 4가지 형태 중 하나 선택해서 사용 */
 
         backkeyHandler.onBackPressed();
+        dbupdate6(requestnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+        dbupdate6(targetnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
         //backkeyHandler.onBackPressed("\'뒤로\' 버튼을 두 번 누르면 종료됩니다.\n입력한 내용이 지워집니다.");
         //backkeyHandler.onBackPressed(5);
 //        backkeyHandler.onBackPressed("5초 내로 한번 더 누르세요", 5);
@@ -498,7 +511,7 @@ selectsource.setCancelable(false);
         //다이얼로그생성
         final Dialog sourceconfirm = new Dialog(tradewindow.this);
         sourceconfirm.setContentView(R.layout.tradesource);
-sourceconfirm.setCancelable(false);
+        sourceconfirm.setCancelable(false);
         ImageView mysourceImage = (ImageView) sourceconfirm.findViewById(R.id.tradesourceimage);
         final EditText mysourcenum = (EditText) sourceconfirm.findViewById(R.id.tradesourcenum);
         Button selectokbtn = (Button) sourceconfirm.findViewById(R.id.tradesourceok);
@@ -508,7 +521,7 @@ sourceconfirm.setCancelable(false);
         switch (sourcename) {
             case "money":
                 mysourceImage.setImageResource(R.drawable.money);
-            break;
+                break;
             case "oil":
                 mysourceImage.setImageResource(R.drawable.oil);
 
@@ -677,7 +690,9 @@ sourceconfirm.setCancelable(false);
                             yoursourcenum = Integer.parseInt(yoursnum.toString());
                             Object yourwant = document.getData().get(yoursourcename).toString();
                             yourwantsourcenum = Integer.parseInt(yourwant.toString());
-
+                            if (myallow.equals("0")) {
+                                loadingEnd();
+                            }
                             if (a == 1 && b == 1) {
                                 loadingEnd();
                                 MySoundPlayer.play(MySoundPlayer.tradeok);
@@ -756,6 +771,25 @@ sourceconfirm.setCancelable(false);
     private void dbupdate2(String name, String field1, String data1, String field2, String data2) {
         db.collection(gameId).document(name)
                 .update(field1, data1, field2, data2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Log.d(TAG, "필드 업데이트 성공함");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "쓰기 실패", e);
+                    }
+                });
+    }
+
+    //db 6개 업데이트
+    private void dbupdate6(String name, String field1, String data1, String field2, String data2, String field3, String data3, String field4, String data4, String field5, String data5, String field6, String data6) {
+        db.collection(gameId).document(name)
+                .update(field1, data1, field2, data2, field3, data3, field4, data4, field5, data5, field6, data6)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

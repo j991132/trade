@@ -57,14 +57,20 @@ public class MainActivity extends AppCompatActivity {
                 if (String.valueOf(ename.getText()).trim().equals("teacher")) {
 
 //선생님 화면으로 인텐트
-                    intent = new Intent(MainActivity.this, TeacherPage.class);
+                    intent = new Intent(MainActivity.this, TeacherPage.class)
+                            .setAction(Intent.ACTION_MAIN)
+                            .addCategory(Intent.CATEGORY_LAUNCHER)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
                     startActivity(intent);
                     connect.setEnabled(false);
                     finish.setEnabled(true);
 
                 } else if (!String.valueOf(ename.getText()).trim().equals("teacher") && !String.valueOf(gamenum.getText()).trim().equals(null) && !String.valueOf(sname.getText()).trim().equals(null)) {
                     String nowgameId = nowDate + sname.getText().toString().trim() + gamenum.getText().toString().trim();
-                    intent = new Intent(MainActivity.this, tradegame.class);
+                    intent = new Intent(MainActivity.this, tradegame.class)
+                            .setAction(Intent.ACTION_MAIN)
+                            .addCategory(Intent.CATEGORY_LAUNCHER)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
                     intent.putExtra("ename", String.valueOf(ename.getText()));
                     intent.putExtra("gameId", nowgameId);
                     startActivity(intent);

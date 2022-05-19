@@ -521,7 +521,10 @@ public class tradegame extends AppCompatActivity {
 
 //나라상태창으로 데이터 인텐트
     public void nationstate(final String nationname) {
-        Intent intent = new Intent(tradegame.this, nation.class);
+        Intent intent = new Intent(tradegame.this, nation.class)
+                .setAction(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
         intent.putExtra("nationname", nationname);
         intent.putExtra("gameId", gameId);
         startActivity(intent);

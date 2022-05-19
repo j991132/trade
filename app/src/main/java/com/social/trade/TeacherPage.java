@@ -145,7 +145,10 @@ public class TeacherPage extends AppCompatActivity {
 
                         MySoundPlayer.play(MySoundPlayer.diring);
 
-                        intent = new Intent(TeacherPage.this, RankList.class);
+                        intent = new Intent(TeacherPage.this, RankList.class)
+                                .setAction(Intent.ACTION_MAIN)
+                                .addCategory(Intent.CATEGORY_LAUNCHER)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
                         intent.putExtra("gameId", nowgameId);
                         startActivity(intent);
 
@@ -154,7 +157,10 @@ public class TeacherPage extends AppCompatActivity {
 
                         MySoundPlayer.play(MySoundPlayer.diring);
 
-                        intent = new Intent(TeacherPage.this, nation.class);
+                        intent = new Intent(TeacherPage.this, nation.class)
+                                .setAction(Intent.ACTION_MAIN)
+                                .addCategory(Intent.CATEGORY_LAUNCHER)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
                         intent.putExtra("nationname", "선생님나라");
                         intent.putExtra("gameId", nowgameId);
                         startActivity(intent);
