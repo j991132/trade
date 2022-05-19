@@ -40,6 +40,7 @@ public class tradewindow extends AppCompatActivity {
     private String mya, youra, mysourcename, requestnation, targetnation, gameId;
     private String yoursourcename = "0";
     private ProgressDialog progressDialog;
+    private BackkeyHandler backkeyHandler = new BackkeyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -481,6 +482,16 @@ selectsource.setCancelable(false);
         });
 
     }  //본문 끝
+
+    @Override
+    public void onBackPressed() {
+        /* 다음 4가지 형태 중 하나 선택해서 사용 */
+
+        backkeyHandler.onBackPressed();
+        //backkeyHandler.onBackPressed("\'뒤로\' 버튼을 두 번 누르면 종료됩니다.\n입력한 내용이 지워집니다.");
+        //backkeyHandler.onBackPressed(5);
+//        backkeyHandler.onBackPressed("5초 내로 한번 더 누르세요", 5);
+    }
 
     //내 자원 이미지 누를때 다이얼로그 불러오기
     private void sourcedialog(String sourcename) {
