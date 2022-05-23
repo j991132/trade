@@ -181,11 +181,13 @@ public class tradewindow extends AppCompatActivity {
                                                 if (presentallow.equals("0")) {
                                                     MySoundPlayer.play(MySoundPlayer.diring);
 
-                                                    Log.d(TAG, "기록이 성공함" + presentallow);
+                                                    Log.e(TAG, "기록이 성공함 현재 나의허락상태" + presentallow);
+
 //나는 거래수락 눌렀다고 db업데이트
                                                     dbupdate(requestnation, "myallow2", "1");
                                                     dbupdate(targetnation, "yourallow", "1");
                                                     loading();
+
 
 //
 
@@ -676,6 +678,7 @@ public class tradewindow extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             Object myallow = document.getData().get("myallow2").toString();
                             Object yourallow = document.getData().get("yourallow").toString();
+                            Object request = document.getData().get("request").toString();
 
                             yoursname = document.getData().get("yoursource").toString();
                             yoursnum = document.getData().get("yoursourcenum").toString();
@@ -690,8 +693,9 @@ public class tradewindow extends AppCompatActivity {
                             yoursourcenum = Integer.parseInt(yoursnum.toString());
                             Object yourwant = document.getData().get(yoursourcename).toString();
                             yourwantsourcenum = Integer.parseInt(yourwant.toString());
-                            if (myallow.equals("0")) {
+                            if (myallow.equals("0") && yourallow.equals("0")&& request.equals("0")) {
                                 loadingEnd();
+                                finish();
                             }
                             if (a == 1 && b == 1) {
                                 loadingEnd();

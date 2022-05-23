@@ -38,17 +38,42 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/kor_mini" />
+
             <Button
                 android:id="@+id/nationbtn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
 
+                android:layout_weight="0"
                 android:orientation="vertical"
                 android:outlineProvider="paddedBounds"
                 android:text="대한민국"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="173dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/cha_mini" />
 
             <Button
                 android:id="@+id/nationbtn2"
@@ -56,34 +81,79 @@
                 android:layout_height="wrap_content"
 
 
+                android:layout_weight="0"
                 android:orientation="vertical"
                 android:text="중국"
                 tools:layout_editor_absoluteX="256dp"
                 tools:layout_editor_absoluteY="172dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/os_mini" />
 
             <Button
                 android:id="@+id/nationbtn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="호주"
                 tools:layout_editor_absoluteX="55dp"
                 tools:layout_editor_absoluteY="341dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ca_mini" />
 
             <Button
                 android:id="@+id/nationbtn4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="캐나다"
                 tools:layout_editor_absoluteX="256dp"
                 tools:layout_editor_absoluteY="340dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,21 +161,52 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/saudi_mini" />
+
             <Button
                 android:id="@+id/nationbtn5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="사우디"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="505dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/sa_mini" />
 
             <Button
                 android:id="@+id/nationbtn6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="남아공"
                 tools:layout_editor_absoluteX="255dp"
                 tools:layout_editor_absoluteY="505dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
 

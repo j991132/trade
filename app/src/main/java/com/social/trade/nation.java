@@ -46,6 +46,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_nation);
+
         MySoundPlayer.initSounds(getApplicationContext());
         Intent intent = getIntent();
         nationname = intent.getStringExtra("nationname");
