@@ -313,6 +313,31 @@ tradetargetnation.setCancelable(false);
                 //              tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
             }
         });
+//성장조건 버튼
+        Button lvupneedbtn = (Button) findViewById(R.id.lvupneed_btn);
+        lvupneedbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MySoundPlayer.play(MySoundPlayer.diring);
+//다이얼로그생성
+                final Dialog lvupdialog = new Dialog( nation.this );
+
+                lvupdialog.setContentView(R.layout.lvupdialog);
+                lvupdialog.setCancelable(false);
+
+                Button lvupneedcanale = (Button) lvupdialog.findViewById(R.id.lvupneedcanclebtn);
+                lvupneedcanale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MySoundPlayer.play(MySoundPlayer.diring);
+                        lvupdialog.dismiss();
+                    }
+                });
+                lvupdialog.show();
+                MySoundPlayer.play(MySoundPlayer.confirm);
+                //              tradetargetnation.setOnDismissListener((DialogInterface.OnDismissListener) nation.this);
+            }
+        });
 // 실시간 데이터 감지
         final DocumentReference docRef = db.collection(gameId).document(nationname);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {

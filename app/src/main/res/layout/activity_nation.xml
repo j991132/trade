@@ -47,7 +47,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/lvupneed_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
