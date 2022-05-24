@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -321,8 +325,21 @@ tradetargetnation.setCancelable(false);
                 MySoundPlayer.play(MySoundPlayer.diring);
 //다이얼로그생성
                 final Dialog lvupdialog = new Dialog( nation.this );
+//다이얼로그 화면 꽉차게
+                // 액티비티의 타이틀바를 숨긴다.
+                lvupdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                Window window = lvupdialog.getWindow();
+                Rect displayRectangle = new Rect();
+                window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+                // inflate and adjust layout
+                LayoutInflater inflater = (LayoutInflater)nation.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.lvupdialog, null);
+                layout.setMinimumWidth((int)(displayRectangle.width() * 0.9f));
+                layout.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
+                lvupdialog.setContentView(layout);
 
-                lvupdialog.setContentView(R.layout.lvupdialog);
+
+//                lvupdialog.setContentView(R.layout.lvupdialog);
                 lvupdialog.setCancelable(false);
 
                 Button lvupneedcanale = (Button) lvupdialog.findViewById(R.id.lvupneedcanclebtn);
