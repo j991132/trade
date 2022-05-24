@@ -3,15 +3,20 @@ package com.social.trade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +31,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private Button connect;
-    private Button finish;
+    private Button finish, teacherrulebtn, howtorulebtn;
     private MediaPlayer mediaPlayer;
     private FirebaseFirestore db;
     private Intent intent = null;
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         connect = (Button) findViewById(R.id.button1);
         finish = (Button) findViewById(R.id.button2);
+        teacherrulebtn = (Button)findViewById(R.id.teacherrulebtn);
+        howtorulebtn = (Button)findViewById(R.id.howtorulebtn);
         connect.setEnabled(true);
         finish.setEnabled(false);
         ename = (EditText) findViewById(R.id.editText);
@@ -136,6 +143,78 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 connect.setEnabled(true);
                 finish.setEnabled(false);
+            }
+        });
+        //선생님 도움말 버튼
+        teacherrulebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                        MySoundPlayer.play(MySoundPlayer.diring);
+//다이얼로그생성
+                        final Dialog teacherruledialog = new Dialog( MainActivity.this );
+//다이얼로그 화면 꽉차게
+                        // 액티비티의 타이틀바를 숨긴다.
+                        teacherruledialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        Window window = teacherruledialog.getWindow();
+                        Rect displayRectangle = new Rect();
+                        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+                        // inflate and adjust layout
+                        LayoutInflater inflater = (LayoutInflater)MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View layout = inflater.inflate(R.layout.teacherruledialog, null);
+                        layout.setMinimumWidth((int)(displayRectangle.width() * 0.9f));
+                        layout.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
+                        teacherruledialog.setContentView(layout);
+
+                        teacherruledialog.setCancelable(false);
+
+                        Button teacherrulecanale = (Button) teacherruledialog.findViewById(R.id.teacherrulecanclebtn);
+                        teacherrulecanale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                MySoundPlayer.play(MySoundPlayer.diring);
+                                teacherruledialog.dismiss();
+                            }
+                        });
+                        teacherruledialog.show();
+                        MySoundPlayer.play(MySoundPlayer.confirm);
+
+
+
+            }
+        });
+ //게임규칙 버튼
+        howtorulebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MySoundPlayer.play(MySoundPlayer.diring);
+//다이얼로그생성
+                final Dialog howtoruledialog = new Dialog( MainActivity.this );
+//다이얼로그 화면 꽉차게
+                // 액티비티의 타이틀바를 숨긴다.
+                howtoruledialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                Window window = howtoruledialog.getWindow();
+                Rect displayRectangle = new Rect();
+                window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+                // inflate and adjust layout
+                LayoutInflater inflater = (LayoutInflater)MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout = inflater.inflate(R.layout.howtodialog, null);
+                layout.setMinimumWidth((int)(displayRectangle.width() * 0.9f));
+                layout.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
+                howtoruledialog.setContentView(layout);
+
+                howtoruledialog.setCancelable(false);
+
+                Button howtorulecanale = (Button) howtoruledialog.findViewById(R.id.howtocanclebtn);
+                howtorulecanale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MySoundPlayer.play(MySoundPlayer.diring);
+                        howtoruledialog.dismiss();
+                    }
+                });
+                howtoruledialog.show();
+                MySoundPlayer.play(MySoundPlayer.confirm);
             }
         });
 //        MySoundPlayer.play(MySoundPlayer.opening);

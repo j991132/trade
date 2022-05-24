@@ -497,6 +497,14 @@ public class tradewindow extends AppCompatActivity {
     }  //본문 끝
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbupdate6(requestnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+        dbupdate6(targetnation, "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+
+    }
+
+    @Override
     public void onBackPressed() {
         /* 다음 4가지 형태 중 하나 선택해서 사용 */
 

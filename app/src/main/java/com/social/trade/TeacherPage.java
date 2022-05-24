@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,8 @@ public class TeacherPage extends AppCompatActivity {
     private String TAG = "activity_TeacherPage";
     private String nowDate, nowgameId;
     private Intent intent;
+    private String shared = "file";
+    private TextView teachermsg, schoolmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +51,23 @@ public class TeacherPage extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         nowDate = dateFormat.format(date);
 
-// 버튼
+       // 버튼
         newgame = (Button) findViewById(R.id.newgame_btn);
         resetgame = (Button) findViewById(R.id.resetgame_btn);
         chart = (Button) findViewById(R.id.chart_btn);
         teachernation = (Button) findViewById(R.id.teachernation_btn);
-        TextView teachermsg = (TextView) findViewById(R.id.teacher_msg);
-        TextView schoolmsg = (TextView) findViewById(R.id.school_msg);
+        teachermsg = (TextView) findViewById(R.id.teacher_msg);
+        schoolmsg = (TextView) findViewById(R.id.school_msg);
+
+        //로그인 값 불러오기
+        SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
+        String tschoolname = sharedPreferences.getString("schoolname","");
+        String tgamenumname = sharedPreferences.getString("gamenumname","");
+
+
+        schoolmsg.setText(tschoolname);
+        teachermsg.setText(tgamenumname);
+
 
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
@@ -85,6 +98,7 @@ public class TeacherPage extends AppCompatActivity {
                                     nowgameId = nowDate + schoolname.getText().toString().trim() + gamenumber.getText().toString().trim();
                                     Log.e("게임아이디", nowgameId);
                                     MakeDb(nowgameId);
+
                                     MakeGameDialog.dismiss();
                                 } else {
                                     MySoundPlayer.play(MySoundPlayer.b);
@@ -175,6 +189,21 @@ public class TeacherPage extends AppCompatActivity {
         resetgame.setOnClickListener(Listener);
         chart.setOnClickListener(Listener);
         teachernation.setOnClickListener(Listener);
+    }//본문 끝
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //로그인 기록하기
+        SharedPreferences  sharedPreferences = getSharedPreferences(shared, 0);
+        SharedPreferences.Editor editor  = sharedPreferences.edit();
+
+
+        editor.putString("schoolname", schoolmsg.getText().toString().trim());
+        editor.putString("gamenumname", teachermsg.getText().toString().trim());
+
+        editor.apply();
     }
 
     private void MakeDb(String gameId) {
