@@ -101,33 +101,35 @@ public class RankList extends AppCompatActivity {
                                 arrayList.add(dc.getNewIndex(), dc.getDocument().toObject(Rank.class));
                                 adapter.notifyItemMoved(dc.getOldIndex(), dc.getNewIndex());
                                 if(dc.getDocument().getData().get("lv").equals("8")){
-                                    //다이얼로그생성
-                                    final Dialog endgameDialog = new Dialog(RankList.this);
-                                    endgameDialog.setContentView(R.layout.confirmdialog);
-                                    endgameDialog.setCancelable(false);
+                                    if(! RankList.this.isFinishing()) {
+                                        //다이얼로그생성
+                                        final Dialog endgameDialog = new Dialog(RankList.this);
+                                        endgameDialog.setContentView(R.layout.confirmdialog);
+                                        endgameDialog.setCancelable(false);
 
-                                    TextView meg = (TextView) endgameDialog.findViewById(R.id.confirmtitle);
-                                    String winner = (String) dc.getDocument().getData().get("nationName");
-                                    meg.setText(winner+" (이)가 8레벨에 먼저 도달하였습니다. 우승을 축하합니다.  ");
+                                        TextView meg = (TextView) endgameDialog.findViewById(R.id.confirmtitle);
+                                        String winner = (String) dc.getDocument().getData().get("nationName");
+                                        meg.setText(winner + " (이)가 8레벨에 먼저 도달하였습니다. 우승을 축하합니다.  ");
 
-                                    Button okbtn = (Button) endgameDialog.findViewById(R.id.ok);
-                                    Button canclebtn = (Button) endgameDialog.findViewById(R.id.cancel);
-                                    canclebtn.setVisibility(View.GONE);
+                                        Button okbtn = (Button) endgameDialog.findViewById(R.id.ok);
+                                        Button canclebtn = (Button) endgameDialog.findViewById(R.id.cancel);
+                                        canclebtn.setVisibility(View.GONE);
 
 //확인버튼
-                                    okbtn.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            MySoundPlayer.play(MySoundPlayer.diring);
-                                           endgameDialog.dismiss();
+                                        okbtn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                MySoundPlayer.play(MySoundPlayer.diring);
+                                                endgameDialog.dismiss();
 
-                                        }
+                                            }
 
-                                    });
+                                        });
 
 
-                                    endgameDialog.show();
-                                    MySoundPlayer.play(MySoundPlayer.result);
+                                        endgameDialog.show();
+                                        MySoundPlayer.play(MySoundPlayer.result);
+                                    }
 //                                    Toast.makeText(getApplication(), "8레벨에 도달하였습니다.", Toast.LENGTH_SHORT).show();
                                 }
 //                                    arrayList.set(dc.getOldIndex(), dc.getDocument().toObject(Rank.class));

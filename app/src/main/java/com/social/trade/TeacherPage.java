@@ -67,7 +67,7 @@ public class TeacherPage extends AppCompatActivity {
 
         schoolmsg.setText(tschoolname);
         teachermsg.setText(tgamenumname);
-
+        nowgameId = nowDate + schoolmsg.getText().toString().trim() + teachermsg.getText().toString().trim();
 
         View.OnClickListener Listener = new View.OnClickListener() {
             @Override
