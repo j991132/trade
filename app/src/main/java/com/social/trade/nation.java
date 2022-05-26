@@ -165,7 +165,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                         break;
                     case 8:
-
+                        cost = 0;
 
                         break;
                 }
@@ -224,7 +224,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 //                final Dialog tradetargetnation = new Dialog( nation.this );
                 tradetargetnation = new Dialog(nation.this);
                 tradetargetnation.setContentView(R.layout.tradetargetnation);
-tradetargetnation.setCancelable(false);
+                tradetargetnation.setCancelable(false);
 //setcontentview 를 먼저 연결해준 뒤에 텍스트뷰를 선언해야 널 에러가 안뜬다
                 TextView message = (TextView) tradetargetnation.findViewById(R.id.gamenumber);
                 message.setText("무역하고 싶은 나라는?");
@@ -324,7 +324,7 @@ tradetargetnation.setCancelable(false);
             public void onClick(View view) {
                 MySoundPlayer.play(MySoundPlayer.diring);
 //다이얼로그생성
-                final Dialog lvupdialog = new Dialog( nation.this );
+                final Dialog lvupdialog = new Dialog(nation.this);
 //다이얼로그 화면 꽉차게
                 // 액티비티의 타이틀바를 숨긴다.
                 lvupdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -332,10 +332,10 @@ tradetargetnation.setCancelable(false);
                 Rect displayRectangle = new Rect();
                 window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
                 // inflate and adjust layout
-                LayoutInflater inflater = (LayoutInflater)nation.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) nation.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.lvupdialog, null);
-                layout.setMinimumWidth((int)(displayRectangle.width() * 0.9f));
-                layout.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
+                layout.setMinimumWidth((int) (displayRectangle.width() * 0.9f));
+                layout.setMinimumHeight((int) (displayRectangle.height() * 0.9f));
                 lvupdialog.setContentView(layout);
 
 
@@ -411,7 +411,65 @@ tradetargetnation.setCancelable(false);
 
             }
         });
+
+        // 실시간 데이터 감지
+        final DocumentReference docRef2 = db.collection(gameId).document("selectednation");
+        docRef2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+
+// 실시간 데이터변화 감지시 실행
+                    Object winner = snapshot.getData().get("winner").toString();
+                    //상대국가 거래 요청 감지
+                    if (! winner.equals("0")) {
+//다이얼로그생성
+                        final Dialog endgame = new Dialog(nation.this);
+                        endgame.setContentView(R.layout.confirmdialog);
+                        endgame.setCancelable(false);
+
+                        TextView meg = (TextView) endgame.findViewById(R.id.confirmtitle);
+
+                        meg.setText(" 무역왕 국가 "+ winner.toString() +" (이)가 탄생하였습니다. 게임이 종료됩니다.  ");
+
+                        Button okbtn = (Button) endgame.findViewById(R.id.ok);
+                        Button canclebtn = (Button) endgame.findViewById(R.id.cancel);
+                        canclebtn.setVisibility(View.GONE);
+
+//확인버튼
+                        okbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MySoundPlayer.play(MySoundPlayer.diring);
+                                endgame.dismiss();
+
+                            }
+
+                        });
+
+
+                        endgame.show();
+                        MySoundPlayer.play(MySoundPlayer.result);
+                    }
+
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+
+// 로딩불러오기
+
+
+            }
+        });
+
     }  // 메인 끝
+
     @Override
     public void onBackPressed() {
         /* 다음 4가지 형태 중 하나 선택해서 사용 */
@@ -459,7 +517,6 @@ tradetargetnation.setCancelable(false);
 //}
 
 
-
     private void getsource(final String name) {
         //파이어스토어에서 자료 가져오기
         db = FirebaseFirestore.getInstance();
@@ -480,35 +537,40 @@ tradetargetnation.setCancelable(false);
                             Object nationtech = document.getData().get("tech").toString();
                             Object nationName = document.getData().get("nationName").toString();
 
-                            if(nationlv.equals("8")) {
+
+                            if (nationlv.equals("8")) {
 //다이얼로그생성
-                                final Dialog endgame = new Dialog(nation.this);
-                                endgame.setContentView(R.layout.confirmdialog);
-                                endgame.setCancelable(false);
-
-                                TextView meg = (TextView) endgame.findViewById(R.id.confirmtitle);
-
-                                meg.setText(" 무역왕 국가가 탄생하였습니다. 게임이 종료됩니다.  ");
-
-                                Button okbtn = (Button) endgame.findViewById(R.id.ok);
-                                Button canclebtn = (Button) endgame.findViewById(R.id.cancel);
-                                canclebtn.setVisibility(View.GONE);
-
-//확인버튼
-                                okbtn.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        MySoundPlayer.play(MySoundPlayer.diring);
-                                        endgame.dismiss();
-
-                                    }
-
-                                });
-
-
-                                endgame.show();
-                                MySoundPlayer.play(MySoundPlayer.result);
+                                dbupdate("selectednation", "winner", name);
                             }
+//                            if (nationlv.equals("8")) {
+////다이얼로그생성
+//                                final Dialog endgame = new Dialog(nation.this);
+//                                endgame.setContentView(R.layout.confirmdialog);
+//                                endgame.setCancelable(false);
+//
+//                                TextView meg = (TextView) endgame.findViewById(R.id.confirmtitle);
+//
+//                                meg.setText(" 무역왕 국가가 탄생하였습니다. 게임이 종료됩니다.  ");
+//
+//                                Button okbtn = (Button) endgame.findViewById(R.id.ok);
+//                                Button canclebtn = (Button) endgame.findViewById(R.id.cancel);
+//                                canclebtn.setVisibility(View.GONE);
+//
+////확인버튼
+//                                okbtn.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        MySoundPlayer.play(MySoundPlayer.diring);
+//                                        endgame.dismiss();
+//
+//                                    }
+//
+//                                });
+//
+//
+//                                endgame.show();
+//                                MySoundPlayer.play(MySoundPlayer.result);
+//                            }
 
                             nowlv.setText(nationlv.toString());
                             nowoil.setText(nationoil.toString());
@@ -1068,7 +1130,7 @@ tradetargetnation.setCancelable(false);
         //다이얼로그생성
         tradeok = new Dialog(this);
         tradeok.setContentView(R.layout.confirmdialog);
-tradeok.setCancelable(false);
+        tradeok.setCancelable(false);
         TextView meg = (TextView) tradeok.findViewById(R.id.confirmtitle);
         if (myallow.equals("0") && !requeststate.equals("0")) {
             meg.setText(requeststate.toString() + "   에서 무역요청이 들어왔습니다. 수락할까요?");
@@ -1128,7 +1190,7 @@ tradeok.setCancelable(false);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         } else {
-                            if(! nation.this.isFinishing()) {
+                            if (!nation.this.isFinishing()) {
                                 progressDialog.show();
                             }
                         }

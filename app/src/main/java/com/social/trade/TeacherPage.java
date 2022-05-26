@@ -215,6 +215,7 @@ public class TeacherPage extends AppCompatActivity {
         selectednation.put("nation4", 0);
         selectednation.put("nation5", 0);
         selectednation.put("nation6", 0);
+        selectednation.put("winner", "0");
 //한국자원 해시맵저장
         final Map<String, Object> kor = new HashMap<>();
         kor.put("lv", "0");
@@ -512,6 +513,7 @@ public class TeacherPage extends AppCompatActivity {
         selectednation.put("nation4", 0);
         selectednation.put("nation5", 0);
         selectednation.put("nation6", 0);
+        selectednation.put("winner", "0");
 //한국자원 해시맵저장
         final Map<String, Object> kor = new HashMap<>();
         kor.put("lv", "0");

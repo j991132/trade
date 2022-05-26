@@ -37,6 +37,10 @@
             android:text="중국" />
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +62,10 @@
             android:layout_marginBottom="10px"
             android:text="캐나다" />
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
