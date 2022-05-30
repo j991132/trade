@@ -71,7 +71,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
         gwood = (TextView) findViewById(R.id.gwood);
         gman = (TextView) findViewById(R.id.gman);
 
-
+        Log.e("나라이름은", ""+nationname);
         switch (nationname) {
             case "대한민국":
                 nationmark.setImageResource(R.drawable.kor);
@@ -386,9 +386,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                     } else if (!requeststate.equals("0") && myallow.equals("1")) {
                         loadingEnd();
                         Intent intent = new Intent(nation.this, tradewindow.class)
-                                .setAction(Intent.ACTION_MAIN)
-                                .addCategory(Intent.CATEGORY_LAUNCHER)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                .setAction(Intent.ACTION_MAIN)
+//                                .addCategory(Intent.CATEGORY_LAUNCHER)
+//                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                ;
                         intent.putExtra("requestnation", nationname);
                         intent.putExtra("targetnation", requeststate.toString());
                         intent.putExtra("gameId", gameId);
@@ -428,7 +429,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 // 실시간 데이터변화 감지시 실행
                     Object winner = snapshot.getData().get("winner").toString();
                     //상대국가 거래 요청 감지
-                    if (! winner.equals("0")) {
+                    if (!winner.equals("0")) {
 //다이얼로그생성
                         final Dialog endgame = new Dialog(nation.this);
                         endgame.setContentView(R.layout.confirmdialog);
@@ -436,7 +437,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
                         TextView meg = (TextView) endgame.findViewById(R.id.confirmtitle);
 
-                        meg.setText(" 무역왕 국가 "+ winner.toString() +" (이)가 탄생하였습니다. 게임이 종료됩니다.  ");
+                        meg.setText(" 무역왕 국가 " + winner.toString() + " (이)가 탄생하였습니다. 게임이 종료됩니다.  ");
 
                         Button okbtn = (Button) endgame.findViewById(R.id.ok);
                         Button canclebtn = (Button) endgame.findViewById(R.id.cancel);
@@ -1127,53 +1128,57 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
     //다이얼로그 나라 선택 확인
     public void tradeconfirm(final String nationname, final String targetnation) {
-        //다이얼로그생성
-        tradeok = new Dialog(this);
-        tradeok.setContentView(R.layout.confirmdialog);
-        tradeok.setCancelable(false);
-        TextView meg = (TextView) tradeok.findViewById(R.id.confirmtitle);
-        if (myallow.equals("0") && !requeststate.equals("0")) {
-            meg.setText(requeststate.toString() + "   에서 무역요청이 들어왔습니다. 수락할까요?");
-        } else if (myallow.equals("0") && requeststate.equals("0")) {
-            meg.setText(targetnation + "   과 무역할까요?");
-        }
+        if (!nation.this.isFinishing()) {
+            //다이얼로그생성
+            tradeok = new Dialog(this);
+            tradeok.setContentView(R.layout.confirmdialog);
+            tradeok.setCancelable(false);
+            TextView meg = (TextView) tradeok.findViewById(R.id.confirmtitle);
+            if (myallow.equals("0") && !requeststate.equals("0")) {
+                meg.setText(requeststate.toString() + "   에서 무역요청이 들어왔습니다. 수락할까요?");
+            } else if (myallow.equals("0") && requeststate.equals("0")) {
+                meg.setText(targetnation + "   과 무역할까요?");
+            }
 
-        Button okbtn = (Button) tradeok.findViewById(R.id.ok);
-        Button canclebtn = (Button) tradeok.findViewById(R.id.cancel);
+            Button okbtn = (Button) tradeok.findViewById(R.id.ok);
+            Button canclebtn = (Button) tradeok.findViewById(R.id.cancel);
 //다이얼로그 ok버튼 클릭액션
-        okbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            okbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                MySoundPlayer.play(MySoundPlayer.diring);
+                    MySoundPlayer.play(MySoundPlayer.diring);
 //tradeok 다이얼로그가 사라질때 리스너를 달아서 액티비티에 신호 전달 ondismiss 매서드 실행
-                tradeok.setOnDismissListener(nation.this);
-                tradeok.dismiss();
-                if (myallow.equals("0")) {
-                    dbupdate(nationname, "myallow", "1");
-                }
-                Log.e("myallow 업데이트3", myallow.toString());
-                traderequest(nationname, targetnation);
-                Log.e("myallow 업데이트4", myallow.toString());
+                    tradeok.setOnDismissListener(nation.this);
+                    tradeok.dismiss();
+                    if (myallow.equals("0")) {
+                        dbupdate(nationname, "myallow", "1");
+                    }
+                    Log.e("myallow 업데이트3", myallow.toString());
+                    traderequest(nationname, targetnation);
+                    Log.e("myallow 업데이트4", myallow.toString());
 
 //ondismissListener 사용을 해보자                tradetargetnation.dismiss();
-            }
-        });
+                }
+            });
 
 //다이얼로그 취소버튼 클릭액션
-        canclebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MySoundPlayer.play(MySoundPlayer.diring);
-                dbupdate(targetnation, "myallow", "0");
-                dbupdate2(nationname, "request", "0", "myallow", "0");
+            canclebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MySoundPlayer.play(MySoundPlayer.diring);
+                    dbupdate(targetnation, "myallow", "0");
+                    dbupdate2(nationname, "request", "0", "myallow", "0");
 
-                tradeok.dismiss();
-            }
-        });
+                    tradeok.dismiss();
+                }
+            });
 
-        tradeok.show();
-        MySoundPlayer.play(MySoundPlayer.confirm);
+            tradeok.show();
+            MySoundPlayer.play(MySoundPlayer.confirm);
+        }else{
+            Toast.makeText(getApplication(), "실행된 나라 화면이 없습니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //프로그레스 다이얼로그
@@ -1300,9 +1305,10 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
 
 //무역창 띄우기 인서트
                                     Intent intent = new Intent(nation.this, tradewindow.class)
-                                            .setAction(Intent.ACTION_MAIN)
-                                            .addCategory(Intent.CATEGORY_LAUNCHER)
-                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            .setAction(Intent.ACTION_MAIN)
+//                                            .addCategory(Intent.CATEGORY_LAUNCHER)
+//                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            ;
                                     intent.putExtra("requestnation", requestnation);
                                     intent.putExtra("targetnation", targetnation);
                                     intent.putExtra("gameId", gameId);

@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                             .setAction(Intent.ACTION_MAIN)
                                             .addCategory(Intent.CATEGORY_LAUNCHER)
                                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    ;
+
                                     intent.putExtra("ename", String.valueOf(ename.getText()));
                                     intent.putExtra("gameId", nowgameId);
                                     startActivity(intent);

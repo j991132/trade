@@ -712,13 +712,24 @@ public class tradewindow extends AppCompatActivity {
                                 Log.d(TAG, "이후   " + mya + youra + a + b);
 //db에 업데이트
                                 Log.d(TAG, "에러   " + mysourcename + "   " + presentsource + "    " + wantsource);
-                                dbupdate8(requestnation, mysourcename, String.valueOf(presentsource - wantsource), yoursourcename, String.valueOf(yourwantsourcenum + yoursourcenum), "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
-//                                dbupdate2(requestnation, mysourcename, String.valueOf(presentsource-wantsource), yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
+                                if(mysourcename !=null && ! request.equals("0")) {
+                                    dbupdate8(requestnation, mysourcename, String.valueOf(presentsource - wantsource), yoursourcename, String.valueOf(yourwantsourcenum + yoursourcenum), "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
+                                    Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(tradewindow.this, nation.class); //지금 액티비티에서 다른 액티비티로 이동하는 인텐트 설정
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);    //인텐트 플래그 설정
+                                    intent.putExtra("nationname", requestnation);
+                                    intent.putExtra("gameId", gameId);
+                                    startActivity(intent);  //인텐트 이동
+                                    finish();
+                                }else{
+                                    MySoundPlayer.play(MySoundPlayer.b);
+                                    Toast.makeText(getApplication(), "내 자원을 다시 선택해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                                //                                dbupdate2(requestnation, mysourcename, String.valueOf(presentsource-wantsource), yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
 //                                dbupdate2(requestnation,"myallow2","0", "yourallow","0");
 //                                dbupdate2(requestnation, "yoursource", "0", "yoursourcenum", "0");
 //                                dbupdate2(requestnation, "request", "0", "myallow", "0");
-                                Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                finish();
+
                             }
 //무역창에 상대국 자료 보이기
                             switch (yoursourcename) {
