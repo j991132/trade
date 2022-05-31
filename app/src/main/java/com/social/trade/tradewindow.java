@@ -41,6 +41,7 @@ public class tradewindow extends AppCompatActivity {
     private String yoursourcename = "0";
     private ProgressDialog progressDialog;
     private BackkeyHandler backkeyHandler = new BackkeyHandler(this);
+    private DocumentReference docRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -432,7 +433,7 @@ public class tradewindow extends AppCompatActivity {
         imgman.setOnClickListener(Listener);
 
 // 실시간 나의 데이터 감지
-        final DocumentReference docRef = db.collection(gameId).document(requestnation);
+        docRef = db.collection(gameId).document(requestnation);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -604,7 +605,7 @@ public class tradewindow extends AppCompatActivity {
     //파이어스토어에서 자료 가져오기
     private void getsource(String name) {
 
-        db = FirebaseFirestore.getInstance();
+//        db = FirebaseFirestore.getInstance();
         db.collection(gameId).document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -676,7 +677,7 @@ public class tradewindow extends AppCompatActivity {
     //거래 수락시 나의 db에서 allow 가져오기
     private void getmyallow(String name) {
 
-        db = FirebaseFirestore.getInstance();
+//        db = FirebaseFirestore.getInstance();
         db.collection(gameId).document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -715,11 +716,12 @@ public class tradewindow extends AppCompatActivity {
                                 if(mysourcename !=null && ! request.equals("0")) {
                                     dbupdate8(requestnation, mysourcename, String.valueOf(presentsource - wantsource), yoursourcename, String.valueOf(yourwantsourcenum + yoursourcenum), "myallow2", "0", "yourallow", "0", "yoursource", "0", "yoursourcenum", "0", "request", "0", "myallow", "0");
                                     Toast.makeText(getApplication(), "무역이 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(tradewindow.this, nation.class); //지금 액티비티에서 다른 액티비티로 이동하는 인텐트 설정
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);    //인텐트 플래그 설정
-                                    intent.putExtra("nationname", requestnation);
-                                    intent.putExtra("gameId", gameId);
-                                    startActivity(intent);  //인텐트 이동
+//                                    Intent intent = new Intent(tradewindow.this, nation.class); //지금 액티비티에서 다른 액티비티로 이동하는 인텐트 설정
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);    //인텐트 플래그 설정
+//                                    intent.putExtra("nationname", requestnation);
+//                                    intent.putExtra("gameId", gameId);
+//                                    startActivity(intent);  //인텐트 이동
+
                                     finish();
                                 }else{
                                     MySoundPlayer.play(MySoundPlayer.b);
