@@ -27,6 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 
 public class tradewindow extends AppCompatActivity {
 
@@ -42,6 +43,8 @@ public class tradewindow extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private BackkeyHandler backkeyHandler = new BackkeyHandler(this);
     private DocumentReference docRef;
+    private ListenerRegistration listenerRegistration;
+    EventListener<DocumentSnapshot> eventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -432,6 +435,29 @@ public class tradewindow extends AppCompatActivity {
         imgwood.setOnClickListener(Listener);
         imgman.setOnClickListener(Listener);
 
+
+
+        eventListener = new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w(TAG, "Listen failed.", error);
+                    return;
+                }
+
+                if (value != null && value.exists()) {
+// 실시간 데이터변화 감지시 실행
+                    getmyallow(requestnation);
+                    getsource(requestnation);
+                    Log.d(TAG, "Current data: " + value.getData());
+                    //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        };
+
+/*
 // 실시간 나의 데이터 감지
         docRef = db.collection(gameId).document(requestnation);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -447,46 +473,7 @@ public class tradewindow extends AppCompatActivity {
 // 실시간 데이터변화 감지시 실행
                     getmyallow(requestnation);
                     getsource(requestnation);
-/*
-                    //무역창에 상대국 자료 보이기
-                    switch (yoursourcename){
-                        case "money":
-                            yoursource.setImageResource(R.drawable.money);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "oil":
-                            yoursource.setImageResource(R.drawable.oil);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "fe":
-                            yoursource.setImageResource(R.drawable.fe);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "gold":
-                            yoursource.setImageResource(R.drawable.gold);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "wood":
-                            yoursource.setImageResource(R.drawable.wood);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "man":
-                            yoursource.setImageResource(R.drawable.man);
-                            yournum.setText(String.valueOf(yoursourcenum));
-                            break;
-                        case "0":
-                            break;
-                    }
 
-
-                    if(mya=="yes"&& youra=="yes"){
-//db에 업데이트
-                        dbupdate(requestnation, mysourcename, String.valueOf(presentsource-wantsource));
-                        dbupdate(requestnation, yoursourcename, String.valueOf(yourwantsourcenum+yoursourcenum));
-                        dbupdate(requestnation,"myallow","0");
-                        dbupdate(requestnation,"yourallow","0");
-                    }
- */
                     Log.d(TAG, "Current data: " + snapshot.getData());
                     //  Toast.makeText(getApplication(), "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
                 } else {
@@ -494,8 +481,24 @@ public class tradewindow extends AppCompatActivity {
                 }
             }
         });
-
+*/
     }  //본문 끝
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        docRef = db.collection(gameId).document(requestnation);
+        listenerRegistration = docRef.addSnapshotListener(eventListener);
+    }
 
     @Override
     protected void onDestroy() {

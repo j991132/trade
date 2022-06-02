@@ -20,9 +20,11 @@
             android:launchMode="singleTop"
 
             />
-<!--            android:launchMode="singleTop" -->
+        <!--            android:launchMode="singleTop" -->
 
-        <activity android:name=".nation" />
+        <activity
+            android:name=".nation"
+            android:launchMode="singleTop" />
         <activity android:name=".tradegame" />
         <activity
             android:name=".MainActivity"
