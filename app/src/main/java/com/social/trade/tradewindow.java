@@ -565,8 +565,14 @@ public class tradewindow extends AppCompatActivity {
             public void onClick(View v) {
 
                 // 각 자원별 수량이 입력 수량보다 넘지 않도록 비교하는 부분 필요
+                if (mysourcenum.getText().toString().getBytes().length <=0) {
+                    Toast.makeText(getApplication(), "입력된 수량이 없거나 '0' 입니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.e("다이얼로그 값", "1   "+ mysourcenum.getText().toString()+"   1");
                 wantsource = Integer.parseInt(mysourcenum.getText().toString());
-                if (presentsource >= wantsource) {
+                if (wantsource == 0) {
+                    Toast.makeText(getApplication(), "입력된 수량이 '0' 입니다.", Toast.LENGTH_SHORT).show();
+                } else if (presentsource >= wantsource) {
                     MySoundPlayer.play(MySoundPlayer.diring);
 
                     tradewindowmynum.setText(mysourcenum.getText().toString());
@@ -587,6 +593,7 @@ public class tradewindow extends AppCompatActivity {
                     Log.w(TAG, "" + presentsource + "   " + wantsource);
                     Toast.makeText(getApplication(), "가지고 있는 수량이 모자랍니다.", Toast.LENGTH_SHORT).show();
                 }
+            }
             }
         });
 //취소버튼
