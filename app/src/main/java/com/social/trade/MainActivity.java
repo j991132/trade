@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     connect.setEnabled(false);
                     finish.setEnabled(true);
 
-                } else if (!String.valueOf(ename.getText()).trim().equals("teacher") && !String.valueOf(ename.getText()).trim().equals("t") && !String.valueOf(ename.getText()).trim().equals("선생님") && !String.valueOf(gamenum.getText()).trim().equals(null) && !String.valueOf(sname.getText()).trim().equals(null)) {
+                } else if (!String.valueOf(ename.getText()).trim().equals("teacher") && !String.valueOf(ename.getText()).trim().equals("t") && !String.valueOf(ename.getText()).trim().equals("선생님") && !String.valueOf(gamenum.getText()).trim().equals(null) && !String.valueOf(sname.getText()).trim().equals(null) && !String.valueOf(ename.getText()).trim().equals("")) {
                     String nowgameId = nowDate + sname.getText().toString().trim() + gamenum.getText().toString().trim();
 
                     db.collection(nowgameId).document("selectednation").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                                     finish.setEnabled(true);
                                 }else{
                                     MySoundPlayer.play(MySoundPlayer.b);
-                                    Toast.makeText(getApplication(), "위 이름으로 된 게임이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplication(), "위 이름으로 된 게임이 존재하지 않거나 모둠이름이 없습니다.", Toast.LENGTH_SHORT).show();
                                 }
 
 
