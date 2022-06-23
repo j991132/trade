@@ -448,6 +448,7 @@ public class nation extends AppCompatActivity implements DialogInterface.OnDismi
                             @Override
                             public void onClick(View v) {
                                 MySoundPlayer.play(MySoundPlayer.diring);
+                                dbupdate("selectednation", "winner", "0");   //승리국가를 다시 0으로 만들어서 승리축하메세지 안뜨게 하기
                                 endgame.dismiss();
 
                             }
